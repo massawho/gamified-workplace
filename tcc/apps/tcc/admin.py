@@ -3,7 +3,7 @@ from django.contrib.admin.filters import RelatedOnlyFieldListFilter
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from apps.tcc.forms import EmployeeFormSet
-from apps.tcc.models import Employee, Department
+from apps.tcc.models import Employee, Department, Occupation
 
 
 class DepartmentFilter(admin.SimpleListFilter):
@@ -35,6 +35,9 @@ class DepartmentFilter(admin.SimpleListFilter):
 class DepartmentAdmin(admin.ModelAdmin):
     model = Department
 
+class OccupationAdmin(admin.ModelAdmin):
+    model = Occupation
+
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
 class EmployeeInline(admin.StackedInline):
@@ -52,3 +55,4 @@ class UserAdmin(BaseUserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Department, DepartmentAdmin)
+admin.site.register(Occupation, OccupationAdmin)

@@ -12,9 +12,19 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+
+class Occupation(models.Model):
+    name = models.CharField(
+        max_length=25
+    )
+
+    def __str__(self):
+        return self.name
+
 class Employee(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
+    occupation = models.ForeignKey(Occupation, on_delete=models.PROTECT, null=True)
     nickname = models.CharField(
         max_length=25,
         null=True,
