@@ -49,7 +49,7 @@ class EmployeeInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = (EmployeeInline, )
-    list_filter = (DepartmentFilter, 'is_staff')
+    list_filter = (DepartmentFilter, 'is_active', 'is_staff', 'is_superuser')
 
 # Re-register UserAdmin
 admin.site.unregister(User)
