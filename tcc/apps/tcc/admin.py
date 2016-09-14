@@ -3,7 +3,7 @@ from django.contrib.admin.filters import RelatedOnlyFieldListFilter
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from apps.tcc.forms import EmployeeFormSet
-from apps.tcc.models import Employee, Department, Occupation
+from apps.tcc.models import Employee, Department, Occupation, Product
 
 
 class DepartmentFilter(admin.SimpleListFilter):
@@ -38,6 +38,11 @@ class DepartmentAdmin(admin.ModelAdmin):
 class OccupationAdmin(admin.ModelAdmin):
     model = Occupation
 
+class ProductAdmin(admin.ModelAdmin):
+    model = Product
+    list_display = ('name', 'is_active', 'is_featured', 'price', 'stock')
+    list_filter = ('is_active', 'is_featured')
+
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
 class EmployeeInline(admin.StackedInline):
@@ -56,3 +61,4 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Occupation, OccupationAdmin)
+admin.site.register(Product, ProductAdmin)
