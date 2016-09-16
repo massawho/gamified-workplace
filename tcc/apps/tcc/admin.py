@@ -11,7 +11,7 @@ class DepartmentFilter(admin.SimpleListFilter):
     """This is a list filter based on the values
     from a model's `keywords` ArrayField. """
 
-    title = 'Departments'
+    title = _('Departments')
     parameter_name = 'department'
 
     def lookups(self, request, model_admin):
