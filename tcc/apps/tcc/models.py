@@ -81,7 +81,7 @@ class Employee(models.Model):
     inventory = models.ManyToManyField(Product, through='Purchase')
 
     def __str__(self):
-        return self.nickname
+        return self.nickname or self.user.get_short_name() or self.user.username
 
 
 class Purchase(models.Model):
@@ -115,6 +115,24 @@ class Purchase(models.Model):
 
         if self.cost is None:
             self.cost = self.product.price
+
+
+class Team(models.Model):
+    name = models.CharField(
+        max_length=25
+    )
+    members = models.ManyToManyField(Employee)
+    created_at = models.DateField()
+    ended_at = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    def is_active(self):
+        return self.ended_at == None
+
+    def __str__(self):
+        return self.name
 
 
 @receiver(post_save, sender=Purchase)

@@ -1,9 +1,10 @@
 from django.contrib import admin
-from django.contrib.admin.filters import RelatedOnlyFieldListFilter
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from apps.tcc.forms import EmployeeFormSet
-from apps.tcc.models import Employee, Department, Occupation, Product
+from apps.tcc.models import Employee, Department, Occupation, Product, Team
+from apps.utils.filters import IsNullFieldListFilter
+from django.utils.translation import ugettext_lazy as _
 
 
 class DepartmentFilter(admin.SimpleListFilter):
@@ -38,6 +39,16 @@ class DepartmentAdmin(admin.ModelAdmin):
 class OccupationAdmin(admin.ModelAdmin):
     model = Occupation
 
+class TeamAdmin(admin.ModelAdmin):
+    model = Team
+    list_display = ('name', 'is_active', 'ended_at')
+    list_filter = (('ended_at', IsNullFieldListFilter), 'members',)
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "members":
+            kwargs["queryset"] = Employee.objects.filter(user__is_staff=False)
+        return super(TeamAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
 class ProductAdmin(admin.ModelAdmin):
     model = Product
     list_display = ('name', 'is_active', 'is_featured', 'price', 'stock')
@@ -62,3 +73,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Occupation, OccupationAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Team, TeamAdmin)
