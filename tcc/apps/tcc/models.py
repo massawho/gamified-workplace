@@ -71,6 +71,10 @@ class Employee(models.Model):
         null=True,
         blank=True,
     )
+    hiring_date = models.DateField(
+        null=True,
+        blank=False,
+    )
     date_of_birth = models.DateField(
         null=True,
         blank=False,
