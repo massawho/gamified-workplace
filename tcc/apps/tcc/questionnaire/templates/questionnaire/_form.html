@@ -1,6 +1,7 @@
 {% load i18n utils %}
 {% csrf_token %}
 
+{% block questionnaire_form %}
 <div class="form-group" style="width:300px; margin: 0 auto; text-align: center">
   {{ form.targets }}
   {% if form.targets.errors %}
@@ -9,6 +10,7 @@
       {% endfor %}
   {% endif %}
 </div>
+{% endblock %}
 
 {{ answer_formset.management_form }}
 {% for form in answer_formset %}
