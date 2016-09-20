@@ -7,7 +7,7 @@ from .models import Answer, Questionnaire, update_score
 from .forms import AnswerForm, QuestionnaireForm
 
 
-def generic_questionnaire_view(request, initial, template, url, questionnaire_form=QuestionnaireForm):
+def generic_questionnaire_view(request, initial, template, url, questionnaire_form=QuestionnaireForm, questionnaire_initial=[]):
     questionnaire = Questionnaire()
     AnswerFormSet = inlineformset_factory(
         Questionnaire,
@@ -17,7 +17,7 @@ def generic_questionnaire_view(request, initial, template, url, questionnaire_fo
         extra=len(initial)
     )
     if request.method == 'POST':
-        form = questionnaire_form(request.POST)
+        form = questionnaire_form(request.POST, initial=questionnaire_initial)
         if form.is_valid():
             questionnaire = form.save(commit=False)
             formset = AnswerFormSet(request.POST, instance=questionnaire, initial=initial)
@@ -32,7 +32,7 @@ def generic_questionnaire_view(request, initial, template, url, questionnaire_fo
             formset = AnswerFormSet(request.POST, instance=questionnaire, initial=initial)
     else:
         formset = AnswerFormSet(instance=questionnaire, initial=initial)
-        form = questionnaire_form()
+        form = questionnaire_form(initial=questionnaire_initial)
 
 
     return render(request, template, {
