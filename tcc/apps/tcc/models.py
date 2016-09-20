@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from .questionnaire.models import EngagementMetric
 
 
 class Department(models.Model):
@@ -134,6 +135,19 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+
+class EngagementMetricConfig(models.Model):
+    engagement_metric = models.OneToOneField(EngagementMetric, on_delete=models.CASCADE, primary_key=True)
+    icon_class = models.CharField(
+        _('Icon class'),
+        max_length=25,
+        help_text=_('An icon class (eg: fontawesome) to be displayed.')
+    )
+    is_staff = models.BooleanField(
+        _('Displayed only for staff'),
+        default=False,
+        help_text=_('Should this metric be displayed only by staff?')
+    )
 
 @receiver(post_save, sender=Purchase)
 def update_data_after_purchase(sender, instance, created, **kwargs):

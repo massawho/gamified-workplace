@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from apps.tcc.forms import EmployeeFormSet
-from apps.tcc.models import Employee, Department, Occupation, Product, Team
 from apps.utils.filters import IsNullFieldListFilter
 from django.utils.translation import ugettext_lazy as _
+from .forms import EmployeeFormSet, EngagementMetricConfigFormSet
+from .models import Employee, Department, Occupation, Product, Team, EngagementMetricConfig
+from .questionnaire.admin import EngagementMetricAdmin as BaseEngagementMetricAdmin
+from .questionnaire.models import EngagementMetric
 
 
 class DepartmentFilter(admin.SimpleListFilter):
@@ -67,9 +69,32 @@ class UserAdmin(BaseUserAdmin):
     inlines = (EmployeeInline, )
     list_filter = (DepartmentFilter, 'is_active', 'is_staff', 'is_superuser')
 
+# Define an inline admin descriptor for EngagementMetricConfig model
+# which acts a bit like a singleton
+class EngagementMetricConfigInline(admin.StackedInline):
+    model = EngagementMetricConfig
+    can_delete = False
+    verbose_name_plural = 'engagement_metric'
+    formset = EngagementMetricConfigFormSet
+
+class EngagementMetricAdmin(BaseEngagementMetricAdmin):
+    inlines = (EngagementMetricConfigInline, )
+    list_display = ['name', 'description', 'get_is_staff']
+    list_filter = ('engagementmetricconfig__is_staff', )
+
+    def get_is_staff(self, obj):
+        return obj.engagementmetricconfig.is_staff
+    get_is_staff.admin_order_field  = 'engagementmetricconfig__is_staff'  #Allows column order sorting
+    get_is_staff.short_description = _('Displayed only for staff')  #Renames column head
+    get_is_staff.boolean = True
+
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+# Re-register EngagementMetricAdmin
+admin.site.unregister(EngagementMetric)
+admin.site.register(EngagementMetric, EngagementMetricAdmin)
+
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Occupation, OccupationAdmin)
 admin.site.register(Product, ProductAdmin)
