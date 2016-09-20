@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.utils',
-    'apps.tcc'
+    'apps.tcc',
+    'apps.tcc.questionnaire'
 ]
 
 MIDDLEWARE_CLASSES = [
