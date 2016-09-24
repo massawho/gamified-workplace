@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric
+from datetime import datetime, timedelta
 
 
 MANAGER_COLLABORATOR = 1
@@ -101,6 +102,12 @@ class Employee(models.Model):
             .exclude(questionnaire_type__in=[COLLABORATOR_SATISFACTION]) \
             .aggregate(points=points_calc)['points'] or 0
         return int(points/10)
+
+    def answered_satisfaction_questionnaire(self):
+        last_week = datetime.today() + timedelta(days=-7)
+        return self.user.questionnaire_set \
+            .filter(questionnaire_type=COLLABORATOR_SATISFACTION, created_at__gte=last_week) \
+            .exists()
 
     @property
     def feedbacks(self):
