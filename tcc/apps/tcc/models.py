@@ -9,6 +9,11 @@ from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric
 
 
+MANAGER_COLLABORATOR = 1
+COLLABORATOR_SATISFACTION = 2
+TASK_FEEDBACK = 3
+
+
 class Department(models.Model):
     name = models.CharField(
         max_length=25
