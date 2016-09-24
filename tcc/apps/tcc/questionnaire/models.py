@@ -29,6 +29,12 @@ class QuestionnaireType(models.Model):
 
 
 class Questionnaire(models.Model):
+    description = models.CharField(
+        null=True,
+        blank=True,
+        max_length=255,
+        help_text=_('A brief description for this questionnaire')
+    )
     targets = models.ManyToManyField(settings.AUTH_USER_MODEL)
     questionnaire_type = models.ForeignKey(QuestionnaireType,
         on_delete=models.PROTECT,

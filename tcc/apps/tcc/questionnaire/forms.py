@@ -19,7 +19,7 @@ class QuestionnaireForm(object):
 
     class Meta:
         model = Questionnaire
-        fields = ['targets', 'questionnaire_type']
+        fields = ['targets', 'description', 'questionnaire_type']
 
     def _save_m2m(self):
         self.cleaned_data['targets'] = [self.cleaned_data['targets']]
