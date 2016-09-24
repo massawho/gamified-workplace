@@ -102,6 +102,12 @@ class Employee(models.Model):
             .aggregate(points=points_calc)['points'] or 0
         return int(points/10)
 
+    @property
+    def feedbacks(self):
+        return self.user.questionnaire_set \
+            .exclude(questionnaire_type__in=[COLLABORATOR_SATISFACTION]) \
+            .count()
+
     @cached_property
     def overall_skill_bar(self):
         skill_calc = models.Avg('answer__value')
