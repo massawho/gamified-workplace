@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric
 
 
@@ -87,6 +88,12 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.nickname or self.user.get_short_name() or self.user.username
+
+    @cached_property
+    def points(self):
+        points_calc = models.Sum('answer__value')
+        points = self.user.questionnaire_set.aggregate(points=points_calc)['points'] or 0
+        return int(points/10)
 
 
 class Purchase(models.Model):
