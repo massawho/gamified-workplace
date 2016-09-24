@@ -95,6 +95,11 @@ class Employee(models.Model):
         points = self.user.questionnaire_set.aggregate(points=points_calc)['points'] or 0
         return int(points/10)
 
+    @cached_property
+    def overall_skill_bar(self):
+        skill_calc = models.Avg('answer__value')
+        return self.user.questionnaire_set.aggregate(skill_bar=skill_calc)['skill_bar'] or 0
+
 
 class Purchase(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
