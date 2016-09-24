@@ -97,7 +97,9 @@ class Employee(models.Model):
     @cached_property
     def points(self):
         points_calc = models.Sum('answer__value')
-        points = self.user.questionnaire_set.aggregate(points=points_calc)['points'] or 0
+        points = self.user.questionnaire_set \
+            .exclude(questionnaire_type__in=[COLLABORATOR_SATISFACTION]) \
+            .aggregate(points=points_calc)['points'] or 0
         return int(points/10)
 
     @cached_property
