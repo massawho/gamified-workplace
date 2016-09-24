@@ -1,0 +1,199 @@
+[
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 1,
+    "fields": {
+      "name": "Communication",
+      "description": "Habilities to communicate."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 2,
+    "fields": {
+      "name": "Quality",
+      "description": "Quality of work done."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 3,
+    "fields": {
+      "name": "Speed",
+      "description": "Speed that the work is done."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 4,
+    "fields": {
+      "name": "Role Sharing",
+      "description": "The willingness and ability to share responsibilities bi-directionally outside of one’s functional."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 5,
+    "fields": {
+      "name": "Energizing",
+      "description": "How well a collaborator is positively influencing the team."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 6,
+    "fields": {
+      "name": "Team satisfaction",
+      "description": "\"If you had a choice, would you continue working with this team member?\""
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 7,
+    "fields": {
+      "name": "Collaboration",
+      "description": "Building consensus and seeking win-win outcomes over just getting one’s own work done."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 8,
+    "fields": {
+      "name": "Continuous Improvement",
+      "description": "By improving oneself and helping others to improve."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 9,
+    "fields": {
+      "name": "Welfare",
+      "description": "How healthy collaborators are."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 10,
+    "fields": {
+      "name": "Workplace",
+      "description": "Satisfaction with the working environment."
+    }
+  },
+  {
+    "model": "questionnaire.engagementmetric",
+    "pk": 11,
+    "fields": {
+      "name": "Overall satisfaction",
+      "description": "How satisfied employees are with things like compensation, benefits, and their overall work environment."
+    }
+  },
+  {
+    "model": "questionnaire.questionnairetype",
+    "pk": 1,
+    "fields": {
+      "description": "Manager to Collaborator"
+    }
+  },
+  {
+    "model": "questionnaire.questionnairetype",
+    "pk": 2,
+    "fields": {
+      "description": "Collaborator satisfaction"
+    }
+  },
+  {
+    "model": "questionnaire.questionnairetype",
+    "pk": 3,
+    "fields": {
+      "description": "Task feedback"
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 1,
+    "fields": {
+      "icon_class": "fa fa-comment",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 2,
+    "fields": {
+      "icon_class": "fa fa-thumbs-up",
+         "is_staff": false
+       }
+     },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 3,
+    "fields": {
+      "icon_class": "fa fa-clock-o",
+         "is_staff": false
+       }
+     },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 4,
+    "fields": {
+      "icon_class": "fa fa-tasks",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 5,
+    "fields": {
+      "icon_class": "fa fa-bolt",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 6,
+    "fields": {
+      "icon_class": "fa fa-heart",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 7,
+    "fields": {
+      "icon_class": "fa fa-users",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 8,
+    "fields": {
+      "icon_class": "fa fa-recycle",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 9,
+    "fields": {
+      "icon_class": "fa fa-heartbeat",
+      "is_staff": true
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 10,
+    "fields": {
+      "icon_class": "fa fa-briefcase",
+      "is_staff": true
+    }
+  },
+  {
+    "model": "tcc.engagementmetricconfig",
+    "pk": 11,
+    "fields": {
+      "icon_class": "fa fa-star",
+      "is_staff": true
+    }
+  }
+]
