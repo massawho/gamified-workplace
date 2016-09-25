@@ -26,7 +26,7 @@ def generic_questionnaire_view(request, initial, template, url, questionnaire_fo
                 form.save_m2m()
                 formset.save()
                 messages.add_message(request, messages.SUCCESS, _("Thank you for your feedback!"))
-                update_score(questionnaire)
+                update_score(request, questionnaire)
                 return redirect(reverse(url))
         else:
             formset = AnswerFormSet(request.POST, instance=questionnaire, initial=initial)

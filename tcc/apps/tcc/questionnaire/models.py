@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+from .signals import update_score as update_score_signal
 
 
 class EngagementMetric(models.Model):
@@ -66,6 +67,9 @@ class Feedback(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
 
 
-def update_score(instance):
+def update_score(request, instance):
     score = instance.answer_set.aggregate(models.Avg('value'))['value__avg']
     Questionnaire.objects.filter(pk=instance.pk).update(score=score)
+    instance.refresh_from_db()
+    update_score_signal.send(sender=Questionnaire,
+        instance=instance, request=request)
