@@ -69,6 +69,38 @@ class Product(models.Model):
         return self.name
 
 
+GOAL_LEVELS = (
+    (4, _('Platinum')),
+    (3, _('Gold')),
+    (2, _('Silver')),
+    (1, _('Bronze'))
+)
+
+
+class Goal(models.Model):
+    description = models.CharField(
+        max_length=40,
+        help_text=_('A short name to describe the goal')
+    )
+    money = models.PositiveIntegerField(
+        _('Diamonds'),
+        default=0,
+        help_text=_('Diamonds received when employee finishes this goal')
+    )
+    level = models.PositiveIntegerField(
+        choices=GOAL_LEVELS,
+        default=1,
+        help_text=_('The level of importance of this goal'),
+    )
+    is_active = models.BooleanField(
+        default = True
+    )
+    products = models.ManyToManyField(Product, blank=True)
+
+    def __str__(self):
+        return self.description
+
+
 class Employee(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
@@ -91,6 +123,7 @@ class Employee(models.Model):
         default=0
     )
     inventory = models.ManyToManyField(Product, through='Purchase')
+    badges = models.ManyToManyField(Goal, through='Badge')
 
     def __str__(self):
         return self.nickname or self.user.get_short_name() or self.user.username
@@ -119,6 +152,15 @@ class Employee(models.Model):
     def overall_skill_bar(self):
         skill_calc = models.Avg('answer__value')
         return self.user.questionnaire_set.aggregate(skill_bar=skill_calc)['skill_bar'] or 0
+
+
+class Badge(models.Model):
+    goal = models.ForeignKey(Goal, on_delete=models.PROTECT)
+    employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
+    received_at = models.DateField(
+        null=True,
+        blank=True
+    )
 
 
 class Purchase(models.Model):
@@ -173,7 +215,11 @@ class Team(models.Model):
 
 
 class EngagementMetricConfig(models.Model):
-    engagement_metric = models.OneToOneField(EngagementMetric, on_delete=models.CASCADE, primary_key=True)
+    engagement_metric = models.OneToOneField(
+        EngagementMetric,
+        on_delete=models.CASCADE,
+        primary_key=True
+    )
     icon_class = models.CharField(
         _('Icon class'),
         max_length=25,

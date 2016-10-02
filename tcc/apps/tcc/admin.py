@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from apps.utils.filters import IsNullFieldListFilter
 from django.utils.translation import ugettext_lazy as _
 from .forms import EmployeeFormSet, EngagementMetricConfigFormSet
-from .models import Employee, Department, Occupation, Product, Team, EngagementMetricConfig
+from .models import (Employee, Department,
+    Occupation, Product, Team, EngagementMetricConfig, Goal)
 from .questionnaire.admin import EngagementMetricAdmin as BaseEngagementMetricAdmin
 from .questionnaire.models import EngagementMetric
 
@@ -84,9 +85,15 @@ class EngagementMetricAdmin(BaseEngagementMetricAdmin):
 
     def get_is_staff(self, obj):
         return obj.engagementmetricconfig.is_staff
-    get_is_staff.admin_order_field  = 'engagementmetricconfig__is_staff'  #Allows column order sorting
-    get_is_staff.short_description = _('Displayed only for staff')  #Renames column head
+    get_is_staff.admin_order_field  = 'engagementmetricconfig__is_staff'
+    get_is_staff.short_description = _('Displayed only for staff')
     get_is_staff.boolean = True
+
+class GoalAdmin(admin.ModelAdmin):
+    model = Goal
+    filter_horizontal = ("products",)
+    list_display = ['description', 'level', 'money']
+    list_filter = ('is_active', 'level')
 
 # Re-register UserAdmin
 admin.site.unregister(User)
@@ -99,3 +106,4 @@ admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Occupation, OccupationAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Team, TeamAdmin)
+admin.site.register(Goal, GoalAdmin)
