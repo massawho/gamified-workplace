@@ -118,6 +118,12 @@ class Employee(models.Model):
         null=True,
         blank=False,
     )
+    first_login = models.BooleanField(
+        _('Is his first login?'),
+        default=True,
+        editable=False,
+        help_text=_('Identify first login user.')
+    )
     money = models.PositiveIntegerField(
         editable=False,
         default=0
