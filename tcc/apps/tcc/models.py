@@ -100,6 +100,10 @@ class Goal(models.Model):
     def __str__(self):
         return self.description
 
+def user_directory_path(instance, filename):
+    extension = filename.split(".")[-1]
+    return 'avatar/{0}.{1}'.format(instance.user.id, extension)
+
 
 class Employee(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -130,6 +134,11 @@ class Employee(models.Model):
     )
     inventory = models.ManyToManyField(Product, through='Purchase')
     badges = models.ManyToManyField(Goal, through='Badge')
+    avatar = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to=user_directory_path
+    )
 
     def __str__(self):
         return self.nickname or self.user.get_short_name() or self.user.username
