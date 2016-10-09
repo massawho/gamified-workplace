@@ -140,6 +140,18 @@ class Employee(models.Model):
         upload_to=user_directory_path
     )
 
+    def get_inventory(self):
+        return self.inventory \
+                    .annotate(
+                        items_left=models.Count('purchase__id') - models.Sum(
+                            models.Case(models.When(
+                                    purchase__used_at__isnull=False,
+                                    then=1),
+                                output_field=models.IntegerField()
+                            )
+                        )
+                    )
+
     def __str__(self):
         return self.nickname or self.user.get_short_name() or self.user.username
 
