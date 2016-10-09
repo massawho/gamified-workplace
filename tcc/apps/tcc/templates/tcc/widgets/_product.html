@@ -1,0 +1,34 @@
+{% load i18n thumbnail %}
+<div class="col-md-4">
+  <div class="panel">
+    <div class="panel-content widget-info">
+      <div class="row">
+        <div class="left">
+          {% thumbnail product.photo "90x90" crop="center" format="PNG" as im %}
+            <img src="{{ im.url }}" class="pull-left img-responsive" alt="{{product.name}}">
+          {% endthumbnail %}
+        </div>
+        <div class="right">
+          <h3 class="c-dark w-600 m-t-0">{{ product.name }}</h3>
+          <p class="text">
+
+            <a class="w-100" {% if user.employee.money > product.price %}data-purchase-product href="{% url 'purchase_product' product.id %}"{% else %}data-not-enough-points{% endif %} title="Clique para comprar"><i class="fa fa-diamond"></i>D$ {{ product.price }}</a>
+
+            <span class="m-l-30">
+              <i class="fa fa-cubes"></i>
+              {% if product.relevant_stock is not -1 %}
+                {% if product.relevant_stock == 0 %}
+                  {% trans 'out of stock' %}
+                {% else %}
+                  {{ product.relevant_stock }}
+                {% endif %}
+              {% else %}
+                {% trans 'unlimited' %}
+              {% endif %}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

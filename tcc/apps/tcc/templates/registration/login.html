@@ -1,0 +1,48 @@
+{% extends "tcc/base.html" %}
+{% load static %}
+{% block bodyclass %}account separate-inputs{% endblock %}
+{% block bodyattr %}data-page="login"{% endblock %}
+
+{% block body %}
+  <!-- BEGIN LOGIN BOX -->
+  <div class="container" id="login-block">
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <div class="account-wall">
+          <i class="user-img icons-faces-users-03"></i>
+          <form class="form-signin" role="form" action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+            <div class="append-icon">
+              <input type="text" name="username" id="username" class="form-control form-white username" placeholder="Username" required>
+              <i class="icon-user"></i>
+            </div>
+            <div class="append-icon m-b-20">
+              <input type="password" name="password" class="form-control form-white password" placeholder="Password" required>
+              <i class="icon-lock"></i>
+            </div>
+            <button type="submit" id="submit-form" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Sign In</button>
+            <div class="clearfix">
+              <p class="pull-left m-t-20"><a id="password" href="#">Forgot password?</a></p>
+            </div>
+          </form>
+          <form class="form-password" action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+            <div class="append-icon m-b-20">
+              <input type="password" name="password" class="form-control form-white password" placeholder="Password" required>
+              <i class="icon-lock"></i>
+            </div>
+            <button type="submit" id="submit-password" class="btn btn-lg btn-danger btn-block ladda-button" data-style="expand-left">Send Password Reset Link</button>
+            <div class="clearfix">
+              <p class="pull-left m-t-20"><a id="login" href="#">Already got an account? Sign In</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <p class="account-copyright">
+      <span>Copyright © 2015 </span><span>THEMES LAB</span>.<span>All rights reserved.</span>
+    </p>
+  </div>
+{% endblock %}
+
+{% block extrajavascript %}
+  <script src="{% static "admin/global/js/pages/login-v1.js" %}"></script>
+{% endblock %}

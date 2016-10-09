@@ -1,0 +1,116 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n static %}
+{% block content_classes %}{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="panel">
+    {% if user.employee.first_login %}
+      <div class="alert alert-warning media fade in">
+      <p><strong>{% trans 'First login' %}!</strong> {% trans 'Before using, you have to update your personal info and choose a new password.' %}</p>
+      </div>
+    {% endif %}
+      <div class="panel-content text-center">
+        <h1 class="m-b-30"><strong>{% trans 'Update profile' %}</strong></h1>
+        <form method="POST" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-offset-1 col-lg-offset-2 col-md-5 col-lg-4">
+              <div class="form-group">
+                {{form.username.label_tag}}
+                {{form.username}}
+                {% for error in form.username.errors %}
+                  <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                {{form.first_name.label_tag}}
+                {{form.first_name}}
+                {% for error in form.first_name.errors %}
+                  <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                {{form.last_name.label_tag}}
+                {{form.last_name}}
+                {% for error in form.last_name.errors %}
+                  <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                {{form.nickname.label_tag}}
+                {{form.nickname}}
+                {% for error in form.nickname.errors %}
+                  <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                {{form.new_password1.label_tag}}
+                {{form.new_password1}}
+                {% for error in form.new_password1.errors %}
+                  <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+              </div>
+              <div class="form-group">
+                {{form.new_password2.label_tag}}
+                {{form.new_password2}}
+                {% for error in form.new_password2.errors %}
+                  <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-md-offset-1 col-md-5 col-lg-4">
+              {{form.avatar.label_tag}}
+              {{form.avatar}}
+              {% for error in form.avatar.errors %}
+                <div class="form-error">{{ error|escape }}</div>
+              {% endfor %}
+              <h4 class="text-center m-t-20 m-b-20">{% trans 'Or choose one from the list' %}</h4>
+              <div class="row avatar-list">
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar1_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar2_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar3_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar4_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar5_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar6_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar7_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar8_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar9_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar10_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar11_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar12_big@2x.png' %}">
+                </div>
+                <div class="col-xs-3 col-md-3">
+                  <img class="img-responsive" src="{% static '/admin/global/images/avatars/avatar13_big@2x.png' %}">
+                </div>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="btn btn-success" value="{% trans 'Update profile' %}">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

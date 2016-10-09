@@ -1,0 +1,46 @@
+{% load i18n admin_static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="" name="description" />
+
+    <link rel="shortcut icon" href="../assets/global/images/favicon.png">
+
+    {% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/global/css/style.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "admin/global/css/ui.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "admin/global/css/theme.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "admin/global/plugins/bootstrap-loading/lada.min.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "admin/layout1/css/layout.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "admin/global/css/custom.css" %}" />
+    <script src="{% static "admin/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
+    {% endblock %}
+    {% block extrastyle %}{% endblock %}
+
+    {% block extrahead %}{% endblock %}
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+  </head>
+  <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}" {% block bodyattr %}{% endblock %}>
+    {% block body %}{% endblock %}
+
+    {% block javascript %}
+      <script src="{% static "admin/global/plugins/jquery/jquery-1.11.1.min.js" %}"></script>
+      <script src="{% static "admin/global/plugins/jquery-ui/jquery-ui-1.11.2.min.js" %}"></script>
+      <script src="{% static "admin/global/plugins/jquery/jquery-migrate-1.2.1.min.js" %}"></script>
+      <script src="{% static "admin/global/plugins/gsap/main-gsap.min.js" %}"></script>
+      <script src="{% static "admin/global/plugins/bootstrap/js/bootstrap.min.js" %}"></script>
+      <script src="{% static "admin/global/plugins/bootstrap-loading/lada.min.js" %}"></script>
+      <script src="{% static "admin/global/plugins/jquery-validation/jquery.validate.min.js" %}"></script>
+      <script src="{% static "admin/global/plugins/jquery-validation/additional-methods.min.js" %}"></script>
+    {% endblock %}
+
+    {% block extrascript %}{% endblock %}
+
+  </body>
+
+</html>

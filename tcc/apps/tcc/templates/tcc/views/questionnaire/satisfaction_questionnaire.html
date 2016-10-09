@@ -1,0 +1,4 @@
+{% extends "tcc/views/questionnaire/base.html" %}
+{% load i18n %}
+{% block questionnaire_name %}{% trans 'How are you?' %}{% endblock %}
+{% block form %}{% include "tcc/views/questionnaire/_satisfaction_form.html" %}{% endblock %}

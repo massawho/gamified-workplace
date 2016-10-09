@@ -1,0 +1,19 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n static %}
+{% block content_classes %}{% endblock %}
+{% block content %}
+  <div class="alert alert-info">
+    <p>
+      <img class="img-md m-r-10" src="https://cdn0.iconfinder.com/data/icons/smile-emoticons/78/smyle_emoticons-01-512.png">
+      <strong>{% trans 'Hey, you...' %}</strong> {% trans 'Don\'t forget to be giving feedback to your collaborators always when possible!' %}
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-4">
+      {% for user in users %}
+        {% include 'tcc/widgets/_ranked_user.html' with user=user ranking=forloop.counter %}
+      {% endfor %}
+    </div>
+
+{% endblock %}

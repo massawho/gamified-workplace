@@ -1,0 +1,17 @@
+{% load utils %}
+
+<div class="skill-bar clearfix m-b-10">
+  <div class="left">
+    <div class="badge badge-default" data-rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="{{ description }}">
+      <i class="{{ icon }}"></i>
+    </div>
+  </div>
+  <div class="right">
+    <h3><strong>{{ skill }}</strong> {{number|floatformat:2}}</h3>
+    {% widthratio number 10 100 as width %}
+    <div class="progress">
+      <div class="progress-bar progress-bar-{% if number < 4 %}danger{% elif number < 8 %}warning{% else %}success{% endif %}" role="progressbar" aria-valuenow="{{width}}" aria-valuemin="0" aria-valuemax="100" style="width: {{width}}%">
+      </div>
+    </div>
+  </div>
+</div>

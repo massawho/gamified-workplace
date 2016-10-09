@@ -1,0 +1,17 @@
+{% load i18n thumbnail %}
+
+<a href="#" class="inventory-item">
+  {% thumbnail product.photo "90x90" crop="center" as im %}
+    <img
+      data-rel="tooltip"
+      data-toggle="tooltip"
+      data-placement="bottom"
+      data-html="true"
+      data-original-title="{{ product.name }}<br>{% trans 'Left' %}: {{product.items_left}}"
+      src="{{im.url}}"
+      alt="{{product.name}}"
+      class="pull-left img-responsive img-circle">
+  {% endthumbnail %}
+
+  <span class="badge badge-danger badge-header">{{product.items_left}}</span>
+</a>

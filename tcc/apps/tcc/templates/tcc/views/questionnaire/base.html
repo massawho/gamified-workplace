@@ -1,0 +1,24 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n %}
+{% block content_classes %}{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="panel">
+      <div class="panel-content text-center">
+        <h1 class="m-b-30"><strong>{% trans 'Questionnaire' %}</strong> {% block questionnaire_name %}{% endblock %}</h1>
+        <form method="POST" novalidate>
+          {% block form %}{% include 'questionnaire/_form.html' %}{% endblock %}
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  {{ form.media.css }}
+{% endblock %}
+{% block extrascript %}
+  {{ block.super }}
+  {{ form.media.js }}
+{% endblock %}

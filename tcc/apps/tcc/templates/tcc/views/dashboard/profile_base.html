@@ -1,0 +1,36 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n %}
+{% block content_classes %} page-app page-profil{% endblock %}
+{% block content %}
+  <div class="col-md-4 m-b-30">
+    {% include 'tcc/widgets/_my_info.html' with user=profile %}
+    {% for skill in skill_list %}
+      {% include 'tcc/widgets/_skill_bar.html' with skill=skill.engagement_metric__name number=skill.value icon=skill.engagement_metric__engagementmetricconfig__icon_class description=skill.engagement_metric__description %}
+    {% endfor %}
+    <h3><strong>{% trans 'Inventory' %}</strong></h3>
+    <div class="clearfix">
+      {% for item in inventory %}
+        {% include 'tcc/widgets/_inventory_item.html' with product=item %}
+      {% empty %}
+        {% block empty_inventory %}{% trans 'Your inventory is empty' %}{% endblock %}
+      {% endfor %}
+    </div>
+    <h3><strong>{% trans 'Badges' %}</strong></h3>
+    {% block empty_badges %}{% trans 'You haven\'t earned any badges yet!' %}{% endblock %}
+
+  </div>
+  <div class="col-md-8 b-30">
+    {% block profile_content %}
+      <div class="row">
+        <div class="col-xs-12">
+          <h3><strong>{% trans 'My goals' %}</strong></h3>
+          <div class="widget-infobox m-t-20">
+            {% for goal in goals %}
+              {% include 'tcc/widgets/_goal.html' with goal=goal %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}

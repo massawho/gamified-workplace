@@ -1,0 +1,23 @@
+{% extends "tcc/views/dashboard/profile_base.html" %}
+{% load i18n %}
+{% block profile_content %}
+  {% if not user.employee.answered_satisfaction_questionnaire %}
+      <div class="alert alert-danger">
+        <p>
+          <img class="img-md m-r-10" src="https://cdn0.iconfinder.com/data/icons/smile-emoticons/78/smyle_emoticons-01-512.png">
+          <strong>{% trans 'We want to hear your!' %}</strong> {% trans 'We haven\'t received your satisfaction quiz this week yet.' %} <a href="{% url 'satisfaction_questionnaire' %}">{% trans 'Click here' %}</a> {% trans 'and answer it right now!' %}
+        </p>
+      </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h3><strong>{% trans 'Featured products' %}</strong></h3>
+      </div>
+      {% for product in featured_products %}
+        {% include 'tcc/widgets/_product.html' with product=product %}
+      {% endfor %}
+    </div>
+
+  {{ block.super }}
+{% endblock %}

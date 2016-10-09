@@ -1,0 +1,4 @@
+{% extends "tcc/views/questionnaire/base.html" %}
+{% load i18n %}
+{% block questionnaire_name %}{% trans 'What are your thoughts about a task?' %}{% endblock %}
+{% block form %}{% include "tcc/views/questionnaire/_task_form.html" %}{% endblock %}

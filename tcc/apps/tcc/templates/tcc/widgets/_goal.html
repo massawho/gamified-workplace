@@ -1,0 +1,23 @@
+{% load tcc %}
+<div class="infobox">
+  <div class="left">
+    <i class="icon-badge bg-{{ goal.level|rank_class }}"></i>
+  </div>
+  <div class="right">
+    <div class="clearfix">
+      <div>
+        <span class="c-{{ goal.level|rank_class }}">{{goal.description}}</span>
+      </div>
+      <small class="txt">
+        {% if goal.money %}
+          <i class="fa fa-diamond" data-rel="tooltip" data-toggle="tooltip" data-placement="top" data-html="true" data-original-title="D$ {{goal.money}}"></i>
+        {% endif %}
+
+        {% if goal.products.count %}
+          <i class="icon-bag" data-rel="tooltip" data-toggle="tooltip" data-placement="top" data-html="true" data-original-title="Itens: <br> {% for item in goal.products.all %}{{item.name}}{% endfor %}"></i>
+        {% endif %}
+
+      </small>
+    </div>
+  </div>
+</div>
