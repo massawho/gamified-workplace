@@ -33,6 +33,11 @@ class Occupation(models.Model):
         return self.name
 
 
+def images_path(instance, filename):
+    extension = filename.split(".")[-1]
+    return '{0}/{1}.{2}'.format(instance._meta.verbose_name_plural, instance.id, extension)
+
+
 class Product(models.Model):
     name = models.CharField(
         _('Product name'),
@@ -56,6 +61,11 @@ class Product(models.Model):
         default = True
     )
     is_featured = models.BooleanField()
+    photo = models.ImageField(
+        null=True,
+        blank=False,
+        upload_to=images_path
+    )
 
     def relevant_stock(self):
         if self.max_per_user > 0:
