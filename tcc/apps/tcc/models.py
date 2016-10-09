@@ -243,6 +243,11 @@ class Team(models.Model):
         null=True,
         blank=True
     )
+    photo = models.ImageField(
+        null=True,
+        blank=False,
+        upload_to=images_path
+    )
 
     def is_active(self):
         return self.ended_at == None
