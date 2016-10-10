@@ -173,3 +173,13 @@ def update_profile(request):
     return render(request, 'tcc/views/dashboard/update_profile.html', {
         'form': form
     });
+
+@login_required
+@user_passes_test(lambda u: not u.is_staff)
+def shop(request):
+    featured_products = Product.objects.featured()
+    products = Product.objects.not_featured()
+    return render(request, 'tcc/views/shop/index.html', {
+        'featured_products': featured_products,
+        'products': products,
+    });

@@ -71,15 +71,15 @@
                 <ul class="header-menu nav navbar-nav">
                   {% if not user.is_staff %}
                     <li id="language-header">
-                      <a href="#">
+                      <a href="{% url 'shop' %}">
                         <i class="fa fa-diamond"></i>
                         <span>D$ {{ user.employee.money }}</span>
                       </a>
                     </li>
                     <li id="language-header">
-                      <a href="#">
+                      <a href="{% url 'shop' %}">
                         <i class="icon-basket"></i>
-                        <span>Shopping</span>
+                        <span>Shop</span>
                       </a>
                     </li>
                   {% endif %}

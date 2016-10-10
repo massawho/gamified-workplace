@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^satisfaction/$', views.satisfaction_questionnaire, name='satisfaction_questionnaire'),
     url(r'^profile/update/$', views.update_profile, name='update_profile'),
     url(r'^profile/(?P<user_id>[0-9]+)/$', views.profile, name='profile'),
+    url(r'^shop/$', views.shop, name='shop'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

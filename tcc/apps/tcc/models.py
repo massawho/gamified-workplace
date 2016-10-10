@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric
+from .managers import ProductManager
 from datetime import datetime, timedelta
 
 
@@ -39,6 +40,7 @@ def images_path(instance, filename):
 
 
 class Product(models.Model):
+    objects = ProductManager()
     name = models.CharField(
         _('Product name'),
         max_length=45

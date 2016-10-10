@@ -97,3 +97,10 @@ a[data-not-enough-points] {
 .avatar-list img {
   margin-bottom: 10px;
 }
+.no-item {
+  padding: 100px 0;
+  text-align: center;
+}
+.no-item img {
+  max-width: 100px;
+}

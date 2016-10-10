@@ -1,0 +1,33 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n static %}
+{% block content_classes %}{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% if featured_products or products %}
+        {% if featured_products %}
+          <div class="col-xs-12">
+            <h3><strong>{% trans 'Featured products' %}</strong></h3>
+          </div>
+          {% for product in featured_products %}
+            {% include 'tcc/widgets/_product.html' with product=product %}
+          {% endfor %}
+        {% endif %}
+
+        {% if products %}
+          <div class="col-xs-12">
+            <h3><strong>{% trans 'Shop' %}</strong></h3>
+          </div>
+          {% for product in products %}
+            {% include 'tcc/widgets/_product.html' with product=product %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="no-item">
+        <img src="{% static 'images/bag.png' %}">
+        <h2>{% trans 'Sorry, the shop has nothing to sell.' %}</h2>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
