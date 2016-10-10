@@ -154,7 +154,7 @@ def task_questionnaire(request, user_id=None):
 
 @login_required
 def update_profile(request):
-    if request.user.employee.first_login:
+    if request.user.employee.first_login and not request.user.is_staff:
         form_class = FirstLoginForm
     else:
         form_class = UpdateLoginForm
