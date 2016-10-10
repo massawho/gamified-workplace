@@ -156,9 +156,15 @@ class Employee(models.Model):
         return self.inventory \
                     .annotate(
                         items_left=models.Count('purchase__id') - models.Sum(
-                            models.Case(models.When(
+                            models.Case(
+                                models.When(
                                     purchase__used_at__isnull=False,
-                                    then=1),
+                                    then=1
+                                ),
+                                models.When(
+                                    purchase__used_at__isnull=True,
+                                    then=0
+                                ),
                                 output_field=models.IntegerField()
                             )
                         )
