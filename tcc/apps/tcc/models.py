@@ -203,8 +203,8 @@ class Badge(models.Model):
     goal = models.ForeignKey(Goal, on_delete=models.PROTECT)
     employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
     received_at = models.DateField(
-        null=True,
-        blank=True
+        null=False,
+        blank=False
     )
 
 
