@@ -10,8 +10,9 @@
       data-original-title="{{ product.name }}<br>{% trans 'Left' %}: {{product.items_left}}"
       src="{{im.url}}"
       alt="{{product.name}}"
-      class="pull-left img-responsive img-circle">
+      class="pull-left img-responsive img-circle{% if product.items_left == 0 %} none-left{% endif %}">
   {% endthumbnail %}
-
-  <span class="badge badge-danger badge-header">{{product.items_left}}</span>
+  {% if product.items_left != 0 %}
+    <span class="badge badge-danger badge-header">{{product.items_left}}</span>
+  {% endif %}
 </a>

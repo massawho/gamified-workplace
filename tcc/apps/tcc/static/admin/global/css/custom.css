@@ -17,6 +17,14 @@ a[data-not-enough-points] {
   margin-right: 1%;
   float: left;
 }
+.inventory-item .none-left {
+  filter: url(data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter i…0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale);
+  filter: gray;
+  -webkit-filter: grayscale(100%);
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+
+}
 .badge-header {
   font-size: 12px;
   padding: 2px 5px;
