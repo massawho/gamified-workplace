@@ -10,7 +10,7 @@ from apps.utils.forms import widgets
 from .questionnaire.models import Questionnaire, QuestionnaireType
 from .questionnaire.forms import QuestionnaireForm
 from django.utils.translation import ugettext_lazy as _
-from.models import Employee
+from .models import Employee, Badge
 
 
 class UserModelChoiceField(forms.ModelChoiceField):
@@ -28,6 +28,16 @@ class UserQuestionnaireForm(QuestionnaireForm, forms.ModelForm):
         queryset=QuestionnaireType.objects.all(),
         disabled=True
     )
+
+class BadgeForm(forms.ModelForm):
+
+    employee = django_models.ModelChoiceField(
+        queryset=Employee.objects.filter(user__is_staff=False)
+    )
+
+    class Meta:
+        model = Badge
+        fields = ['employee', 'received_at']
 
 class SatisfactionQuestionnaireForm(QuestionnaireForm, forms.ModelForm):
 

@@ -3,8 +3,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from apps.utils.filters import IsNullFieldListFilter
 from django.utils.translation import ugettext_lazy as _
-from .forms import EmployeeFormSet, EngagementMetricConfigFormSet
-from .models import (Employee, Department,
+from .forms import EmployeeFormSet, EngagementMetricConfigFormSet, BadgeForm
+from .models import (Employee, Department, Badge,
     Occupation, Product, Team, EngagementMetricConfig, Goal)
 from .questionnaire.admin import EngagementMetricAdmin as BaseEngagementMetricAdmin
 from .questionnaire.models import EngagementMetric
@@ -89,11 +89,19 @@ class EngagementMetricAdmin(BaseEngagementMetricAdmin):
     get_is_staff.short_description = _('Displayed only for staff')
     get_is_staff.boolean = True
 
+class BadgeInline(admin.TabularInline):
+    model = Badge
+    form = BadgeForm
+    can_delete = False
+    verbose_name_plural = 'badges'
+    extra = 1
+
 class GoalAdmin(admin.ModelAdmin):
     model = Goal
     filter_horizontal = ("products",)
     list_display = ['description', 'level', 'money']
     list_filter = ('is_active', 'level')
+    inlines = (BadgeInline, )
 
 # Re-register UserAdmin
 admin.site.unregister(User)

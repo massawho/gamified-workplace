@@ -207,6 +207,12 @@ class Badge(models.Model):
         blank=False
     )
 
+    def __str__(self):
+        return _('%(employee_name)s\'s %(badge_name)s badge') % {
+            'employee_name': self.employee,
+            'badge_name': self.goal
+        }
+
 
 class Purchase(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
