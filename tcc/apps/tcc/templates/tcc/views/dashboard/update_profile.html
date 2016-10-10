@@ -4,7 +4,7 @@
 {% block content %}
   <div class="container">
     <div class="panel">
-    {% if user.employee.first_login and not user.is_staff %}
+    {% if user.employee.first_login and not user.is_superuser %}
       <div class="alert alert-warning media fade in">
       <p><strong>{% trans 'First login' %}!</strong> {% trans 'Before using, you have to update your personal info and choose a new password.' %}</p>
       </div>
