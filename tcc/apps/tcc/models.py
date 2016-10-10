@@ -132,7 +132,7 @@ class Employee(models.Model):
     )
     date_of_birth = models.DateField(
         null=True,
-        blank=False,
+        blank=True,
     )
     first_login = models.BooleanField(
         _('Is his first login?'),

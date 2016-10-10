@@ -152,6 +152,18 @@ class FirstLoginForm(UpdateLoginForm):
                 'placeholder': _('User')
             }
         ))
+
+    date_of_birth = forms.DateField(
+        label=_("Date of birth"),
+        required=True,
+        label_suffix='',
+        widget = django_widgets.DateInput(
+            attrs = {
+                'class': 'form-control',
+                'placeholder': _('Date of birth'),
+                'data-mask': '99/99/9999'
+            }
+        ))
     new_password1 = forms.CharField(
         label=_("New password"),
         required=True,
