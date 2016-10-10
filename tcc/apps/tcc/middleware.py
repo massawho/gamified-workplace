@@ -7,6 +7,7 @@ class FirstLoginMiddleware:
     def process_request(self, request):
         if request.user.is_authenticated() and \
             not request.user.is_superuser and \
+            not re.match(r'^/logout/?', request.path) and \
             not re.match(r'^/profile/update/?', request.path):
 
             profile = request.user.employee
