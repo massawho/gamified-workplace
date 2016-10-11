@@ -310,3 +310,12 @@ def update_data_after_purchase(sender, instance, created, **kwargs):
         employee = instance.employee
         employee.money -= instance.cost
         employee.save()
+
+@receiver(post_save, sender=Badge)
+def update_data_after_earning_badge(sender, instance, created, **kwargs):
+    if created:
+        goal = instance.goal
+        employee = instance.employee
+
+        Employee.objects.add_money_to_user(employee.user, goal.money)
+
