@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric
-from .managers import ProductManager
+from .managers import ProductManager, EmployeeManager
 from datetime import datetime, timedelta
 
 
@@ -118,6 +118,7 @@ def user_directory_path(instance, filename):
 
 
 class Employee(models.Model):
+    objects = EmployeeManager()
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
     occupation = models.ForeignKey(Occupation, on_delete=models.PROTECT, null=True)
