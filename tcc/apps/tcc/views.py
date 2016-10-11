@@ -21,6 +21,7 @@ from .signals import update_money
 def dashboard(request):
     if not request.user.is_staff:
         goals = Goal.objects.all()
+        badges = request.user.employee.badge_set.all()
         featured_products = Product.objects.filter(is_active=True, is_featured=True)
         inventory = request.user.employee.get_inventory()
         engagement_metrics = Answer.objects \
@@ -35,6 +36,7 @@ def dashboard(request):
             'featured_products': featured_products,
             'inventory': inventory,
             'goals': goals,
+            'badges': badges,
             'skill_list': engagement_metrics
         })
     else:
@@ -56,6 +58,7 @@ def profile(request, user_id):
     inventory = user.employee.get_inventory()
 
     goals = Goal.objects.all()
+    badges = user.employee.badge_set.all()
 
     engagement_metrics = Answer.objects \
             .values('engagement_metric', 'engagement_metric__name', 'engagement_metric__description',
@@ -67,7 +70,8 @@ def profile(request, user_id):
         'profile': user,
         'inventory': inventory,
         'skill_list': engagement_metrics,
-        'goals': goals
+        'goals': goals,
+        'badges': badges
     })
 
 

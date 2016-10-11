@@ -1,0 +1,16 @@
+{% load tcc %}
+<div class="widget-infobox m-t-10 m-b-20">
+  <div class="">
+    <div class="left">
+      <i class="icon-badge bg-{{ badge.level|rank_class }}"></i>
+    </div>
+    <div class="right">
+      <div class="clearfix">
+        <div>
+          <span class="c-{{ badge.level|rank_class }}">{{badge.goal.description}}</span><br>
+          <span">{{badge.received_at}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

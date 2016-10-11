@@ -16,7 +16,14 @@
       {% endfor %}
     </div>
     <h3><strong>{% trans 'Badges' %}</strong></h3>
-    {% block empty_badges %}{% trans 'You haven\'t earned any badges yet!' %}{% endblock %}
+    <div class="clearfix">
+      {% for badge in badges %}
+        {% include 'tcc/widgets/_badge.html' with badge=badge %}
+      {% empty %}
+        {% block empty_badges %}{% trans 'You haven\'t earned any badges yet!' %}{% endblock %}
+      {% endfor %}
+    </div>
+
 
   </div>
   <div class="col-md-8 b-30">
