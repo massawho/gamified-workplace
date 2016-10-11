@@ -206,12 +206,23 @@ class Badge(models.Model):
         null=False,
         blank=False
     )
+    level = models.PositiveIntegerField(
+        choices=GOAL_LEVELS,
+        null=False,
+        blank=False,
+        editable=False,
+        help_text=_('The level of importance of this goal'),
+    )
 
     def __str__(self):
         return _('%(employee_name)s\'s %(badge_name)s badge') % {
             'employee_name': self.employee,
             'badge_name': self.goal
         }
+
+    def clean(self):
+        if self.level is None:
+            self.level = self.goal.level
 
 
 class Purchase(models.Model):
