@@ -29,6 +29,7 @@ class UserQuestionnaireForm(QuestionnaireForm, forms.ModelForm):
         disabled=True
     )
 
+
 class BadgeForm(forms.ModelForm):
 
     employee = django_models.ModelChoiceField(
@@ -41,13 +42,19 @@ class BadgeForm(forms.ModelForm):
 
 class SatisfactionQuestionnaireForm(QuestionnaireForm, forms.ModelForm):
 
-    targets = django_fields.Field(
+    targets = UserModelChoiceField(
+        queryset=User.objects.all().filter(is_staff=False),
         disabled=True
     )
     questionnaire_type = django_models.ModelChoiceField(
         queryset=QuestionnaireType.objects.all(),
         disabled=True
     )
+
+    def __init__(self, current_user, *args, **kwargs):
+        super(QuestionnaireForm, self).__init__(*args, **kwargs)
+        queryset = self.fields['targets'].queryset.filter(id=current_user.id)
+        self.fields['targets'].queryset = queryset
 
 class TaskQuestionnaireForm(UserQuestionnaireForm):
 

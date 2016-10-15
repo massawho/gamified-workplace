@@ -5,7 +5,10 @@ from apps.utils.forms import widgets
 
 
 class AnswerForm(forms.ModelForm):
-    engagement_metric = models.ModelChoiceField(queryset=EngagementMetric.objects.all(), disabled=True)
+    engagement_metric = models.ModelChoiceField(
+        queryset=EngagementMetric.objects.all(),
+        disabled=True
+    )
     class Meta:
         model = Answer
         fields = ['value', 'engagement_metric']
@@ -15,8 +18,10 @@ class AnswerForm(forms.ModelForm):
 
 
 class QuestionnaireForm(object):
-    questionnaire_type = models.ModelChoiceField(queryset=QuestionnaireType.objects.all(), disabled=True)
-
+    questionnaire_type = models.ModelChoiceField(
+        queryset=QuestionnaireType.objects.all(),
+        disabled=True
+    )
     class Meta:
         model = Questionnaire
         fields = ['targets', 'description', 'questionnaire_type']
@@ -25,3 +30,7 @@ class QuestionnaireForm(object):
         self.cleaned_data['targets'] = [self.cleaned_data['targets']]
         super(QuestionnaireForm, self)._save_m2m()
 
+    def __init__(self, current_user, *args, **kwargs):
+        super(QuestionnaireForm, self).__init__(*args, **kwargs)
+        queryset = self.fields['targets'].queryset.exclude(id=current_user.id)
+        self.fields['targets'].queryset = queryset
