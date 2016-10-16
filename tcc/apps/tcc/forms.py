@@ -11,7 +11,7 @@ from apps.utils.forms import widgets
 from .questionnaire.models import Questionnaire, QuestionnaireType
 from .questionnaire.forms import QuestionnaireFormMixin
 from django.utils.translation import ugettext_lazy as _
-from .models import Employee, Badge
+from .models import Employee, Badge, Team, TeamQuestionnaire
 
 
 class UserModelChoiceField(forms.ModelChoiceField):
@@ -66,7 +66,53 @@ class TaskQuestionnaireForm(UserQuestionnaireForm):
                 'class': 'form-control',
                 'placeholder': _('Task name')
             }
-        ))
+        )
+    )
+
+class QuestionnaireForm(forms.ModelForm):
+    description = django_fields.CharField(
+        required=True,
+        widget = django_widgets.TextInput(
+            attrs = {
+                'class': 'form-control',
+                'placeholder': _('Task name')
+            }
+        )
+    )
+    questionnaire_type = django_models.ModelChoiceField(
+        queryset=QuestionnaireType.objects.all(),
+        disabled=True
+    )
+
+    class Meta:
+        model = Questionnaire
+        fields = ['description', 'questionnaire_type']
+
+
+class TeamQuestionnaireForm(forms.ModelForm):
+    team = django_models.ModelChoiceField(
+        queryset=Team.objects.filter(ended_at=None),
+        required=True
+    )
+
+    def __init__(self, current_user, *args, **kwargs):
+        super(TeamQuestionnaireForm, self).__init__(*args, **kwargs)
+        queryset = self.fields['team'].queryset.exclude(members__id=current_user.id)
+        self.fields['team'].queryset = queryset
+
+    class Meta:
+        model = TeamQuestionnaire
+        fields = ['team']
+
+class TeamQuestionnaireInline(InlineFormSet):
+    model = TeamQuestionnaire
+    form_class = TeamQuestionnaireForm
+    extra = 1
+
+    def get_formset_kwargs(self):
+        kwargs = super(TeamQuestionnaireInline, self).get_formset_kwargs()
+        kwargs['form_kwargs'] = {'empty_permitted': False, 'current_user': self.request.user}
+        return kwargs
 
 
 class EmployeeFormSet(BaseInlineFormSet):

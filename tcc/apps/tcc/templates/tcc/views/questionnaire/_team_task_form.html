@@ -1,0 +1,27 @@
+{% extends "questionnaire/_form.html" %}
+{% load i18n %}
+{% block questionnaire_form %}
+  <div style="width:350px; margin-left: auto; margin-right: auto;">
+    {{ inlines.1.management_form }}
+    {% for form in inlines.1 %}
+      <div class="form-group">
+        <div class="primary m-b-20 text-center">
+          {{ form.team }}
+          {% for error in form.team.errors %}
+            <div class="text-center form-error">{{ error|escape }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="form-group">
+      <h3>{% trans 'Which task will you give your feedback to?' %}</h3>
+      {{ form.description }}
+      {% if form.description.errors %}
+        {% for error in form.description.errors %}
+          <div class="text-center form-error">{{ error|escape }}</div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

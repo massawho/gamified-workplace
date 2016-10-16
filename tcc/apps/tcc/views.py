@@ -8,14 +8,15 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from .models import (Product, Employee, Purchase, Goal,
+from .models import (Product, Employee, Purchase, Team, Goal,
     MANAGER_COLLABORATOR, COLLABORATOR_SATISFACTION, TASK_FEEDBACK)
 from .questionnaire.forms import AnswersInline
 from .questionnaire.models import EngagementMetric, Answer, Questionnaire
 from .questionnaire.signals import update_score
 from .questionnaire.views import GenericQuestionnaireView
 from .forms import (UserQuestionnaireForm, SatisfactionQuestionnaireForm, FirstLoginForm,
-                    QuestionnaireForm, UpdateLoginForm, TaskQuestionnaireForm)
+        TeamQuestionnaireForm, TeamQuestionnaireInline, QuestionnaireForm, UpdateLoginForm,
+        TaskQuestionnaireForm)
 from .signals import update_money
 
 
@@ -162,6 +163,23 @@ class TaskQuestionnaire(QuestionnaireView):
             {'question':_('How would you rate the done working speed of this task?'), 'engagement_metric': 3},
             {'question':_('How would you rate your overall satisfaction of this task over past works?'), 'engagement_metric': 8}
         ]
+
+class TeamTaskQuestionnaire(TaskQuestionnaire):
+
+    template_name = 'tcc/views/questionnaire/team_task_questionnaire.html'
+    form_class = QuestionnaireForm
+    inlines = [AnswersInline, TeamQuestionnaireInline]
+
+    def get_initial(self):
+        return {'questionnaire_type': TASK_FEEDBACK}
+
+    def construct_inlines(self):
+        inline_formsets = super(TeamTaskQuestionnaire, self).construct_inlines()
+        inline_formsets[1].initial = [{'team': self.kwargs['team_id']}]
+        return inline_formsets
+
+    def get_form_kwargs(self):
+        return super(GenericQuestionnaireView, self).get_form_kwargs()
 
 @login_required
 def update_profile(request):
