@@ -281,6 +281,13 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+    @cached_property
+    def points(self):
+        points_calc = models.Sum('questionnaire__answer__value')
+        points = self.teamquestionnaire_set \
+            .exclude(questionnaire__questionnaire_type__in=[COLLABORATOR_SATISFACTION]) \
+            .aggregate(points=points_calc)['points'] or 0
+        return int(points/10)
 
 class TeamQuestionnaire(models.Model):
     questionnaire = models.OneToOneField(Questionnaire,
