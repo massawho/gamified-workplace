@@ -12,11 +12,11 @@
 </div>
 {% endblock %}
 
-{{ answer_formset.management_form }}
-{% for form in answer_formset %}
+{{ inlines.0.management_form }}
+{% for form in inlines.0 %}
   {{ form.errors }}
   <div class="form-group text-center">
-    <h3><strong>{{forloop.counter}}.</strong> {% with hash=questions|get_at_index:forloop.counter0 %} {{ hash.question }} {% endwith %}</h3>
+    <h3><strong>{{forloop.counter}}.</strong> {% with hash=view.questions|get_at_index:forloop.counter0 %} {{ hash.question }} {% endwith %}</h3>
     <div style="width:300px; margin: 0 auto;" class="primary m-b-20">
       {{ form.value }}
     </div>

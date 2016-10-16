@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import models
+from extra_views.advanced import InlineFormSet
 from .models import Answer, EngagementMetric, Questionnaire, QuestionnaireType
 from apps.utils.forms import widgets
 
@@ -16,8 +17,11 @@ class AnswerForm(forms.ModelForm):
             'value': widgets.SlideiOSWidget(max=10)
         }
 
+class AnswersInline(InlineFormSet):
+    model = Answer
+    form_class = AnswerForm
 
-class QuestionnaireForm(object):
+class QuestionnaireFormMixin(object):
     questionnaire_type = models.ModelChoiceField(
         queryset=QuestionnaireType.objects.all(),
         disabled=True
@@ -28,9 +32,9 @@ class QuestionnaireForm(object):
 
     def _save_m2m(self):
         self.cleaned_data['targets'] = [self.cleaned_data['targets']]
-        super(QuestionnaireForm, self)._save_m2m()
+        super(QuestionnaireFormMixin, self)._save_m2m()
 
     def __init__(self, current_user, *args, **kwargs):
-        super(QuestionnaireForm, self).__init__(*args, **kwargs)
+        super(QuestionnaireFormMixin, self).__init__(*args, **kwargs)
         queryset = self.fields['targets'].queryset.exclude(id=current_user.id)
         self.fields['targets'].queryset = queryset

@@ -6,14 +6,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from .models import (Product, Employee, Purchase, Goal,
     MANAGER_COLLABORATOR, COLLABORATOR_SATISFACTION, TASK_FEEDBACK)
+from .questionnaire.forms import AnswersInline
 from .questionnaire.models import EngagementMetric, Answer, Questionnaire
 from .questionnaire.signals import update_score
-from .questionnaire.views import generic_questionnaire_view
-from .forms import (UserQuestionnaireForm, SatisfactionQuestionnaireForm,
-    TaskQuestionnaireForm, FirstLoginForm, UpdateLoginForm)
+from .questionnaire.views import GenericQuestionnaireView
+from .forms import (UserQuestionnaireForm, SatisfactionQuestionnaireForm, FirstLoginForm,
+                    QuestionnaireForm, UpdateLoginForm, TaskQuestionnaireForm)
 from .signals import update_money
 
 
@@ -91,70 +93,75 @@ def purchase_product(request, product_id):
     finally:
         return redirect(reverse('dashboard'))
 
+@method_decorator(login_required, name='dispatch')
+class QuestionnaireView(GenericQuestionnaireView):
 
-@login_required
-@user_passes_test(lambda u: not u.is_staff)
-def satisfaction_questionnaire(request):
-    update_score.connect(update_money)
-    if request.user.employee.answered_satisfaction_questionnaire():
-        messages.add_message(request, messages.ERROR, _("You have already answered this quiz this week!"))
-        return redirect(reverse('dashboard'))
-
-    initial = [
-        {'question':_('In a scale of 1 to 10, how was your week, considering your sports, meals and relationships?'), 'engagement_metric': 9},
-        {'question':_('Considering the amount of work, team mates, noise, how was your week at work?'), 'engagement_metric': 10},
-        {'question':_('In a scale of 1 to 10, what is your satisfaction of working with us?'), 'engagement_metric': 11},
-    ]
-
-    questionnaire_initial = {
-        'targets': request.user.id,
-        'questionnaire_type': COLLABORATOR_SATISFACTION
-    }
-
-    return generic_questionnaire_view(request,
-        initial, 'tcc/views/questionnaire/satisfaction_questionnaire.html', 'dashboard',
-        questionnaire_form=SatisfactionQuestionnaireForm, questionnaire_initial=questionnaire_initial)
-
-@login_required
-@user_passes_test(lambda u: u.is_staff)
-def manager_to_collaborator_questionnaire(request, user_id=None):
-    update_score.connect(update_money)
-    initial = [
-        {'question':_('How would you rate this member\'s level of communication skills?'), 'engagement_metric': 1},
-        {'question':_('How would you rate the conducted working quality of this member?'), 'engagement_metric': 2},
-        {'question':_('How would you rate the done working speed of this member?'), 'engagement_metric': 3},
-        {'question':_('How would you rate the way this member share responsabilities?'), 'engagement_metric': 4},
-        {'question':_('How would you rate the positiveness of his/her presence?'), 'engagement_metric': 5},
-        {'question':_('How would you rate the satisfaction of others about working with this member?'), 'engagement_metric': 6},
-        {'question':_('How would you rate this member\'s team work?'), 'engagement_metric': 7},
-        {'question':_('How would you rate this member\'s improvement as a whole?'), 'engagement_metric': 8}
-    ]
-
-    questionnaire_initial = {'questionnaire_type': MANAGER_COLLABORATOR}
-    if user_id:
-        questionnaire_initial['targets'] = user_id
-
-    return generic_questionnaire_view(request,
-        initial, 'tcc/views/questionnaire/manager_to_collaborator.html', 'dashboard',
-        questionnaire_form=UserQuestionnaireForm, questionnaire_initial=questionnaire_initial)
+    def forms_valid(self, form, inlines):
+        update_score.connect(update_money)
+        return super(QuestionnaireView, self).forms_valid(form, inlines)
 
 
-@login_required
-def task_questionnaire(request, user_id=None):
-    update_score.connect(update_money)
-    initial = [
-        {'question':_('How would you rate the conducted working quality of this task?'), 'engagement_metric': 2},
-        {'question':_('How would you rate the done working speed of this task?'), 'engagement_metric': 3},
-        {'question':_('How would you rate your overall satisfaction of this task over past works?'), 'engagement_metric': 8}
-    ]
+@method_decorator(user_passes_test(lambda u: not u.is_staff), name='dispatch')
+class SatisfactionQuestionnaire(QuestionnaireView):
 
-    questionnaire_initial = {'questionnaire_type': TASK_FEEDBACK}
-    if user_id:
-        questionnaire_initial['targets'] = user_id
+    template_name = 'tcc/views/questionnaire/satisfaction_questionnaire.html'
+    form_class = SatisfactionQuestionnaireForm
 
-    return generic_questionnaire_view(request,
-        initial, 'tcc/views/questionnaire/task_questionnaire.html', 'dashboard',
-        questionnaire_form=TaskQuestionnaireForm, questionnaire_initial=questionnaire_initial)
+    def get(self, request):
+        if request.user.employee.answered_satisfaction_questionnaire():
+            messages.add_message(request, messages.ERROR, _("You have already answered this quiz this week!"))
+            return redirect(reverse('dashboard'))
+
+        return super(SatisfactionQuestionnaire, self).get(request)
+
+    def get_initial(self):
+        return {
+            'targets': self.request.user.id,
+            'questionnaire_type': COLLABORATOR_SATISFACTION
+        }
+
+    def questions(self):
+        return [
+            {'question':_('In a scale of 1 to 10, how was your week, considering your sports, meals and relationships?'), 'engagement_metric': 9},
+            {'question':_('Considering the amount of work, team mates, noise, how was your week at work?'), 'engagement_metric': 10},
+            {'question':_('In a scale of 1 to 10, what is your satisfaction of working with us?'), 'engagement_metric': 11},
+        ]
+
+@method_decorator(user_passes_test(lambda u: u.is_staff), name='dispatch')
+class ManagerToCollaboratorQuestionnaire(QuestionnaireView):
+
+    template_name = 'tcc/views/questionnaire/manager_to_collaborator.html'
+    form_class = UserQuestionnaireForm
+
+    def get_initial(self):
+        return {'targets': self.kwargs['user_id'], 'questionnaire_type': MANAGER_COLLABORATOR}
+
+    def questions(self):
+        return [
+            {'question':_('How would you rate this member\'s level of communication skills?'), 'engagement_metric': 1},
+                    {'question':_('How would you rate the conducted working quality of this member?'), 'engagement_metric': 2},
+                    {'question':_('How would you rate the done working speed of this member?'), 'engagement_metric': 3},
+                    {'question':_('How would you rate the way this member share responsabilities?'), 'engagement_metric': 4},
+                    {'question':_('How would you rate the positiveness of his/her presence?'), 'engagement_metric': 5},
+                    {'question':_('How would you rate the satisfaction of others about working with this member?'), 'engagement_metric': 6},
+                    {'question':_('How would you rate this member\'s team work?'), 'engagement_metric': 7},
+                    {'question':_('How would you rate this member\'s improvement as a whole?'), 'engagement_metric': 8}
+        ]
+
+class TaskQuestionnaire(QuestionnaireView):
+
+    template_name = 'tcc/views/questionnaire/task_questionnaire.html'
+    form_class = TaskQuestionnaireForm
+
+    def get_initial(self):
+        return {'targets': self.kwargs['user_id'], 'questionnaire_type': TASK_FEEDBACK}
+
+    def questions(self):
+        return [
+            {'question':_('How would you rate the conducted working quality of this task?'), 'engagement_metric': 2},
+            {'question':_('How would you rate the done working speed of this task?'), 'engagement_metric': 3},
+            {'question':_('How would you rate your overall satisfaction of this task over past works?'), 'engagement_metric': 8}
+        ]
 
 @login_required
 def update_profile(request):
@@ -163,7 +170,6 @@ def update_profile(request):
     else:
         form_class = UpdateLoginForm
     if request.method == "POST":
-        print(request.FILES)
         form = form_class(user=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()

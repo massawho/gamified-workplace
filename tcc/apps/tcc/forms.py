@@ -6,9 +6,10 @@ from django.forms import (
 from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.forms import SetPasswordForm
 from django.forms.models import BaseInlineFormSet
+from extra_views.advanced import InlineFormSet
 from apps.utils.forms import widgets
 from .questionnaire.models import Questionnaire, QuestionnaireType
-from .questionnaire.forms import QuestionnaireForm
+from .questionnaire.forms import QuestionnaireFormMixin
 from django.utils.translation import ugettext_lazy as _
 from .models import Employee, Badge
 
@@ -19,7 +20,7 @@ class UserModelChoiceField(forms.ModelChoiceField):
 
 User = get_user_model()
 
-class UserQuestionnaireForm(QuestionnaireForm, forms.ModelForm):
+class UserQuestionnaireForm(QuestionnaireFormMixin, forms.ModelForm):
 
     targets = UserModelChoiceField(
         queryset=User.objects.filter(is_staff=False)
@@ -40,7 +41,7 @@ class BadgeForm(forms.ModelForm):
         model = Badge
         fields = ['employee', 'received_at']
 
-class SatisfactionQuestionnaireForm(QuestionnaireForm, forms.ModelForm):
+class SatisfactionQuestionnaireForm(QuestionnaireFormMixin, forms.ModelForm):
 
     targets = UserModelChoiceField(
         queryset=User.objects.all().filter(is_staff=False),
@@ -52,7 +53,7 @@ class SatisfactionQuestionnaireForm(QuestionnaireForm, forms.ModelForm):
     )
 
     def __init__(self, current_user, *args, **kwargs):
-        super(QuestionnaireForm, self).__init__(*args, **kwargs)
+        super(QuestionnaireFormMixin, self).__init__(*args, **kwargs)
         queryset = self.fields['targets'].queryset.filter(id=current_user.id)
         self.fields['targets'].queryset = queryset
 
