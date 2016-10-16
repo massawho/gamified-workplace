@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
-from .questionnaire.models import EngagementMetric
+from .questionnaire.models import EngagementMetric, Questionnaire
 from .managers import ProductManager, EmployeeManager
 from datetime import datetime, timedelta
 
@@ -282,6 +282,13 @@ class Team(models.Model):
         return self.name
 
 
+class TeamQuestionnaire(models.Model):
+    questionnaire = models.OneToOneField(Questionnaire,
+        on_delete=models.CASCADE,
+        primary_key=True
+    )
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=False, blank=False)
+
 class EngagementMetricConfig(models.Model):
     engagement_metric = models.OneToOneField(
         EngagementMetric,
@@ -319,3 +326,11 @@ def update_data_after_earning_badge(sender, instance, created, **kwargs):
 
         Employee.objects.add_money_to_user(employee.user, goal.money)
 
+@receiver(post_save, sender=TeamQuestionnaire)
+def update_targets(sender, instance, created, **kwargs):
+    if created:
+        users = []
+        for member in instance.team.members.all():
+            users.append(member.user)
+        instance.questionnaire.targets = users
+        instance.questionnaire.save()
