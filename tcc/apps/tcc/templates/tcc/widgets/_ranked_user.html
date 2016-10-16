@@ -3,9 +3,9 @@
   <div class="control-btn">
     <a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
     <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
-      <li><a href="{% url 'profile' user.pk %}">Ver detalhes</a></li>
-      <li><a href="{% url 'manager_to_collaborator_questionnaire' user_id=user.id %}">Enviar feedback</a></li>
-      <li><a href="{% url 'task_questionnaire' user_id=user.id %}">Feedback de tarefa</a></li>
+      <li><a href="{% url 'profile' user.pk %}">{% trans 'See profile' %}</a></li>
+      <li><a href="{% url 'manager_to_collaborator_questionnaire' user_id=user.id %}">{% trans 'Progress feedback' %}</a></li>
+      <li><a href="{% url 'task_questionnaire' user_id=user.id %}">{% trans 'Task feedback' %}</a></li>
     </ul>
   </div>
   <div class="panel-content">
