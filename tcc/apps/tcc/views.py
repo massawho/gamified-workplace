@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from .models import (Product, Employee, Purchase, Team, Goal,
     MANAGER_COLLABORATOR, COLLABORATOR_SATISFACTION, TASK_FEEDBACK)
+from django.views.generic import DetailView
 from .questionnaire.forms import AnswersInline
 from .questionnaire.models import EngagementMetric, Answer, Questionnaire
 from .questionnaire.signals import update_score
@@ -26,6 +27,7 @@ def dashboard(request):
         goals = Goal.objects.all()
         badges = request.user.employee.badge_set.all()
         featured_products = Product.objects.filter(is_active=True, is_featured=True)
+        user_teams = request.user.employee.team_set.active()
         inventory = request.user.employee.get_inventory()
         engagement_metrics = Answer.objects \
             .values('engagement_metric', 'engagement_metric__name', 'engagement_metric__description',
@@ -38,6 +40,7 @@ def dashboard(request):
             'profile': request.user.employee,
             'featured_products': featured_products,
             'inventory': inventory,
+            'user_teams': user_teams,
             'goals': goals,
             'badges': badges,
             'skill_list': engagement_metrics
@@ -45,9 +48,11 @@ def dashboard(request):
     else:
         employees = Employee.objects.filter(user__is_staff=False)
 
+        teams = Team.objects.filter(ended_at=None)
 
         return render(request, 'tcc/views/dashboard/manager_dashboard.html', {
             'employees': sorted(employees, key=lambda employee: employee.points, reverse=True),
+            'teams': teams,
         })
 
 
@@ -56,6 +61,7 @@ def dashboard(request):
 def profile(request, pk):
     employee = get_object_or_404(Employee, pk=pk, user__is_staff=False)
 
+    user_teams = employee.team_set.active()
     inventory = employee.get_inventory()
 
     goals = Goal.objects.all()
@@ -70,6 +76,7 @@ def profile(request, pk):
     return render(request, 'tcc/views/dashboard/profile.html', {
         'profile': employee,
         'inventory': inventory,
+        'user_teams': user_teams,
         'skill_list': engagement_metrics,
         'goals': goals,
         'badges': badges
@@ -208,3 +215,7 @@ def shop(request):
         'featured_products': featured_products,
         'products': products,
     });
+
+class TeamDetail(DetailView):
+    model = Team
+    template_name = 'tcc/views/team/details.html'

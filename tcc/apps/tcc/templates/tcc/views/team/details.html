@@ -1,0 +1,23 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n %}
+{% block content_classes %}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel panel-transparent">
+      <div class="panel-content">
+        <div class="row">
+  <div class="col-md-4 m-b-30">
+    {% include 'tcc/views/team/_team_info.html' %}
+  </div>
+  <div class="col-md-8 m-b-30">
+    <h3><strong>{% trans 'Members' %}</strong></h3>
+    <div class="row">
+      <div class="col-xs-12">
+        {% for member in team.members.all %}
+          {% include 'tcc/widgets/_user.html' with employee=member %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div></div></div></div>
+{% endblock %}

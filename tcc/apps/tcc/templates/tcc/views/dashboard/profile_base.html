@@ -30,6 +30,17 @@
     {% block profile_content %}
       <div class="row">
         <div class="col-xs-12">
+          <h3><strong>{% trans 'My teams' %}</strong></h3>
+        </div>
+        {% for team in user_teams %}
+          <div class="col-md-6">
+            {% include 'tcc/widgets/_team.html' with team=team %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
           <h3><strong>{% trans 'My goals' %}</strong></h3>
           <div class="widget-infobox m-t-20">
             {% for goal in goals %}

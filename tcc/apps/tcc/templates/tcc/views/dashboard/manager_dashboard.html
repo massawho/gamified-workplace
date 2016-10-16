@@ -16,4 +16,10 @@
       {% endfor %}
     </div>
 
+    <div class="col-xs-4">
+      {% for team in teams %}
+        {% include 'tcc/widgets/_team.html' with team=team %}
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

@@ -1,0 +1,54 @@
+{% load i18n thumbnail rules %}
+<div class="panel widget-member">
+  <div class="control-btn">
+    <a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+    <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+      <li>
+        <a href="{% url 'team_details' pk=team.pk %}">{% trans 'See details' %}</a>
+      </li>
+      {% test_rule 'team.can_receive_feedback_from' user team as can_give_feedback %}
+      {% if can_give_feedback %}
+        <li>
+          <a href="{% url 'team_task_questionnaire' team_id=team.id %}">{% trans 'Task feedback' %}</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">
+      {% thumbnail team.photo "120x120" crop="center" format="PNG" as im %}
+        <img src="{{ im.url }}" class="pull-left img-responsive" alt="{{team.name}}">
+      {% endthumbnail %}
+    </div>
+    <div class="col-xs-9">
+      <h3 class="m-t-0 member-name"><strong>{{team.name}}</strong></h3>
+      <div class="row">
+        <div class="col-xlg-6 col-lg-12 col-sm-6">
+          <p><i class="fa fa-calendar c-gray-light p-r-10"></i> {{team.created_at}}</p>
+          <p>
+            <i class="octicon octicon-flame c-gray-light p-r-10"></i> {{team.teamquestionnaire_set.count}}
+          </p>
+        </div>
+        <div class="col-xlg-6 col-lg-12 col-sm-6">
+          <p><i class="fa fa-trophy c-gray-light p-r-10"></i> {{team.points}}</p>
+          <p><i class="icon-user c-gray-light p-r-10"></i> {{team.members.count}}</p>
+        </div>
+      </div>
+        <ul class="team-avatar-list">
+          {% for member in team.members.all %}
+            <li>
+              {% thumbnail member.avatar "36x36" crop="center" as im %}
+                <img data-rel="tooltip" data-toggle="tooltip" data-placement="bottom" data-html="true" data-original-title="{% if member.user_id == user.id %}{% trans 'You' %}{% else %}{{member}}{% endif %}" src="{{ im.url }}" alt="{{member.name}}" class="pull-left img-responsive img-circle img-xs">
+              {% endthumbnail %}
+
+            </li>
+          {% endfor %}
+          {% if team.members.count > 3 %}
+            <li class="bd-full bg-orange">
+              {{ team.members.count|add:-3 }}
+            </li>
+          {% endif %}
+        </ul>
+    </div>
+  </div>
+</div>

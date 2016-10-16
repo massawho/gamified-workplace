@@ -1,0 +1,28 @@
+{% load i18n thumbnail rules %}
+<div class="panel widget-member">
+  <div class="control-btn">
+    {% include 'tcc/widgets/_user_options.html' with dropdown_name='dropdownMenu1' employee=employee %}
+  </div>
+  <div class="row">
+    <div class="col-xs-3">
+      {% thumbnail employee.avatar "120x120" crop="center" format="PNG" as im %}
+        <img src="{{ im.url }}" class="pull-left img-responsive" alt="{{employee.name}}">
+      {% endthumbnail %}
+    </div>
+    <div class="col-xs-9">
+      <h3 class="m-t-0 member-name"><strong>{{employee}}</strong></h3>
+      <div class="row">
+        <div class="col-xlg-6 col-lg-12 col-sm-6">
+          <p><i class="fa fa-envelope c-gray-light p-r-10"></i> {{employee.user.email}}</p>
+          <p><i class="icon-present c-gray-light p-r-10"></i> {{employee.date_of_birth}}</p>
+        </div>
+        <div class="col-xlg-6 col-lg-12 col-sm-6">
+          <p><i class="fa fa-calendar c-gray-light p-r-10"></i> {{employee.hiring_date}}</p>
+          <p><i class="fa fa-trophy c-gray-light p-r-10"></i> {{employee.points}}</p>
+        </div>
+      </div>
+      <br>
+      {% include 'tcc/widgets/_user_overall_bar.html' with employee=employee %}
+    </div>
+  </div>
+</div>

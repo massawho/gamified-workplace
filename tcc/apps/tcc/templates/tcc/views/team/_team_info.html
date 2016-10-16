@@ -1,0 +1,26 @@
+{% load i18n thumbnail %}
+<div class="panel panel-transparent widget-member">
+  <div class="row">
+    <div class="col-xs-3">
+      {% thumbnail team.photo "200x200" crop="center" format="PNG" as im %}
+        <img src="{{ im.url }}" class="img-circle img-responsive">
+      {% endthumbnail %}
+    </div>
+    <div class="col-xs-9">
+      <h3 class="m-t-0 member-name"><strong>{{ team.name }}</strong></h3>
+      <p class="member-job">{% if not team.ended_at %}{% trans 'Active' %}{% else %}{% trans '' %}{% trans 'Finished at' %} {{team.ended_at}}{% endif %}</p>
+      <div class="row">
+        <div class="col-xlg-6 col-lg-12 col-sm-6">
+          <p><i class="fa fa-calendar c-gray-light p-r-10"></i> {{team.created_at}}</p>
+          <p>
+            <i class="octicon octicon-flame c-gray-light p-r-10"></i> {{team.teamquestionnaire_set.count}}
+          </p>
+        </div>
+        <div class="col-xlg-6 col-lg-12 col-sm-6 align-right">
+          <p><i class="fa fa-trophy c-gray-light p-r-10"></i> {{team.points}}</p>
+          <p><i class="icon-user c-gray-light p-r-10"></i> {{team.members.count}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
