@@ -175,7 +175,6 @@ class TeamTaskQuestionnaire(TaskQuestionnaire):
 
     def construct_inlines(self):
         inline_formsets = super(TeamTaskQuestionnaire, self).construct_inlines()
-        inline_formsets[1].initial = [{'team': self.kwargs['team_id']}]
         return inline_formsets
 
     def get_form_kwargs(self):

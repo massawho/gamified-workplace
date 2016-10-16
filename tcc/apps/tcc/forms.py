@@ -99,6 +99,8 @@ class TeamQuestionnaireForm(forms.ModelForm):
         super(TeamQuestionnaireForm, self).__init__(*args, **kwargs)
         queryset = self.fields['team'].queryset.exclude(members__id=current_user.id)
         self.fields['team'].queryset = queryset
+        if kwargs['initial']['team']:
+            self.fields['team'].disabled = True
 
     class Meta:
         model = TeamQuestionnaire
@@ -111,7 +113,11 @@ class TeamQuestionnaireInline(InlineFormSet):
 
     def get_formset_kwargs(self):
         kwargs = super(TeamQuestionnaireInline, self).get_formset_kwargs()
-        kwargs['form_kwargs'] = {'empty_permitted': False, 'current_user': self.request.user}
+        kwargs['form_kwargs'] = {
+            'empty_permitted': False,
+            'current_user': self.request.user,
+            'initial': {'team': self.kwargs['team_id']}
+        }
         return kwargs
 
 
