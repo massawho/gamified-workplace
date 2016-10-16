@@ -9,6 +9,10 @@ class EmployeeManager(models.Manager):
     def add_money_to_users(self, users, money):
         return self.filter(user_id__in=users).update(money=models.F('money')+money)
 
+class TeamManager(models.Manager):
+
+    def active(self):
+        return self.filter(ended_at__isnull=True)
 
 class ProductManager(models.Manager):
 

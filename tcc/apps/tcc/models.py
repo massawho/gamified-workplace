@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric, Questionnaire
-from .managers import ProductManager, EmployeeManager
+from .managers import ProductManager, EmployeeManager, TeamManager
 from datetime import datetime, timedelta
 
 
@@ -260,6 +260,7 @@ class Purchase(models.Model):
 
 
 class Team(models.Model):
+    objects = TeamManager()
     name = models.CharField(
         max_length=25
     )
