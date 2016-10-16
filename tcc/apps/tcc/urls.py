@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^team-task-feedback/(?:(?P<team_id>[0-9]+)/)?$', views.TeamTaskQuestionnaire.as_view(), name='team_task_questionnaire'),
     url(r'^satisfaction/$', views.SatisfactionQuestionnaire.as_view(), name='satisfaction_questionnaire'),
     url(r'^profile/update/$', views.update_profile, name='update_profile'),
-    url(r'^profile/(?P<user_id>[0-9]+)/$', views.profile, name='profile'),
+    url(r'^profile/(?P<pk>[0-9]+)/$', views.profile, name='profile'),
     url(r'^shop/$', views.shop, name='shop'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

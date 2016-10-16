@@ -3,7 +3,7 @@
 {% block content_classes %} page-app page-profil{% endblock %}
 {% block content %}
   <div class="col-md-4 m-b-30">
-    {% include 'tcc/widgets/_my_info.html' with user=profile %}
+    {% include 'tcc/widgets/_my_info.html' with employee=profile %}
     {% for skill in skill_list %}
       {% include 'tcc/widgets/_skill_bar.html' with skill=skill.engagement_metric__name number=skill.value icon=skill.engagement_metric__engagementmetricconfig__icon_class description=skill.engagement_metric__description %}
     {% endfor %}

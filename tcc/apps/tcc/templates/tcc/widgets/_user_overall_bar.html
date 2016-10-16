@@ -1,0 +1,6 @@
+{% load i18n %}
+{% widthratio employee.overall_skill_bar 10 100 as width %}
+<div class="progress" data-rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="{% trans 'Overall' %}: {{ employee.overall_skill_bar|floatformat:2 }}">
+  <div class="progress-bar progress-bar-{% if employee.overall_skill_bar < 4 %}danger{% elif employee.overall_skill_bar < 8 %}warning{% else %}success{% endif %}" role="progressbar" aria-valuenow="{{width}}" aria-valuemin="0" aria-valuemax="100" style="width: {{width}}%">
+  </div>
+</div>

@@ -1,35 +1,27 @@
 {% load i18n thumbnail %}
 <div class="panel widget-member">
   <div class="control-btn">
-    <a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-    <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
-      <li><a href="{% url 'profile' user.pk %}">{% trans 'See profile' %}</a></li>
-      <li><a href="{% url 'manager_to_collaborator_questionnaire' user_id=user.id %}">{% trans 'Progress feedback' %}</a></li>
-      <li><a href="{% url 'task_questionnaire' user_id=user.id %}">{% trans 'Task feedback' %}</a></li>
-    </ul>
+    {% include 'tcc/widgets/_user_options.html' with dropdown_name='dropdownMenu1' employee=employee %}
   </div>
   <div class="panel-content">
     <div class="pull-left p-r-10" style="max-width: 70px;">
-      <a href="{% url 'profile' user.pk %}">
-        {% thumbnail user.employee.avatar "60x60" crop="center" as im %}
-          <img src="{{im.url}}" class="img-responsive" alt="{{user.employee}}">
+      <a href="{% url 'profile' employee.pk %}">
+        {% thumbnail employee.avatar "60x60" crop="center" as im %}
+          <img src="{{im.url}}" class="img-responsive" alt="{{employee}}">
         {% endthumbnail %}
       </a>
     </div>
     <div>
+      <small class="pull-right text-danger"><i class="fa fa-exclamation-triangle" data-rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="Há X dias sem receber feedback"></i></small>
       <h4 class="c-dark">
         {% if ranking <= 3 %}
           <i class="fa fa-trophy {% if ranking == 1 %}gold{% elif ranking == 2 %}silver{% else %}bronze{% endif %}"></i>
         {% else %}
           {{ ranking }}º
         {% endif %}
-        <strong>{{ user.employee }}</strong> {{ user.employee.occupation }}
+        <strong>{{ employee }}</strong> {{ employee.occupation }}
       </h4>
-      {% widthratio user.employee.overall_skill_bar 10 100 as width %}
-      <div class="progress" data-rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="{% trans 'Overall' %}: {{ user.employee.overall_skill_bar|floatformat:2 }}">
-        <div class="progress-bar progress-bar-{% if user.employee.overall_skill_bar < 4 %}danger{% elif user.employee.overall_skill_bar < 8 %}warning{% else %}success{% endif %}" role="progressbar" aria-valuenow="{{width}}" aria-valuemin="0" aria-valuemax="100" style="width: {{width}}%">
-        </div>
-      </div>
+      {% include 'tcc/widgets/_user_overall_bar.html' with employee=employee %}
     </div>
   </div>
 </div>

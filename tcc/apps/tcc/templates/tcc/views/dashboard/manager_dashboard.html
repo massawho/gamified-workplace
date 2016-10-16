@@ -11,8 +11,8 @@
 
   <div class="row">
     <div class="col-xs-4">
-      {% for user in users %}
-        {% include 'tcc/widgets/_ranked_user.html' with user=user ranking=forloop.counter %}
+      {% for employee in employees %}
+        {% include 'tcc/widgets/_ranked_user.html' with employee=employee ranking=forloop.counter %}
       {% endfor %}
     </div>
 

@@ -35,7 +35,7 @@ def dashboard(request):
             .annotate(value=models.Avg('value'))
 
         return render(request, 'tcc/views/dashboard/user_dashboard.html', {
-            'profile': request.user,
+            'profile': request.user.employee,
             'featured_products': featured_products,
             'inventory': inventory,
             'goals': goals,
@@ -43,34 +43,32 @@ def dashboard(request):
             'skill_list': engagement_metrics
         })
     else:
-        User = get_user_model()
-        users = User.objects.filter(is_staff=False)
+        employees = Employee.objects.filter(user__is_staff=False)
 
 
         return render(request, 'tcc/views/dashboard/manager_dashboard.html', {
-            'users': sorted(users, key=lambda user: user.employee.points, reverse=True),
+            'employees': sorted(employees, key=lambda employee: employee.points, reverse=True),
         })
 
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
-def profile(request, user_id):
-    User = get_user_model()
-    user = get_object_or_404(User, pk=user_id, is_staff=False)
+def profile(request, pk):
+    employee = get_object_or_404(Employee, pk=pk, user__is_staff=False)
 
-    inventory = user.employee.get_inventory()
+    inventory = employee.get_inventory()
 
     goals = Goal.objects.all()
-    badges = user.employee.badge_set.all()
+    badges = employee.badge_set.all()
 
     engagement_metrics = Answer.objects \
             .values('engagement_metric', 'engagement_metric__name', 'engagement_metric__description',
                 'engagement_metric__engagementmetricconfig__icon_class' ) \
-            .filter(questionnaire__targets__id=user.id) \
+            .filter(questionnaire__targets__id=employee.user.id) \
             .annotate(value=models.Avg('value'))
 
     return render(request, 'tcc/views/dashboard/profile.html', {
-        'profile': user,
+        'profile': employee,
         'inventory': inventory,
         'skill_list': engagement_metrics,
         'goals': goals,
