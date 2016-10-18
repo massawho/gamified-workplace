@@ -8,6 +8,7 @@
         <h1 class="m-b-30"><strong>{% trans 'Questionnaire' %}</strong> {% block questionnaire_name %}{% endblock %}</h1>
         <form method="POST" novalidate>
           {% block form %}{% include 'questionnaire/_form.html' %}{% endblock %}
+          <input type="submit" class="btn btn-success" value="{% trans 'Send questionnaire' %}">
         </form>
       </div>
     </div>
