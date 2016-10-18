@@ -1,14 +1,14 @@
 {% load i18n rules %}
 
-{% test_rule 'user.can_make_task_feedback' user employee as can_make_task_feedback %}
+{% test_rule 'can_make_task_feedback' user employee as can_make_task_feedback %}
 {% if can_make_task_feedback %}
   <a id="{{dropdown_name}}" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
   <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="{{dropdown_name}}">
-    {% test_rule 'user.can_see_profile' user as can_see_profile %}
+    {% test_rule 'can_see_profile' user as can_see_profile %}
     {% if can_see_profile %}
       <li><a href="{% url 'profile' employee.pk %}">{% trans 'See profile' %}</a></li>
     {% endif %}
-    {% test_rule 'user.can_make_progress_feedback' user as can_make_progress_feedback %}
+    {% test_rule 'can_make_progress_feedback' user as can_make_progress_feedback %}
     {% if can_make_progress_feedback %}
       <li><a href="{% url 'manager_to_collaborator_questionnaire' user_id=employee.user.id %}">{% trans 'Progress feedback' %}</a></li>
     {% endif %}

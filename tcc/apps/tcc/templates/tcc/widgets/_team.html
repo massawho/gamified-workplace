@@ -6,7 +6,7 @@
       <li>
         <a href="{% url 'team_details' pk=team.pk %}">{% trans 'See details' %}</a>
       </li>
-      {% test_rule 'team.can_receive_feedback_from' user team as can_give_feedback %}
+      {% test_rule 'can_give_team_feedback' user team as can_give_feedback %}
       {% if can_give_feedback %}
         <li>
           <a href="{% url 'team_task_questionnaire' team_id=team.id %}">{% trans 'Task feedback' %}</a>
