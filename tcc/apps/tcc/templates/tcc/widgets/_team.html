@@ -12,6 +12,13 @@
           <a href="{% url 'team_task_questionnaire' team_id=team.id %}">{% trans 'Task feedback' %}</a>
         </li>
       {% endif %}
+      {% test_rule 'can_give_team_member_feedback' user team as can_give_peer_feedback %}
+      {% if can_give_peer_feedback %}
+        <li>
+          <a href="{% url 'team_members_questionnaire' team_id=team.id %}">{% trans 'Peer feedback' %}</a>
+        </li>
+      {% endif %}
+
     </ul>
   </div>
   <div class="row">

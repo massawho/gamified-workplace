@@ -8,7 +8,7 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.forms.models import BaseInlineFormSet
 from extra_views.advanced import InlineFormSet
 from apps.utils.forms import widgets
-from .questionnaire.models import Questionnaire, QuestionnaireType
+from .questionnaire.models import Questionnaire, QuestionnaireType, EngagementMetric, Answer
 from .questionnaire.forms import QuestionnaireFormMixin
 from django.utils.translation import ugettext_lazy as _
 from .models import Employee, Badge, Team, TeamQuestionnaire
@@ -282,3 +282,67 @@ class FirstLoginForm(UpdateLoginForm):
             user.save()
             employee.save()
         return user, employee
+
+class PeerToPeerQuestionnaireForm(forms.Form):
+
+    team = django_models.ModelChoiceField(
+        queryset=Team.objects.all(),
+        disabled=True,
+        required=True
+    )
+    questionnaire_type = django_models.ModelChoiceField(
+        queryset=QuestionnaireType.objects.all(),
+        disabled=True
+    )
+    target = django_fields.Field(
+        required=True,
+        widget=django_widgets.HiddenInput(
+            attrs={'readonly': True}
+        )
+    )
+
+    def __init__(self, questionnaire_type, team, engagement_metrics, *args, **kwargs):
+        super(PeerToPeerQuestionnaireForm, self).__init__(*args, **kwargs)
+        for idx, engagement_metric in enumerate(engagement_metrics):
+            metric_index = self.get_metric_index(idx)
+            value_index = self.get_value_index(idx)
+            self.fields[metric_index] = django_models.ModelChoiceField(
+                queryset=EngagementMetric.objects.all(),
+                disabled=True,
+                initial=engagement_metric
+            )
+            self.fields[value_index] = django_fields.Field(
+                widget=widgets.SlideiOSWidget(max=10)
+            )
+            self.fields['team'].initial = team
+            self.fields['questionnaire_type'].initial = questionnaire_type
+            self.engagement_metrics = len(engagement_metrics)
+
+    def get_metric_index(self, idx):
+        return "answer_metric_%d" % idx
+
+    def get_value_index(self, idx):
+        return "answer_value_%d" % idx
+
+    def save(self):
+        questionnaire = Questionnaire()
+        questionnaire.questionnaire_type = self.cleaned_data['questionnaire_type']
+        questionnaire.save()
+        questionnaire.targets = [self.cleaned_data['target']]
+        questionnaire.save()
+
+        team = self.cleaned_data['team']
+        team_questionnaire = TeamQuestionnaire(questionnaire=questionnaire, team=team)
+        team_questionnaire.save()
+
+        for idx in range(0,self.engagement_metrics):
+            value = self.cleaned_data[self.get_value_index(idx)]
+            engagement_metric = self.cleaned_data[self.get_metric_index(idx)]
+            answer = Answer(
+                questionnaire=questionnaire,
+                engagement_metric=engagement_metric,
+                value=value
+            )
+            answer.save()
+
+        return questionnaire

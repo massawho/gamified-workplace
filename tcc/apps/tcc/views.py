@@ -11,13 +11,15 @@ from django.utils.translation import ugettext_lazy as _
 from .models import (Product, Employee, Purchase, Team, Goal,
     MANAGER_COLLABORATOR, COLLABORATOR_SATISFACTION, TASK_FEEDBACK)
 from django.views.generic import DetailView
+from extra_views import FormSetView
+from rules.contrib.views import PermissionRequiredMixin
 from .questionnaire.forms import AnswersInline
-from .questionnaire.models import EngagementMetric, Answer, Questionnaire
-from .questionnaire.signals import update_score
+from .questionnaire.models import EngagementMetric, Answer, Questionnaire, update_score
+from .questionnaire.signals import update_score as update_score_signal
 from .questionnaire.views import GenericQuestionnaireView
 from .forms import (UserQuestionnaireForm, SatisfactionQuestionnaireForm, FirstLoginForm,
         TeamQuestionnaireForm, TeamQuestionnaireInline, QuestionnaireForm, UpdateLoginForm,
-        TaskQuestionnaireForm)
+        TaskQuestionnaireForm, PeerToPeerQuestionnaireForm)
 from .signals import update_money
 
 
@@ -103,7 +105,7 @@ def purchase_product(request, product_id):
 class QuestionnaireView(GenericQuestionnaireView):
 
     def forms_valid(self, form, inlines):
-        update_score.connect(update_money)
+        update_score_signal.connect(update_money)
         return super(QuestionnaireView, self).forms_valid(form, inlines)
 
 
@@ -168,6 +170,65 @@ class TaskQuestionnaire(QuestionnaireView):
             {'question':_('How would you rate the done working speed of this task?'), 'engagement_metric': 3},
             {'question':_('How would you rate your overall satisfaction of this task over past works?'), 'engagement_metric': 8}
         ]
+
+class TeamMembersQuestionnaire(PermissionRequiredMixin, FormSetView):
+    template_name = 'tcc/views/questionnaire/team_member_questionnaire.html'
+    form_class = PeerToPeerQuestionnaireForm
+    fields = ['date_of_birth', 'hiring_date']
+    extra = 0
+    permission_required = 'tcc.receive_peer_feedback_team'
+
+    def get_object(self):
+        return Team.objects.get(pk=self.kwargs['team_id'])
+
+    def get_extra_form_kwargs(self):
+        kwargs = super(TeamMembersQuestionnaire, self).get_extra_form_kwargs()
+        kwargs['engagement_metrics'] = self.engagement_metrics()
+        kwargs['team'] = self.kwargs['team_id']
+        kwargs['questionnaire_type'] = COLLABORATOR_SATISFACTION
+        return kwargs
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.has_permission():
+            return self.handle_no_permission()
+        return super(TeamMembersQuestionnaire, self).dispatch(request, *args, **kwargs)
+
+    def engagement_metrics(self):
+        return [1, 2, 3, 4, 5, 6, 7, 8]
+
+    def members(self):
+        return Employee.objects \
+            .filter(team=self.kwargs['team_id']) \
+            .exclude(id=self.request.user.employee.pk)
+
+    def get_initial(self):
+        if self.request.method == 'POST':
+            return []
+        else:
+            initial = []
+            for member in self.members():
+                initial.append({'target': member.id})
+            return initial
+
+    def questions(self):
+        return [
+            _('How would you rate this member\'s level of communication skills?'),
+            _('How would you rate the conducted working quality of this member?'),
+            _('How would you rate the done working speed of this member?'),
+            _('How would you rate the way this member share responsabilities?'),
+            _('How would you rate the positiveness of his/her presence?'),
+            _('How would you rate the satisfaction of others about working with this member?'),
+            _('How would you rate this member\'s team work?'),
+            _('How would you rate this member\'s improvement as a whole?')
+        ]
+
+    def formset_valid(self, formset):
+        messages.add_message(self.request, messages.SUCCESS, _("Thank you for your feedback!"))
+        for form in formset:
+            questionnaire = form.save()
+            update_score(self.request, questionnaire)
+            update_money(None, questionnaire, self.request)
+        return super(TeamMembersQuestionnaire, self).formset_valid(formset)
 
 class TeamTaskQuestionnaire(TaskQuestionnaire):
 

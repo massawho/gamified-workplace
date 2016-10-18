@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^manager-to-collaborator/(?:(?P<user_id>[0-9]+)/)?$', views.ManagerToCollaboratorQuestionnaire.as_view(), name='manager_to_collaborator_questionnaire'),
     url(r'^task-feedback/(?:(?P<user_id>[0-9]+)/)?$', views.TaskQuestionnaire.as_view(), name='task_questionnaire'),
     url(r'^team-task-feedback/(?:(?P<team_id>[0-9]+)/)?$', views.TeamTaskQuestionnaire.as_view(), name='team_task_questionnaire'),
+    url(r'^team-members-feedback/(?P<team_id>[0-9]+)/?$', views.TeamMembersQuestionnaire.as_view(), name='team_members_questionnaire'),
     url(r'^satisfaction/$', views.SatisfactionQuestionnaire.as_view(), name='satisfaction_questionnaire'),
     url(r'^profile/update/$', views.update_profile, name='update_profile'),
     url(r'^profile/(?P<pk>[0-9]+)/$', views.profile, name='profile'),

@@ -12,3 +12,7 @@ def rank_class(value):
         return 'gold'
     else:
         return 'blue'
+
+@register.filter
+def get_answer_value_field(form, position):
+    return form["answer_value_%d" % position]
