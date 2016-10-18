@@ -99,8 +99,11 @@ class TeamQuestionnaireForm(forms.ModelForm):
         super(TeamQuestionnaireForm, self).__init__(*args, **kwargs)
         queryset = self.fields['team'].queryset.exclude(members__id=current_user.id)
         self.fields['team'].queryset = queryset
-        if kwargs['initial']['team']:
-            self.fields['team'].disabled = True
+        try:
+            if kwargs['initial']['team']:
+                self.fields['team'].disabled = True
+        except KeyError:
+            pass
 
     class Meta:
         model = TeamQuestionnaire

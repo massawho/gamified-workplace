@@ -38,5 +38,8 @@ class QuestionnaireFormMixin(object):
         super(QuestionnaireFormMixin, self).__init__(*args, **kwargs)
         queryset = self.fields['targets'].queryset.exclude(id=current_user.id)
         self.fields['targets'].queryset = queryset
-        if kwargs['initial']['targets']:
-            self.fields['targets'].disabled = True
+        try:
+            if kwargs['initial']['targets']:
+                self.fields['targets'].disabled = True
+        except KeyError:
+            pass
