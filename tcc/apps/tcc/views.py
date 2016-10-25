@@ -188,11 +188,6 @@ class TeamMembersQuestionnaire(PermissionRequiredMixin, FormSetView):
         kwargs['questionnaire_type'] = COLLABORATOR_SATISFACTION
         return kwargs
 
-    def dispatch(self, request, *args, **kwargs):
-        if not self.has_permission():
-            return self.handle_no_permission()
-        return super(TeamMembersQuestionnaire, self).dispatch(request, *args, **kwargs)
-
     def engagement_metrics(self):
         return [1, 2, 3, 4, 5, 6, 7, 8]
 
