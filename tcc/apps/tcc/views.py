@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from .models import (Product, Employee, Purchase, Team, Goal,
+from .models import (Product, Employee, Purchase, Team, Goal, TeamQuestionnaireControl,
     MANAGER_COLLABORATOR, COLLABORATOR_SATISFACTION, TASK_FEEDBACK)
 from django.views.generic import DetailView
 from extra_views import FormSetView
@@ -228,6 +228,9 @@ class TeamMembersQuestionnaire(PermissionRequiredMixin, FormSetView):
             questionnaire = form.save()
             update_score(self.request, questionnaire)
             update_money(None, questionnaire, self.request)
+        control = TeamQuestionnaireControl(
+            employee=self.request.user.employee, team=self.get_object())
+        control.save()
         return super(TeamMembersQuestionnaire, self).formset_valid(formset)
 
 class TeamTaskQuestionnaire(TaskQuestionnaire):
