@@ -297,6 +297,11 @@ class TeamQuestionnaire(models.Model):
     )
     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=False, blank=False)
 
+class TeamQuestionnaireControl(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    created_at = models.DateField(auto_now=True)
+
 class EngagementMetricConfig(models.Model):
     engagement_metric = models.OneToOneField(
         EngagementMetric,
