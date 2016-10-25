@@ -1,6 +1,6 @@
 {% extends "tcc/views/questionnaire/base.html" %}
 {% load i18n tcc %}
-{% block questionnaire_name %}{% trans 'What are your thoughts about a task?' %}{% endblock %}
+{% block questionnaire_name %}{% trans 'How\'s been working with this team so far?' %}{% endblock %}
 {% block form %}
   {% csrf_token %}
   {{formset.management_form}}
