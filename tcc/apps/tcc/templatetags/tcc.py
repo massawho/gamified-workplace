@@ -16,3 +16,7 @@ def rank_class(value):
 @register.filter
 def get_answer_value_field(form, position):
     return form["answer_value_%d" % position]
+
+@register.filter
+def is_missing_questionnaire(team, user):
+    return team.missing_questionnaire(user.employee)

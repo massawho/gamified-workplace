@@ -1,5 +1,5 @@
 {% extends "tcc/views/dashboard/profile_base.html" %}
-{% load i18n %}
+{% load i18n rules %}
 {% block profile_content %}
   {% if not user.employee.answered_satisfaction_questionnaire %}
       <div class="alert alert-danger">
@@ -9,6 +9,28 @@
         </p>
       </div>
     {% endif %}
+    {% for team in user.employee.missing_team_questionnaire %}
+      {% test_rule 'can_give_team_member_feedback' user team as can_give_peer_feedback %}
+      {% if can_give_peer_feedback %}
+        <div class="alert alert-danger">
+          <p>
+            <img class="img-md m-r-10" src="https://cdn0.iconfinder.com/data/icons/smile-emoticons/78/smyle_emoticons-01-512.png">
+            <strong>{% trans 'We want to hear you!' %}</strong> {% blocktrans %}We haven't received your your thoughts for {{team}} this week yet.{% endblocktrans %}<a href="{% url 'team_members_questionnaire' team.id %}">{% trans 'Click here' %}</a> {% trans 'and answer it right now!' %}
+          </p>
+        </div>
+      {% endif %}
+    {% endfor %}
+    {% for team in user.employee.missing_team_final_questionnaire %}
+      {% test_rule 'can_give_team_member_feedback' user team as can_give_peer_feedback %}
+      {% if can_give_peer_feedback %}
+        <div class="alert alert-danger">
+          <p>
+            <img class="img-md m-r-10" src="https://cdn0.iconfinder.com/data/icons/smile-emoticons/78/smyle_emoticons-01-512.png">
+            <strong>{% trans 'We want to hear you!' %}</strong> {% blocktrans %}We haven't received your your final thoughts for {{team}} this week yet.{% endblocktrans %}<a href="{% url 'team_members_questionnaire' team.id %}">{% trans 'Click here' %}</a> {% trans 'and answer it right now!' %}
+          </p>
+        </div>
+      {% endif %}
+    {% endfor %}
 
     <div class="row">
       <div class="col-xs-12">
