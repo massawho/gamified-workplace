@@ -188,6 +188,15 @@ class Employee(models.Model):
             .filter(questionnaire_type=COLLABORATOR_SATISFACTION, created_at__gte=last_week) \
             .exists()
 
+    def missing_team_questionnaire(self):
+        last_week = datetime.today() + timedelta(days=-7)
+        return self.team_set.filter(models.Q(
+            teamquestionnairecontrol__created_at__lt=last_week
+        ) | models.Q(teamquestionnairecontrol=None), ended_at=None)
+
+    def missing_team_final_questionnaire(self):
+        return self.team_set.filter(teamquestionnairecontrol=None).exclude(ended_at=None)
+
     @property
     def feedbacks(self):
         return self.user.questionnaire_set \
@@ -289,6 +298,12 @@ class Team(models.Model):
             .exclude(questionnaire__questionnaire_type__in=[COLLABORATOR_SATISFACTION]) \
             .aggregate(points=points_calc)['points'] or 0
         return int(points/10)
+
+    def missing_questionnaire(self, employee):
+        if self.is_active():
+            return employee.missing_team_questionnaire().filter(id=self.pk).exists()
+        else:
+            return employee.missing_team_final_questionnaire().filter(id=self.pk).exists()
 
 class TeamQuestionnaire(models.Model):
     questionnaire = models.OneToOneField(Questionnaire,
