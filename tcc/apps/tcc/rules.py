@@ -16,9 +16,13 @@ def many_members(user, team):
 def team_member(user, team):
     return user.employee.team_set.filter(id=team.pk).exists()
 
+@rules.predicate
+def missing_questionnaire(user, team):
+    return team.missing_questionnaire(user.employee)
+
 rules.add_rule('can_see_profile', is_manager)
 rules.add_rule('can_make_progress_feedback', is_manager)
 rules.add_rule('can_make_task_feedback', not_self)
 rules.add_rule('can_give_team_feedback', is_manager | ~team_member)
-rules.add_rule('can_give_team_member_feedback', team_member & many_members)
-rules.add_perm('tcc.receive_peer_feedback_team', team_member & many_members)
+rules.add_rule('can_give_team_member_feedback', team_member & many_members & missing_questionnaire)
+rules.add_perm('tcc.receive_peer_feedback_team', team_member & many_members & missing_questionnaire)
