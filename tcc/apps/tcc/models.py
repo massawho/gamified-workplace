@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric, Questionnaire
-from .managers import ProductManager, EmployeeManager, TeamManager
+from .managers import ProductManager, EmployeeManager, TeamManager, GoalManager
 from datetime import datetime, timedelta
 
 
@@ -90,6 +90,8 @@ GOAL_LEVELS = (
 
 
 class Goal(models.Model):
+    objects = GoalManager()
+
     description = models.CharField(
         max_length=40,
         help_text=_('A short name to describe the goal')

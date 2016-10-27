@@ -24,3 +24,8 @@ class ProductManager(models.Manager):
 
     def not_featured(self):
         return self.active().filter(is_featured=False)
+
+class GoalManager(models.Manager):
+
+    def not_taken(self, employee):
+        return self.filter(models.Q(badge=None) | ~models.Q(badge__employee=employee))

@@ -26,7 +26,7 @@ from .signals import update_money
 @login_required
 def dashboard(request):
     if not request.user.is_staff:
-        goals = Goal.objects.all()
+        goals = Goal.objects.not_taken(request.user.employee)
         badges = request.user.employee.badge_set.all()
         featured_products = Product.objects.filter(is_active=True, is_featured=True)
         user_teams = request.user.employee.team_set.active()
@@ -66,7 +66,7 @@ def profile(request, pk):
     user_teams = employee.team_set.active()
     inventory = employee.get_inventory()
 
-    goals = Goal.objects.all()
+    goals = Goal.objects.not_taken(employee)
     badges = employee.badge_set.all()
 
     engagement_metrics = Answer.objects \
