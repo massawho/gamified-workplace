@@ -14,21 +14,40 @@
       </div>
     {% endif %}
   {% endif %}
-    <div class="panel panel-transparent">
-      <div class="panel-content">
-        <div class="row">
-  <div class="col-md-4 m-b-30">
-    {% include 'tcc/views/team/_team_info.html' %}
-  </div>
-  <div class="col-md-8 m-b-30">
-    <h3><strong>{% trans 'Members' %}</strong></h3>
-    <div class="row">
-      <div class="col-xs-12">
-        {% for member in team.members.all %}
-          {% include 'tcc/widgets/_user.html' with employee=member %}
-        {% endfor %}
+  <div class="panel panel-transparent">
+    <div class="panel-content">
+      <div class="row">
+        <div class="col-md-4 m-b-30">
+          <img src="{{ team.photo.url }}" class="img-circle img-responsive">
+          <h3 class="m-t-0 member-name">
+            <strong>{{ team.name }}</strong>
+            {% if not team.ended_at %}{% trans 'Active' %}{% else %}{% trans '' %}{% trans 'Finished at' %} {{team.ended_at}}{% endif %}
+          </h3>
+          <div class="row">
+            <div class="col-xlg-6 col-lg-12 col-sm-6">
+              <p><i class="fa fa-calendar c-gray-light p-r-10"></i> {{team.created_at}}</p>
+              <p>
+                <i class="octicon octicon-flame c-gray-light p-r-10"></i> {{team.teamquestionnaire_set.count}}
+              </p>
+            </div>
+            <div class="col-xlg-6 col-lg-12 col-sm-6 align-right">
+              <p><i class="fa fa-trophy c-gray-light p-r-10"></i> {{team.points}}</p>
+              <p><i class="icon-user c-gray-light p-r-10"></i> {{team.members.count}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 m-b-30">
+          <h3><strong>{% trans 'Members' %}</strong></h3>
+          <div class="row">
+            <div class="col-xs-12">
+              {% for member in team.members.all %}
+                {% include 'tcc/widgets/_user.html' with employee=member %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div></div></div></div>
+</div>
 {% endblock %}
