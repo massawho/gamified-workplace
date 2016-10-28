@@ -1,5 +1,15 @@
 from django.contrib import admin
-from .models import EngagementMetric
+from .models import EngagementMetric, QuestionnaireTemplate, QuestionTemplate
+
+
+class QuestionTemplateAdmin(admin.ModelAdmin):
+    model = QuestionTemplate
+    list_display = ('question', 'engagement_metric')
+
+class QuestionnaireTemplateAdmin(admin.ModelAdmin):
+    model = QuestionnaireTemplate
+    list_display = ('description', 'questionnaire_type', 'id')
+    filter_horizontal = ('questions',)
 
 class EngagementMetricAdmin(admin.ModelAdmin):
     model = EngagementMetric
@@ -12,3 +22,5 @@ class EngagementMetricAdmin(admin.ModelAdmin):
         return False
 
 admin.site.register(EngagementMetric, EngagementMetricAdmin)
+admin.site.register(QuestionTemplate, QuestionTemplateAdmin)
+admin.site.register(QuestionnaireTemplate, QuestionnaireTemplateAdmin)

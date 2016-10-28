@@ -29,6 +29,26 @@ class QuestionnaireType(models.Model):
         return self.description
 
 
+class QuestionTemplate(models.Model):
+    question = models.CharField(
+        _('Question'),
+        max_length=120
+    )
+    engagement_metric = models.ForeignKey(EngagementMetric, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.question
+
+
+class QuestionnaireTemplate(models.Model):
+    description = models.CharField(
+        _('Description'),
+        max_length=80
+    )
+    questionnaire_type = models.ForeignKey(QuestionnaireType, on_delete=models.PROTECT)
+    questions = models.ManyToManyField(QuestionTemplate)
+
+
 class Questionnaire(models.Model):
     description = models.CharField(
         null=True,
