@@ -5,10 +5,32 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 from extra_views.generic import GenericInlineFormSet
-from .models import Answer, Questionnaire, update_score
+from .models import Answer, Questionnaire, update_score, QuestionnaireTemplate
 from .forms import AnswerForm, QuestionnaireFormMixin, AnswersInline
 
-class GenericQuestionnaireView(CreateWithInlinesView):
+
+class QuestionnaireTemplateMixin(object):
+
+    def get_initial(self):
+        return {
+            'questionnaire_type': self.get_questionnaire_type()
+        }
+
+    def get_questionnaire_type(self):
+        return self.get_questionnaire().questionnaire_type.id
+
+    def get_questionnaire(self):
+        return QuestionnaireTemplate.objects.get(pk=self.kwargs['id'])
+
+    def get_engagement_values_list(self):
+        # values_list = self.questions().values_list('engagement_metric_id', flat=True)
+        # engagement_values_list = dict(engagement_metric=x) for x in values_list
+        return self.questions().values_list('engagement_metric_id', flat=True)
+
+    def questions(self):
+        return self.get_questionnaire().questions.all()
+
+class GenericQuestionnaireView(QuestionnaireTemplateMixin, CreateWithInlinesView):
     model = Questionnaire
     inlines = [AnswersInline]
 
@@ -25,9 +47,10 @@ class GenericQuestionnaireView(CreateWithInlinesView):
 
     def construct_inlines(self):
         inline_formsets = super(GenericQuestionnaireView, self).construct_inlines()
-        questions = self.questions()
-        inline_formsets[0].initial = questions
-        inline_formsets[0].extra = len(questions)
+        question_values = self.get_engagement_values_list()
+        initial = [dict(engagement_metric=x) for x in question_values]
+        inline_formsets[0].initial = initial
+        inline_formsets[0].extra = len(question_values)
         return inline_formsets
 
     def get_success_url(self):

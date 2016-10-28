@@ -8,15 +8,15 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from .models import (Product, Employee, Purchase, Team, Goal, TeamQuestionnaireControl,
-    MANAGER_COLLABORATOR, COLLABORATOR_SATISFACTION, TASK_FEEDBACK)
+from .models import Product, Employee, Purchase, Team, Goal, TeamQuestionnaireControl
 from django.views.generic import DetailView
 from extra_views import FormSetView
 from rules.contrib.views import PermissionRequiredMixin
 from .questionnaire.forms import AnswersInline
-from .questionnaire.models import EngagementMetric, Answer, Questionnaire, update_score
+from .questionnaire.models import (EngagementMetric, Answer, Questionnaire,
+    update_score, QuestionnaireTemplate)
 from .questionnaire.signals import update_score as update_score_signal
-from .questionnaire.views import GenericQuestionnaireView
+from .questionnaire.views import GenericQuestionnaireView, QuestionnaireTemplateMixin
 from .forms import (UserQuestionnaireForm, SatisfactionQuestionnaireForm, FirstLoginForm,
         TeamQuestionnaireForm, TeamQuestionnaireInline, QuestionnaireForm, UpdateLoginForm,
         TaskQuestionnaireForm, PeerToPeerQuestionnaireForm)
@@ -108,12 +108,20 @@ class QuestionnaireView(GenericQuestionnaireView):
         update_score_signal.connect(update_money)
         return super(QuestionnaireView, self).forms_valid(form, inlines)
 
+    def get_initial(self):
+        initial = super(QuestionnaireView, self).get_initial()
+        initial.update({'targets': self.kwargs['user_id']})
+        return initial
+
 
 @method_decorator(user_passes_test(lambda u: not u.is_staff), name='dispatch')
 class SatisfactionQuestionnaire(QuestionnaireView):
 
     template_name = 'tcc/views/questionnaire/satisfaction_questionnaire.html'
     form_class = SatisfactionQuestionnaireForm
+
+    def get_questionnaire(self):
+        return QuestionnaireTemplate.objects.get(pk=1)
 
     def get(self, request):
         if request.user.employee.answered_satisfaction_questionnaire():
@@ -123,17 +131,10 @@ class SatisfactionQuestionnaire(QuestionnaireView):
         return super(SatisfactionQuestionnaire, self).get(request)
 
     def get_initial(self):
-        return {
-            'targets': self.request.user.id,
-            'questionnaire_type': COLLABORATOR_SATISFACTION
-        }
+        initial = super(QuestionnaireView, self).get_initial()
+        initial.update({'targets': self.request.user.id})
+        return initial
 
-    def questions(self):
-        return [
-            {'question':_('In a scale of 1 to 10, how was your week, considering your sports, meals and relationships?'), 'engagement_metric': 9},
-            {'question':_('Considering the amount of work, team mates, noise, how was your week at work?'), 'engagement_metric': 10},
-            {'question':_('In a scale of 1 to 10, what is your satisfaction of working with us?'), 'engagement_metric': 11},
-        ]
 
 @method_decorator(user_passes_test(lambda u: u.is_staff), name='dispatch')
 class ManagerToCollaboratorQuestionnaire(QuestionnaireView):
@@ -141,37 +142,21 @@ class ManagerToCollaboratorQuestionnaire(QuestionnaireView):
     template_name = 'tcc/views/questionnaire/manager_to_collaborator.html'
     form_class = UserQuestionnaireForm
 
-    def get_initial(self):
-        return {'targets': self.kwargs['user_id'], 'questionnaire_type': MANAGER_COLLABORATOR}
+    def get_questionnaire(self):
+        return QuestionnaireTemplate.objects.get(pk=3)
 
-    def questions(self):
-        return [
-            {'question':_('How would you rate this member\'s level of communication skills?'), 'engagement_metric': 1},
-                    {'question':_('How would you rate the conducted working quality of this member?'), 'engagement_metric': 2},
-                    {'question':_('How would you rate the done working speed of this member?'), 'engagement_metric': 3},
-                    {'question':_('How would you rate the way this member share responsabilities?'), 'engagement_metric': 4},
-                    {'question':_('How would you rate the positiveness of his/her presence?'), 'engagement_metric': 5},
-                    {'question':_('How would you rate the satisfaction of others about working with this member?'), 'engagement_metric': 6},
-                    {'question':_('How would you rate this member\'s team work?'), 'engagement_metric': 7},
-                    {'question':_('How would you rate this member\'s improvement as a whole?'), 'engagement_metric': 8}
-        ]
 
 class TaskQuestionnaire(QuestionnaireView):
 
     template_name = 'tcc/views/questionnaire/task_questionnaire.html'
     form_class = TaskQuestionnaireForm
 
-    def get_initial(self):
-        return {'targets': self.kwargs['user_id'], 'questionnaire_type': TASK_FEEDBACK}
+    def get_questionnaire(self):
+        return QuestionnaireTemplate.objects.get(pk=2)
 
-    def questions(self):
-        return [
-            {'question':_('How would you rate the conducted working quality of this task?'), 'engagement_metric': 2},
-            {'question':_('How would you rate the done working speed of this task?'), 'engagement_metric': 3},
-            {'question':_('How would you rate your overall satisfaction of this task over past works?'), 'engagement_metric': 8}
-        ]
 
-class TeamMembersQuestionnaire(PermissionRequiredMixin, FormSetView):
+class TeamMembersQuestionnaire(PermissionRequiredMixin, QuestionnaireTemplateMixin,
+    FormSetView):
     template_name = 'tcc/views/questionnaire/team_member_questionnaire.html'
     form_class = PeerToPeerQuestionnaireForm
     fields = ['date_of_birth', 'hiring_date']
@@ -181,15 +166,15 @@ class TeamMembersQuestionnaire(PermissionRequiredMixin, FormSetView):
     def get_object(self):
         return Team.objects.get(pk=self.kwargs['team_id'])
 
+    def get_questionnaire(self):
+        return QuestionnaireTemplate.objects.get(pk=4)
+
     def get_extra_form_kwargs(self):
         kwargs = super(TeamMembersQuestionnaire, self).get_extra_form_kwargs()
-        kwargs['engagement_metrics'] = self.engagement_metrics()
+        kwargs['engagement_metrics'] = self.get_engagement_values_list()
         kwargs['team'] = self.kwargs['team_id']
-        kwargs['questionnaire_type'] = COLLABORATOR_SATISFACTION
+        kwargs['questionnaire_type'] = self.get_questionnaire_type()
         return kwargs
-
-    def engagement_metrics(self):
-        return [1, 2, 3, 4, 5, 6, 7, 8]
 
     def members(self):
         return Employee.objects \
@@ -204,18 +189,6 @@ class TeamMembersQuestionnaire(PermissionRequiredMixin, FormSetView):
             for member in self.members():
                 initial.append({'target': member.id})
             return initial
-
-    def questions(self):
-        return [
-            _('How would you rate this member\'s level of communication skills?'),
-            _('How would you rate the conducted working quality of this member?'),
-            _('How would you rate the done working speed of this member?'),
-            _('How would you rate the way this member share responsabilities?'),
-            _('How would you rate the positiveness of his/her presence?'),
-            _('How would you rate the satisfaction of others about working with this member?'),
-            _('How would you rate this member\'s team work?'),
-            _('How would you rate this member\'s improvement as a whole?')
-        ]
 
     def formset_valid(self, formset):
         messages.add_message(self.request, messages.SUCCESS, _("Thank you for your feedback!"))
@@ -235,7 +208,7 @@ class TeamTaskQuestionnaire(TaskQuestionnaire):
     inlines = [AnswersInline, TeamQuestionnaireInline]
 
     def get_initial(self):
-        return {'questionnaire_type': TASK_FEEDBACK}
+        return super(TaskQuestionnaire, self).get_initial()
 
     def construct_inlines(self):
         inline_formsets = super(TeamTaskQuestionnaire, self).construct_inlines()
