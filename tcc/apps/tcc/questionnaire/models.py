@@ -63,7 +63,7 @@ class Questionnaire(models.Model):
         blank=True
     )
     score = models.DecimalField(
-        max_digits=3,
+        max_digits=4,
         decimal_places=2,
         null=True,
         blank=True,
