@@ -217,6 +217,9 @@ class TeamTaskQuestionnaire(TaskQuestionnaire):
     def get_form_kwargs(self):
         return super(GenericQuestionnaireView, self).get_form_kwargs()
 
+    def get_initial(self):
+        return super(QuestionnaireView, self).get_initial()
+
 @login_required
 def update_profile(request):
     if request.user.employee.first_login and not request.user.is_superuser:
