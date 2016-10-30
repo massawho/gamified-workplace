@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^team-members-feedback/(?P<team_id>[0-9]+)/?$', views.TeamMembersQuestionnaire.as_view(), name='team_members_questionnaire'),
     url(r'^satisfaction/$', views.SatisfactionQuestionnaire.as_view(), name='satisfaction_questionnaire'),
     url(r'^profile/update/$', views.update_profile, name='update_profile'),
+    url(r'^collaborators/$', views.collaborator_list, name='collaborator_list'),
     url(r'^profile/(?P<pk>[0-9]+)/$', views.profile, name='profile'),
     url(r'^shop/$', views.shop, name='shop'),
     url(r'^team/(?P<pk>[0-9]+)/$', views.TeamDetail.as_view(), name='team_details'),

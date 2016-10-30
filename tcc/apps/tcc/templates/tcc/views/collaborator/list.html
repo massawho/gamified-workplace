@@ -1,0 +1,10 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n %}
+{% block content_classes %}{% endblock %}
+{% block content %}
+  <div class="container">
+    {% for collaborator in collaborators %}
+      {% include 'tcc/widgets/_user.html' with employee=collaborator %}
+    {% endfor %}
+  </div>
+{% endblock %}

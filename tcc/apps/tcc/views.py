@@ -59,6 +59,14 @@ def dashboard(request):
 
 
 @login_required
+def collaborator_list(request):
+    collaborators = Employee.objects.filter(user__is_staff=False)
+    return render(request, 'tcc/views/collaborator/list.html', {
+        'collaborators': collaborators,
+    })
+
+
+@login_required
 @user_passes_test(lambda u: u.is_staff)
 def profile(request, pk):
     employee = get_object_or_404(Employee, pk=pk, user__is_staff=False)
