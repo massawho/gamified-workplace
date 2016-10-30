@@ -104,3 +104,6 @@ a[data-not-enough-points] {
 .no-item img {
   max-width: 100px;
 }
+h3 .no-case {
+  text-transform: initial !important;
+}

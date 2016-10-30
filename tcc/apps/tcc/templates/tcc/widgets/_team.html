@@ -1,4 +1,4 @@
-{% load i18n thumbnail rules %}
+{% load i18n thumbnail rules tcc %}
 <div class="panel widget-member">
   <div class="control-btn">
     <a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -28,7 +28,12 @@
       {% endthumbnail %}
     </div>
     <div class="col-xs-9">
-      <h3 class="m-t-0 member-name"><strong>{{team.name}}</strong></h3>
+      <h3 class="m-t-0 member-name">
+        <strong>{{team.name}}</strong>
+        {% if team|is_missing_questionnaire:user %}
+          <small class="text-danger no-case"><i class="fa fa-exclamation-triangle" data-rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="{% trans 'Peer feedback needed' %}"></i></small>
+        {% endif %}
+      </h3>
       <div class="row">
         <div class="col-xlg-6 col-lg-12 col-sm-6">
           <p><i class="fa fa-calendar c-gray-light p-r-10"></i> {{team.created_at}}</p>
