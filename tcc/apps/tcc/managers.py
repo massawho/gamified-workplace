@@ -14,6 +14,9 @@ class TeamManager(models.Manager):
     def active(self):
         return self.filter(ended_at__isnull=True)
 
+    def inactive(self):
+        return self.filter(ended_at__isnull=False)
+
 class ProductManager(models.Manager):
 
     def active(self):
