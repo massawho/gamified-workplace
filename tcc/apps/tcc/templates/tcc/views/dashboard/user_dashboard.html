@@ -26,7 +26,7 @@
         <div class="alert alert-danger">
           <p>
             <img class="img-md m-r-10" src="https://cdn0.iconfinder.com/data/icons/smile-emoticons/78/smyle_emoticons-01-512.png">
-            <strong>{% trans 'We want to hear you!' %}</strong> {% blocktrans %}We haven't received your your final thoughts for {{team}} this week yet.{% endblocktrans %}<a href="{% url 'team_members_questionnaire' team.id %}">{% trans 'Click here' %}</a> {% trans 'and answer it right now!' %}
+            <strong>{% trans 'We want to hear you!' %}</strong> {% blocktrans %}We haven't received your your final thoughts for {{team}} yet.{% endblocktrans %}<a href="{% url 'team_members_questionnaire' team.id %}">{% trans 'Click here' %}</a> {% trans 'and answer it right now!' %}
           </p>
         </div>
       {% endif %}
