@@ -1,0 +1,20 @@
+{% extends "tcc/base_site.html" %}
+{% load i18n %}
+{% block content_classes %}{% endblock %}
+{% block content %}
+  <div class="container">
+    <h2>{% trans 'Active' %}</h2>
+    {% for team in active_teams %}
+      {% include 'tcc/widgets/_team.html' with team=team %}
+    {% empty %}
+      <h3>{% trans 'No active teams.' %}</h3>
+    {% endfor %}
+
+    <h2>{% trans 'Inactive' %}</h2>
+    {% for team in inactive_teams %}
+      {% include 'tcc/widgets/_team.html' with team=team %}
+    {% empty %}
+      <h3>{% trans 'No inactive teams.' %}</h3>
+    {% endfor %}
+  </div>
+{% endblock %}

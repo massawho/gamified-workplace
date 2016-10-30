@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^profile/(?P<pk>[0-9]+)/$', views.profile, name='profile'),
     url(r'^shop/$', views.shop, name='shop'),
     url(r'^team/(?P<pk>[0-9]+)/$', views.TeamDetail.as_view(), name='team_details'),
+    url(r'^teams/$', views.team_list, name='team_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

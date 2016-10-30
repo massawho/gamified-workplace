@@ -67,6 +67,16 @@ def collaborator_list(request):
 
 
 @login_required
+def team_list(request):
+    active_teams = Team.objects.active()
+    inactive_teams = Team.objects.inactive()
+    return render(request, 'tcc/views/team/list.html', {
+        'active_teams': active_teams,
+        'inactive_teams': inactive_teams
+    })
+
+
+@login_required
 @user_passes_test(lambda u: u.is_staff)
 def profile(request, pk):
     employee = get_object_or_404(Employee, pk=pk, user__is_staff=False)
