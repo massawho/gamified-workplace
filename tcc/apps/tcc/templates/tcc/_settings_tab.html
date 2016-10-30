@@ -1,0 +1,72 @@
+{% load i18n %}
+<div class="tab-pane fade active in" id="settings">
+  <div class="settings">
+    <div class="title">ACCOUNT SETTINGS</div>
+    <div class="setting">
+      <span> Show Personal Statut</span>
+      <label class="switch pull-right">
+      <input type="checkbox" class="switch-input" checked>
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+      </label>
+      <p class="setting-info">Lorem ipsum dolor sit amet consectetuer.</p>
+    </div>
+    <div class="setting">
+      <span> Show my Picture</span>
+      <label class="switch pull-right">
+      <input type="checkbox" class="switch-input" checked>
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+      </label>
+      <p class="setting-info">Lorem ipsum dolor sit amet consectetuer.</p>
+    </div>
+    <div class="setting">
+      <span> Show my Location</span>
+      <label class="switch pull-right">
+      <input type="checkbox" class="switch-input">
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+      </label>
+      <p class="setting-info">Lorem ipsum dolor sit amet consectetuer.</p>
+    </div>
+    <div class="title">CHAT</div>
+    <div class="setting">
+      <span> Show User Image</span>
+      <label class="switch pull-right">
+      <input type="checkbox" class="switch-input" checked>
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+      </label>
+    </div>
+    <div class="setting">
+      <span> Show Fullname</span>
+      <label class="switch pull-right">
+      <input type="checkbox" class="switch-input" checked>
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+      </label>
+    </div>
+    <div class="setting">
+      <span> Show Location</span>
+      <label class="switch pull-right">
+      <input type="checkbox" class="switch-input">
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+      </label>
+    </div>
+    <div class="setting">
+      <span> Show Unread Count</span>
+      <label class="switch pull-right">
+      <input type="checkbox" class="switch-input" checked>
+      <span class="switch-label" data-on="On" data-off="Off"></span>
+      <span class="switch-handle"></span>
+      </label>
+    </div>
+    <div class="title">
+      <a href="/admin"><i class="fa fa-cogs"></i> {% trans 'ADMINISTRATION' %}</a>
+    </div>
+    <div class="m-t-30" style="width:100%">
+      <canvas id="setting-chart" height="300"></canvas>
+    </div>
+  </div>
+</div>
