@@ -164,6 +164,12 @@ class Employee(models.Model):
         upload_to=user_directory_path
     )
 
+    def reset_energy(self):
+        now = datetime.now()
+        if now.weekday() == 0 and self.last_energy_update < now: #monday
+            self.energy = 3
+            self.save()
+
     def get_inventory(self):
         return self.inventory \
                     .annotate(
