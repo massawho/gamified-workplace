@@ -164,10 +164,11 @@ class ManagerToCollaboratorQuestionnaire(QuestionnaireView):
         return QuestionnaireTemplate.objects.get(pk=3)
 
 
-class TaskQuestionnaire(QuestionnaireView):
+class TaskQuestionnaire(PermissionRequiredMixin, QuestionnaireView):
 
     template_name = 'tcc/views/questionnaire/task_questionnaire.html'
     form_class = TaskQuestionnaireForm
+    permission_required = 'tcc.receive_task_feedback_employee'
 
     def get_questionnaire(self):
         return QuestionnaireTemplate.objects.get(pk=2)
@@ -224,6 +225,7 @@ class TeamTaskQuestionnaire(TaskQuestionnaire):
     template_name = 'tcc/views/questionnaire/team_task_questionnaire.html'
     form_class = QuestionnaireForm
     inlines = [AnswersInline, TeamQuestionnaireInline]
+    permission_required = 'tcc.receive_task_feedback_team'
 
     def get_initial(self):
         return super(TaskQuestionnaire, self).get_initial()
