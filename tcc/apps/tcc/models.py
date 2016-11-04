@@ -147,6 +147,15 @@ class Employee(models.Model):
         editable=False,
         default=0
     )
+    energy = models.PositiveIntegerField(
+        editable=False,
+        default=3
+    )
+    last_energy_update = models.DateField(
+        null=False,
+        blank=False,
+        editable=False
+    )
     inventory = models.ManyToManyField(Product, through='Purchase')
     badges = models.ManyToManyField(Goal, through='Badge')
     avatar = models.ImageField(
