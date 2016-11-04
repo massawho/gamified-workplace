@@ -3,6 +3,9 @@ from django.db import models
 
 class EmployeeManager(models.Manager):
 
+    def decrease_energy(self, user):
+        return self.filter(user_id=user.pk).update(energy=models.F('energy')-1)
+
     def add_money_to_user(self, user, money):
         return self.filter(user_id=user.pk).update(money=models.F('money')+money)
 
