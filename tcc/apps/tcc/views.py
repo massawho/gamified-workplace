@@ -26,6 +26,8 @@ from .signals import update_money
 @login_required
 def dashboard(request):
     if not request.user.is_staff:
+        request.user.employee.reset_energy()
+
         goals = Goal.objects.not_taken(request.user.employee)
         badges = request.user.employee.badge_set.all()
         featured_products = Product.objects.filter(is_active=True, is_featured=True)
