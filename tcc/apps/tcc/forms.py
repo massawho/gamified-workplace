@@ -158,6 +158,7 @@ class UpdateLoginForm(forms.ModelForm):
         self.user = user
         self.fields['first_name'].initial = user.first_name
         self.fields['last_name'].initial = user.last_name
+        self.fields['email'].initial = user.email
 
     first_name = forms.CharField(
         label=_("First name"),
@@ -185,6 +186,16 @@ class UpdateLoginForm(forms.ModelForm):
             attrs = {
                 'class': 'form-control',
                 'placeholder': _('First name')
+            }
+        ))
+    email = forms.CharField(
+        label=_("Email"),
+        required=True,
+        label_suffix='',
+        widget = django_widgets.TextInput(
+            attrs = {
+                'class': 'form-control',
+                'placeholder': _('Email')
             }
         ))
     nickname = forms.CharField(
