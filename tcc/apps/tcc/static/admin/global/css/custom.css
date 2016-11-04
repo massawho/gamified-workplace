@@ -107,3 +107,8 @@ a[data-not-enough-points] {
 h3 .no-case {
   text-transform: initial !important;
 }
+.widget-info .right {
+  padding-left: 0;
+  margin-left: 70px;
+  float: none;
+}
