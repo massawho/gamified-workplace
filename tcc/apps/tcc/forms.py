@@ -215,6 +215,7 @@ class UpdateLoginForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = self.user
+        user.email = self.cleaned_data['email']
         if commit:
             user.save()
         return user, super(UpdateLoginForm, self).save(commit)
