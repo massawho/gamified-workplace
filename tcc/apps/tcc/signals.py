@@ -25,6 +25,14 @@ def update_money(sender, instance, request, **kwargs):
         added_money = money = 10
         users = [request.user.pk]
 
+    if not request.user.is_staff and instance.questionnaire_type_id is TASK_FEEDBACK:
+        messages.add_message(
+            request,
+            messages.WARNING,
+            "<strong><i class=\"fa fa-bolt\"></i> - 1"
+        )
+        Employee.objects.decrease_energy(request.user)
+
     if added_money is not 0:
         messages.add_message(
             request,
