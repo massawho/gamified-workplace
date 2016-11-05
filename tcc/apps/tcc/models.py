@@ -166,9 +166,12 @@ class Employee(models.Model):
 
     def reset_energy(self):
         now = datetime.now()
-        if now.weekday() == 0 and self.last_energy_update < now: #monday
+        if now.isocalendar()[1] > self.last_energy_update.isocalendar()[1]:
+            self.last_energy_update = now
             self.energy = 3
             self.save()
+            return self.energy
+        return False
 
     def get_inventory(self):
         return self.inventory \
