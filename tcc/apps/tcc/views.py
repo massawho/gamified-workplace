@@ -26,7 +26,13 @@ from .signals import update_money
 @login_required
 def dashboard(request):
     if not request.user.is_staff:
-        request.user.employee.reset_energy()
+        energy = request.user.employee.reset_energy()
+        if energy:
+            messages.add_message(
+                request,
+                messages.INFO,
+                "<strong><i class=\"fa fa-bolt\"></i> + 3"
+            )
 
         goals = Goal.objects.not_taken(request.user.employee)
         badges = request.user.employee.badge_set.all()
