@@ -32,7 +32,37 @@ TEMPLATE_DEBUG = False
 
 # Application definition
 
+SHARED_APPS = (
+    'tenant_schemas',
+    'django.contrib.contenttypes',
+    'apps.customer',
+
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'sorl.thumbnail',
+    'apps.tcc',
+    'apps.tcc.questionnaire',
+)
+
+TENANT_APPS = (
+    'django.contrib.contenttypes',
+
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'sorl.thumbnail',
+
+    'apps.tcc',
+    'apps.tcc.questionnaire',
+)
+
 INSTALLED_APPS = [
+    'tenant_schemas',  # mandatory, should always be before any django app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,10 +73,12 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'apps.utils',
     'apps.tcc',
+    'apps.customer',
     'apps.tcc.questionnaire'
 ]
 
 MIDDLEWARE_CLASSES = [
+    'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,6 +113,14 @@ AUTHENTICATION_BACKENDS = (
 )
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+TENANT_MODEL = "customer.Client"
+
+DATABASE_ROUTERS = (
+    'tenant_schemas.routers.TenantSyncRouter',
+)
+
+DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
 
 
 # Internationalization

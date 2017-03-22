@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric, Questionnaire
@@ -154,7 +153,8 @@ class Employee(models.Model):
     last_energy_update = models.DateField(
         null=False,
         blank=False,
-        editable=False
+        editable=False,
+        default=datetime.now()
     )
     inventory = models.ManyToManyField(Product, through='Purchase')
     badges = models.ManyToManyField(Goal, through='Badge')
