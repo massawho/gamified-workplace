@@ -75,7 +75,7 @@ class Product(models.Model):
         help_text=_('0 means no limit')
     )
     is_active = models.BooleanField(
-        default = True
+        default=True
     )
     is_featured = models.BooleanField()
     photo = models.ImageField(
@@ -127,12 +127,13 @@ class Goal(models.Model):
         help_text=_('The level of importance of this goal'),
     )
     is_active = models.BooleanField(
-        default = True
+        default=True
     )
     products = models.ManyToManyField(Product, blank=True)
 
     def __str__(self):
         return self.description
+
 
 def user_directory_path(instance, filename):
     extension = filename.split(".")[-1]
@@ -180,7 +181,6 @@ class Employee(models.Model):
         null=False,
         blank=False,
         editable=False,
-        default=datetime.now()
     )
     inventory = models.ManyToManyField(Product, through='Purchase')
     badges = models.ManyToManyField(Goal, through='Badge')
@@ -207,21 +207,21 @@ class Employee(models.Model):
 
     def get_inventory(self):
         return self.inventory \
-                    .annotate(
-                        items_left=models.Count('purchase__id') - models.Sum(
-                            models.Case(
-                                models.When(
-                                    purchase__used_at__isnull=False,
-                                    then=1
-                                ),
-                                models.When(
-                                    purchase__used_at__isnull=True,
-                                    then=0
-                                ),
-                                output_field=models.IntegerField()
-                            )
-                        )
+            .annotate(
+                items_left=models.Count('purchase__id') - models.Sum(
+                    models.Case(
+                        models.When(
+                            purchase__used_at__isnull=False,
+                            then=1
+                        ),
+                        models.When(
+                            purchase__used_at__isnull=True,
+                            then=0
+                        ),
+                        output_field=models.IntegerField()
                     )
+                )
+            )
 
     def __str__(self):
         return self.nickname or self.user.get_short_name() or self.user.username
@@ -425,6 +425,7 @@ class EngagementMetricConfig(models.Model):
         help_text=_('Should this metric be displayed only by staff?')
     )
 
+
 @receiver(post_save, sender=Purchase)
 def update_data_after_purchase(sender, instance, created, **kwargs):
     if created:
@@ -437,6 +438,7 @@ def update_data_after_purchase(sender, instance, created, **kwargs):
         employee.money -= instance.cost
         employee.save()
 
+
 @receiver(post_save, sender=Badge)
 def update_data_after_earning_badge(sender, instance, created, **kwargs):
     if created:
@@ -444,6 +446,7 @@ def update_data_after_earning_badge(sender, instance, created, **kwargs):
         employee = instance.employee
 
         Employee.objects.add_money_to_user(employee.user, goal.money)
+
 
 @receiver(post_save, sender=TeamQuestionnaire)
 def update_targets(sender, instance, created, **kwargs):
