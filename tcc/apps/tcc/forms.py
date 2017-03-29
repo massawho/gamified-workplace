@@ -290,6 +290,7 @@ class FirstLoginForm(UpdateLoginForm):
         user.last_name = self.cleaned_data["last_name"]
         user.username = self.cleaned_data["username"]
         employee.first_login = False
+        employee.date_of_birth = self.cleaned_data["date_of_birth"]
         if commit:
             user.save()
             employee.save()
