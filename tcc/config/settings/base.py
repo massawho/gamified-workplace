@@ -24,6 +24,7 @@ def get_env_variable(var_name):
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.dirname(os.path.dirname(__file__))
+ROOT_DIR = os.path.join(BASE_DIR, '../../')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -137,3 +138,10 @@ USE_L10N = True
 USE_TZ = True
 
 LOGIN_URL = '/login/'
+
+from django.utils.translation import ugettext_lazy as _
+LANGUAGES = (
+    ('pt-br', _('Portuguese (BR)')),
+    ('es', _('Spanish')),
+    ('en-au', _('English (AU)')),
+)

@@ -1,0 +1,588 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-29 01:06+0000\n"
+"PO-Revision-Date: 2017-03-28 22:41-0300\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.11\n"
+
+#: apps/tcc/admin.py:17 apps/tcc/models.py:22
+msgid "Departments"
+msgstr "Departamentos"
+
+#: apps/tcc/admin.py:89 apps/tcc/models.py:416
+msgid "Displayed only for staff"
+msgstr "Mostrar apenas para gerentes"
+
+#: apps/tcc/forms.py:67 apps/tcc/forms.py:78
+msgid "Task name"
+msgstr "Nome da tarefa"
+
+#: apps/tcc/forms.py:164 apps/tcc/forms.py:170 apps/tcc/forms.py:188
+msgid "First name"
+msgstr "Primeiro nome"
+
+#: apps/tcc/forms.py:174
+msgid "Avatar"
+msgstr "Foto"
+
+#: apps/tcc/forms.py:182
+msgid "Last name"
+msgstr "Último nome"
+
+#: apps/tcc/forms.py:192 apps/tcc/forms.py:198
+msgid "Email"
+msgstr "Email"
+
+#: apps/tcc/forms.py:202 apps/tcc/forms.py:208
+msgid "Nickname"
+msgstr "Apelido"
+
+#: apps/tcc/forms.py:231 apps/tcc/forms.py:237
+msgid "User"
+msgstr "Usuário"
+
+#: apps/tcc/forms.py:242 apps/tcc/forms.py:248
+msgid "Date of birth"
+msgstr "Data de nascimento"
+
+#: apps/tcc/forms.py:253
+msgid "New password"
+msgstr "Nova senha"
+
+#: apps/tcc/forms.py:259
+msgid "Password"
+msgstr "Senha"
+
+#: apps/tcc/forms.py:263
+msgid "New password confirmation"
+msgstr "Confirmação de nova senha"
+
+#: apps/tcc/forms.py:269
+msgid "Password confirmation"
+msgstr "Confirmação de senha"
+
+#: apps/tcc/forms.py:279
+msgid "The two password fields didn't match."
+msgstr "Os dois campos de senha não bateram."
+
+#: apps/tcc/models.py:21
+msgid "Department"
+msgstr "Departamento"
+
+#: apps/tcc/models.py:35
+msgid "Occupation"
+msgstr "Ocupação"
+
+#: apps/tcc/models.py:36
+msgid "Occupations"
+msgstr "Ocupações"
+
+#: apps/tcc/models.py:54
+msgid "Product"
+msgstr "Produto"
+
+#: apps/tcc/models.py:55
+msgid "Products"
+msgstr "Produtos"
+
+#: apps/tcc/models.py:59
+msgid "Product name"
+msgstr "Nome do produto"
+
+#: apps/tcc/models.py:63
+msgid "Price"
+msgstr "Preço"
+
+#: apps/tcc/models.py:64
+msgid "Cost in points"
+msgstr "Preço em pontos"
+
+#: apps/tcc/models.py:67
+msgid "Stock"
+msgstr "Estoque"
+
+#: apps/tcc/models.py:69
+msgid "-1 means unlimited stock"
+msgstr "-1 significa estoque ilimitado"
+
+#: apps/tcc/models.py:72
+msgid "Max purchases per user"
+msgstr "Máximo de compras por usuário"
+
+#: apps/tcc/models.py:74
+msgid "0 means no limit"
+msgstr "0 significa sem limite"
+
+#: apps/tcc/models.py:99
+msgid "Platinum"
+msgstr "Platina"
+
+#: apps/tcc/models.py:100
+msgid "Gold"
+msgstr "Ouro"
+
+#: apps/tcc/models.py:101
+msgid "Silver"
+msgstr "Prata"
+
+#: apps/tcc/models.py:102
+msgid "Bronze"
+msgstr "Bronze"
+
+#: apps/tcc/models.py:109
+msgid "Goal"
+msgstr "Meta"
+
+#: apps/tcc/models.py:110
+msgid "Goals"
+msgstr "Metas"
+
+#: apps/tcc/models.py:116
+msgid "A short name to describe the goal"
+msgstr "Um nome para descrever a meta"
+
+#: apps/tcc/models.py:119
+msgid "Diamonds"
+msgstr "Diamantes"
+
+#: apps/tcc/models.py:121
+msgid "Diamonds received when employee finishes this goal"
+msgstr "Diamantes recebidos quando colaborador terminar esta meta"
+
+#: apps/tcc/models.py:126 apps/tcc/models.py:274
+msgid "The level of importance of this goal"
+msgstr "O nível de importância desta meta"
+
+#: apps/tcc/models.py:144
+msgid "Employee"
+msgstr "Colaborador"
+
+#: apps/tcc/models.py:145
+msgid "Employees"
+msgstr "Colaboradores"
+
+#: apps/tcc/models.py:165
+msgid "Is his first login?"
+msgstr "Primeiro login?"
+
+#: apps/tcc/models.py:168
+msgid "Identify first login user."
+msgstr "Identifica o primeiro login do usuário."
+
+#: apps/tcc/models.py:260
+msgid "Badge"
+msgstr "Medalha"
+
+#: apps/tcc/models.py:261
+#: apps/tcc/templates/tcc/views/dashboard/profile_base.html:18
+msgid "Badges"
+msgstr "Medalhas"
+
+#: apps/tcc/models.py:278
+#, python-format
+msgid "%(employee_name)s's %(badge_name)s badge"
+msgstr "medalha %(badge_name)s de %(employee_name)s"
+
+#: apps/tcc/models.py:291
+msgid "Purchase"
+msgstr "Compra"
+
+#: apps/tcc/models.py:292
+msgid "Purchases"
+msgstr "Compras"
+
+#: apps/tcc/models.py:313
+msgid "You don't have enough money."
+msgstr "Você não tem dinheiro suficiente."
+
+#: apps/tcc/models.py:316
+msgid "This item is not available."
+msgstr "Este item não está disponível."
+
+#: apps/tcc/models.py:320
+msgid "You already own this product."
+msgstr "Você já possui este produto."
+
+#: apps/tcc/models.py:329
+msgid "Team"
+msgstr "Time"
+
+#: apps/tcc/models.py:330 apps/tcc/templates/tcc/base_site.html:35
+msgid "Teams"
+msgstr "Times"
+
+#: apps/tcc/models.py:372
+msgid "Team questionnaire"
+msgstr "Questionário de time"
+
+#: apps/tcc/models.py:373
+msgid "Team questionnaires"
+msgstr "Questionários de time"
+
+#: apps/tcc/models.py:391
+msgid "Team questionnaire control"
+msgstr "Controle de questionário de time"
+
+#: apps/tcc/models.py:392
+msgid "Team questionnaire controls"
+msgstr "Controles de questionário de time"
+
+#: apps/tcc/models.py:402
+msgid "Engagement metric config"
+msgstr "Configuração de métrica de engajamento"
+
+#: apps/tcc/models.py:403
+msgid "Engagement metric configs"
+msgstr "Configurações de métrica de engajamento"
+
+#: apps/tcc/models.py:411
+msgid "Icon class"
+msgstr "Classe do ícone"
+
+#: apps/tcc/models.py:413
+msgid "An icon class (eg: fontawesome) to be displayed."
+msgstr "Um classe de ícone (ex: fontawesome) a ser mostrada."
+
+#: apps/tcc/models.py:418
+msgid "Should this metric be displayed only by staff?"
+msgstr "Essa métrica deve ser mostrada apenas para gerentes?"
+
+#: apps/tcc/questionnaire/models.py:11
+msgid "Metric name"
+msgstr "Nome da métrica"
+
+#: apps/tcc/questionnaire/models.py:13
+msgid "Short description of this engagement metric"
+msgstr "Curta descrição dessa métrica de engajamento"
+
+#: apps/tcc/questionnaire/models.py:16
+msgid "Metric description"
+msgstr "Descrição da métrica"
+
+#: apps/tcc/questionnaire/models.py:18
+msgid "Briefly describe this engagement metric"
+msgstr "Descreva brevemente esta métrica de engajamento"
+
+#: apps/tcc/questionnaire/models.py:34
+msgid "Question"
+msgstr "Questão"
+
+#: apps/tcc/questionnaire/models.py:45
+msgid "Description"
+msgstr "Descrição"
+
+#: apps/tcc/questionnaire/models.py:57
+msgid "A brief description for this questionnaire"
+msgstr "A descrição breve para este questionário"
+
+#: apps/tcc/questionnaire/views.py:44 apps/tcc/questionnaire/views.py:81
+#: apps/tcc/views.py:223
+msgid "Thank you for your feedback!"
+msgstr "Obrigado pelo seu feedback!"
+
+#: apps/tcc/templates/tcc/_settings_tab.html:66
+msgid "ADMINISTRATION"
+msgstr "ADMINISTRAÇÃO"
+
+#: apps/tcc/templates/tcc/base_site.html:2
+msgid "Django site admin"
+msgstr "Administração django"
+
+#: apps/tcc/templates/tcc/base_site.html:23
+msgid "Dashboard"
+msgstr "Painel"
+
+#: apps/tcc/templates/tcc/base_site.html:29
+msgid "Collaborators"
+msgstr "Colaboradores"
+
+#: apps/tcc/templates/tcc/base_site.html:41
+msgid "Feedback"
+msgstr "Feedback"
+
+#: apps/tcc/templates/tcc/base_site.html:48
+msgid "Satisfaction quiz"
+msgstr "Quiz de satisfação"
+
+#: apps/tcc/templates/tcc/base_site.html:52
+msgid " Task feedback"
+msgstr " Feedback de tarefa"
+
+#: apps/tcc/templates/tcc/base_site.html:55
+msgid " Team task feedback"
+msgstr " Feedback de tarefa de time"
+
+#: apps/tcc/templates/tcc/base_site.html:60
+#: apps/tcc/templates/tcc/widgets/_user_options.html:13
+msgid "Progress feedback"
+msgstr "Feedback de progresso"
+
+#: apps/tcc/templates/tcc/base_site.html:68
+msgid "Reports"
+msgstr "Relatórios"
+
+#: apps/tcc/templates/tcc/base_site.html:123
+msgid "Hi,"
+msgstr "Olá,"
+
+#: apps/tcc/templates/tcc/base_site.html:130
+#: apps/tcc/templates/tcc/views/dashboard/update_profile.html:13
+#: apps/tcc/templates/tcc/views/dashboard/update_profile.html:83
+msgid "Update profile"
+msgstr "Atualizar perfil"
+
+#: apps/tcc/templates/tcc/base_site.html:133
+msgid "Change password"
+msgstr "Trocar senha"
+
+#: apps/tcc/templates/tcc/base_site.html:136
+msgid "Logout"
+msgstr "Sair"
+
+#: apps/tcc/templates/tcc/views/dashboard/manager_dashboard.html:10
+msgid "Hey, you..."
+msgstr "Hey, psiu!"
+
+#: apps/tcc/templates/tcc/views/dashboard/manager_dashboard.html:10
+msgid "Don\\"
+msgstr ""
+
+#: apps/tcc/templates/tcc/views/dashboard/profile_base.html:10
+msgid "Inventory"
+msgstr "Inventório"
+
+#: apps/tcc/templates/tcc/views/dashboard/profile_base.html:15
+msgid "Your inventory is empty"
+msgstr "Seu inventório está vazio"
+
+#: apps/tcc/templates/tcc/views/dashboard/profile_base.html:23
+msgid "You haven\\"
+msgstr ""
+
+#: apps/tcc/templates/tcc/views/dashboard/profile_base.html:33
+msgid "My teams"
+msgstr "Meus times"
+
+#: apps/tcc/templates/tcc/views/dashboard/profile_base.html:44
+msgid "My goals"
+msgstr "Minhas metas"
+
+#: apps/tcc/templates/tcc/views/dashboard/update_profile.html:9
+msgid "First login"
+msgstr "Primeiro login"
+
+#: apps/tcc/templates/tcc/views/dashboard/update_profile.html:9
+msgid ""
+"Before using, you have to update your personal info and choose a new "
+"password."
+msgstr ""
+"Antes de usar, você precisa atualizar suas informações pessoas e "
+"escolher uma nova senha."
+
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:8
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:18
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:29
+#: apps/tcc/templates/tcc/views/team/details.html:12
+msgid "We want to hear you!"
+msgstr "Queremos ouvir você!"
+
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:8
+#: apps/tcc/templates/tcc/views/team/details.html:14
+#: apps/tcc/templates/tcc/views/team/details.html:16
+msgid "We haven\\"
+msgstr ""
+
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:8
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:18
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:29
+#: apps/tcc/templates/tcc/views/team/details.html:18
+msgid "Click here"
+msgstr "Clique aqui"
+
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:8
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:18
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:29
+#: apps/tcc/templates/tcc/views/team/details.html:18
+msgid "and answer it right now!"
+msgstr "e responda agora!"
+
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:18
+#, python-format
+msgid "We haven't received your your thoughts for %(team)s this week yet."
+msgstr ""
+"Não recebemos o que você está sentindo sobre %(team)s esta semana ainda."
+
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:29
+#, python-format
+msgid "We haven't received your your final thoughts for %(team)s yet."
+msgstr ""
+"Não recebemos seu feedback final sobre %(team)s esta semana ainda."
+
+#: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:37
+#: apps/tcc/templates/tcc/views/shop/index.html:10
+msgid "Featured products"
+msgstr "Produtos"
+
+#: apps/tcc/templates/tcc/views/questionnaire/_task_form.html:6
+#: apps/tcc/templates/tcc/views/questionnaire/_team_task_form.html:18
+msgid "Which task will you give your feedback to?"
+msgstr "Para qual tarefa gostaria de dar feedback?"
+
+#: apps/tcc/templates/tcc/views/questionnaire/base.html:8
+msgid "Questionnaire"
+msgstr "Quiz"
+
+#: apps/tcc/templates/tcc/views/questionnaire/base.html:11
+msgid "Send questionnaire"
+msgstr "Enviar quiz"
+
+#: apps/tcc/templates/tcc/views/questionnaire/manager_to_collaborator.html:3
+msgid "Feedback to collaborator"
+msgstr "Feedback para colaborador"
+
+#: apps/tcc/templates/tcc/views/questionnaire/satisfaction_questionnaire.html:3
+msgid "How are you?"
+msgstr "Como você está?"
+
+#: apps/tcc/templates/tcc/views/questionnaire/task_questionnaire.html:3
+#: apps/tcc/templates/tcc/views/questionnaire/team_task_questionnaire.html:3
+msgid "What are your thoughts about a task?"
+msgstr "O que você pensa sobre uma determinada tarefa?"
+
+#: apps/tcc/templates/tcc/views/questionnaire/team_member_questionnaire.html:3
+msgid "How\\"
+msgstr "Como"
+
+#: apps/tcc/templates/tcc/views/reports/collaborator.html:9
+msgid "Collaborator list"
+msgstr "Lista de colaborador"
+
+#: apps/tcc/templates/tcc/views/reports/collaborator.html:25
+msgid "Engagement metric list"
+msgstr "Lista de métrica de engajamento"
+
+#: apps/tcc/templates/tcc/views/reports/collaborator.html:31
+#: apps/tcc/templates/tcc/widgets/_user_overall_bar.html:3
+msgid "Overall"
+msgstr "Geral"
+
+#: apps/tcc/templates/tcc/views/shop/index.html:19
+msgid "Shop"
+msgstr "Loja"
+
+#: apps/tcc/templates/tcc/views/shop/index.html:29
+msgid "Sorry, the shop has nothing to sell."
+msgstr "Desculpe, mas a loja ainda não tem nada a oferecer."
+
+#: apps/tcc/templates/tcc/views/team/_team_info.html:13
+#: apps/tcc/templates/tcc/views/team/details.html:31
+#: apps/tcc/templates/tcc/views/team/list.html:6
+msgid "Active"
+msgstr "Ativo"
+
+#: apps/tcc/templates/tcc/views/team/_team_info.html:15
+#: apps/tcc/templates/tcc/views/team/details.html:33
+msgid "Finished at"
+msgstr "Finalizado em"
+
+#: apps/tcc/templates/tcc/views/team/details.html:50
+msgid "Members"
+msgstr "Membros"
+
+#: apps/tcc/templates/tcc/views/team/list.html:10
+msgid "No active teams."
+msgstr "Nenhum time ativo."
+
+#: apps/tcc/templates/tcc/views/team/list.html:13
+msgid "Inactive"
+msgstr "Inativo"
+
+#: apps/tcc/templates/tcc/views/team/list.html:17
+msgid "No inactive teams."
+msgstr "Sem times inativos."
+
+#: apps/tcc/templates/tcc/widgets/_inventory_item.html:10
+msgid "Left"
+msgstr "Faltante"
+
+#: apps/tcc/templates/tcc/widgets/_product.html:21
+msgid "out of stock"
+msgstr "sem estoque"
+
+#: apps/tcc/templates/tcc/widgets/_product.html:26
+msgid "unlimited"
+msgstr "ilimitado"
+
+#: apps/tcc/templates/tcc/widgets/_team.html:7
+msgid "See details"
+msgstr "Ver detalhes"
+
+#: apps/tcc/templates/tcc/widgets/_team.html:12
+#: apps/tcc/templates/tcc/widgets/_user_options.html:15
+msgid "Task feedback"
+msgstr "Feedback de tarefa"
+
+#: apps/tcc/templates/tcc/widgets/_team.html:18
+msgid "Peer feedback"
+msgstr "Feedback dos colegas"
+
+#: apps/tcc/templates/tcc/widgets/_team.html:34
+msgid "Peer feedback needed"
+msgstr "Feedback dos colegas necessitado"
+
+#: apps/tcc/templates/tcc/widgets/_team.html:53
+msgid "You"
+msgstr "Você"
+
+#: apps/tcc/templates/tcc/widgets/_user_options.html:9
+msgid "See profile"
+msgstr "Ver perfil"
+
+#: apps/tcc/views.py:124
+msgid "Item purchased!"
+msgstr "Item comprado!"
+
+#: apps/tcc/views.py:156
+msgid "You have already answered this quiz this week!"
+msgstr "Você já respondeu o quiz esta semana!"
+
+#: apps/tcc/views.py:263
+msgid "Your profile were updated!"
+msgstr "Seu perfil foi atualizado!"
+
+#: apps/utils/filters.py:17
+msgid "All"
+msgstr "Todos"
+
+#: apps/utils/filters.py:18
+msgid "Yes"
+msgstr "Sim"
+
+#: apps/utils/filters.py:19
+msgid "No"
+msgstr "Não"
+
+#: config/settings/base.py:144
+msgid "Portuguese (BR)"
+msgstr "Português (BR)"
+
+#: config/settings/base.py:145
+msgid "Spanish"
+msgstr "Espanhol"
+
+#: config/settings/base.py:146
+msgid "English (AU)"
+msgstr "Inglês (AU)"

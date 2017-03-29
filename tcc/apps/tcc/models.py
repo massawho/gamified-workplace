@@ -16,6 +16,11 @@ TASK_FEEDBACK = 3
 
 
 class Department(models.Model):
+
+    class Meta:
+        verbose_name = _('Department')
+        verbose_name_plural = _('Departments')
+
     name = models.CharField(
         max_length=25
     )
@@ -25,6 +30,11 @@ class Department(models.Model):
 
 
 class Occupation(models.Model):
+
+    class Meta:
+        verbose_name = _('Occupation')
+        verbose_name_plural = _('Occupations')
+
     name = models.CharField(
         max_length=25
     )
@@ -39,6 +49,11 @@ def images_path(instance, filename):
 
 
 class Product(models.Model):
+
+    class Meta:
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
+
     objects = ProductManager()
     name = models.CharField(
         _('Product name'),
@@ -89,6 +104,11 @@ GOAL_LEVELS = (
 
 
 class Goal(models.Model):
+
+    class Meta:
+        verbose_name = _('Goal')
+        verbose_name_plural = _('Goals')
+
     objects = GoalManager()
 
     description = models.CharField(
@@ -119,6 +139,11 @@ def user_directory_path(instance, filename):
 
 
 class Employee(models.Model):
+
+    class Meta:
+        verbose_name = _('Employee')
+        verbose_name_plural = _('Employees')
+
     objects = EmployeeManager()
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
@@ -230,6 +255,11 @@ class Employee(models.Model):
 
 
 class Badge(models.Model):
+
+    class Meta:
+        verbose_name = _('Badge')
+        verbose_name_plural = _('Badges')
+
     goal = models.ForeignKey(Goal, on_delete=models.PROTECT)
     employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
     received_at = models.DateField(
@@ -256,6 +286,11 @@ class Badge(models.Model):
 
 
 class Purchase(models.Model):
+
+    class Meta:
+        verbose_name = _('Purchase')
+        verbose_name_plural = _('Purchases')
+
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     employee = models.ForeignKey(Employee, on_delete=models.PROTECT)
     cost = models.PositiveIntegerField(
@@ -289,6 +324,11 @@ class Purchase(models.Model):
 
 
 class Team(models.Model):
+
+    class Meta:
+        verbose_name = _('Team')
+        verbose_name_plural = _('Teams')
+
     objects = TeamManager()
     name = models.CharField(
         max_length=25
@@ -325,19 +365,43 @@ class Team(models.Model):
         else:
             return employee.missing_team_final_questionnaire().filter(id=self.pk).exists()
 
+
 class TeamQuestionnaire(models.Model):
-    questionnaire = models.OneToOneField(Questionnaire,
+
+    class Meta:
+        verbose_name = _('Team questionnaire')
+        verbose_name_plural = _('Team questionnaires')
+
+    questionnaire = models.OneToOneField(
+        Questionnaire,
         on_delete=models.CASCADE,
         primary_key=True
     )
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=False, blank=False)
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False
+    )
+
 
 class TeamQuestionnaireControl(models.Model):
+
+    class Meta:
+        verbose_name = _('Team questionnaire control')
+        verbose_name_plural = _('Team questionnaire controls')
+
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now=True)
 
+
 class EngagementMetricConfig(models.Model):
+
+    class Meta:
+        verbose_name = _('Engagement metric config')
+        verbose_name_plural = _('Engagement metric configs')
+
     engagement_metric = models.OneToOneField(
         EngagementMetric,
         on_delete=models.CASCADE,

@@ -8,7 +8,13 @@
     </div>
     <div class="col-xs-9">
       <h3 class="m-t-0 member-name"><strong>{{ team.name }}</strong></h3>
-      <p class="member-job">{% if not team.ended_at %}{% trans 'Active' %}{% else %}{% trans '' %}{% trans 'Finished at' %} {{team.ended_at}}{% endif %}</p>
+      <p class="member-job">
+        {% if not team.ended_at %}
+          {% trans 'Active' %}
+        {% else %}
+          {% trans 'Finished at' %} {{team.ended_at}}
+        {% endif %}
+      </p>
       <div class="row">
         <div class="col-xlg-6 col-lg-12 col-sm-6">
           <p><i class="fa fa-calendar c-gray-light p-r-10"></i> {{team.created_at}}</p>

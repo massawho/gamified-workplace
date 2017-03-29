@@ -16,6 +16,10 @@ MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 SITE_URL = 'http://localhost:8000'
 
+LOCALE_PATHS = (
+    os.path.join(ROOT_DIR, 'locale'),
+)
+
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
