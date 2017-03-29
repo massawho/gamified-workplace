@@ -226,6 +226,7 @@ class FirstLoginForm(UpdateLoginForm):
         self._meta.fields.append('username')
         super(FirstLoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].initial = self.user.username
+        self.fields['date_of_birth'].initial = self.user.employee.date_of_birth
 
     username = forms.CharField(
         label=_("User"),
@@ -234,6 +235,7 @@ class FirstLoginForm(UpdateLoginForm):
         widget = django_widgets.TextInput(
             attrs = {
                 'class': 'form-control',
+                'readonly': True,
                 'placeholder': _('User')
             }
         ))
