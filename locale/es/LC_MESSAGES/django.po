@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-29 01:06+0000\n"
+"POT-Creation-Date: 2017-03-29 19:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: apps/tcc/admin.py:17 apps/tcc/models.py:22
+#: apps/tcc/admin.py:17 apps/tcc/models.py:23
 msgid "Departments"
 msgstr ""
 
-#: apps/tcc/admin.py:89 apps/tcc/models.py:416
+#: apps/tcc/admin.py:89 apps/tcc/models.py:423
 msgid "Displayed only for staff"
 msgstr ""
 
@@ -78,185 +78,189 @@ msgstr ""
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: apps/tcc/models.py:21
+#: apps/tcc/models.py:22
 msgid "Department"
 msgstr ""
 
-#: apps/tcc/models.py:35
+#: apps/tcc/models.py:36
 msgid "Occupation"
 msgstr ""
 
-#: apps/tcc/models.py:36
+#: apps/tcc/models.py:37
 msgid "Occupations"
 msgstr ""
 
-#: apps/tcc/models.py:54
+#: apps/tcc/models.py:55
 msgid "Product"
 msgstr ""
 
-#: apps/tcc/models.py:55
+#: apps/tcc/models.py:56
 msgid "Products"
 msgstr ""
 
-#: apps/tcc/models.py:59
+#: apps/tcc/models.py:60
 msgid "Product name"
 msgstr ""
 
-#: apps/tcc/models.py:63
+#: apps/tcc/models.py:64
 msgid "Price"
 msgstr ""
 
-#: apps/tcc/models.py:64
+#: apps/tcc/models.py:65
 msgid "Cost in points"
 msgstr ""
 
-#: apps/tcc/models.py:67
+#: apps/tcc/models.py:68
 msgid "Stock"
 msgstr ""
 
-#: apps/tcc/models.py:69
+#: apps/tcc/models.py:70
 msgid "-1 means unlimited stock"
 msgstr ""
 
-#: apps/tcc/models.py:72
+#: apps/tcc/models.py:73
 msgid "Max purchases per user"
 msgstr ""
 
-#: apps/tcc/models.py:74
+#: apps/tcc/models.py:75
 msgid "0 means no limit"
 msgstr ""
 
-#: apps/tcc/models.py:99
+#: apps/tcc/models.py:100
 msgid "Platinum"
 msgstr ""
 
-#: apps/tcc/models.py:100
+#: apps/tcc/models.py:101
 msgid "Gold"
 msgstr ""
 
-#: apps/tcc/models.py:101
+#: apps/tcc/models.py:102
 msgid "Silver"
 msgstr ""
 
-#: apps/tcc/models.py:102
+#: apps/tcc/models.py:103
 msgid "Bronze"
 msgstr ""
 
-#: apps/tcc/models.py:109
+#: apps/tcc/models.py:110
 msgid "Goal"
 msgstr ""
 
-#: apps/tcc/models.py:110
+#: apps/tcc/models.py:111
 msgid "Goals"
 msgstr ""
 
-#: apps/tcc/models.py:116
+#: apps/tcc/models.py:117
 msgid "A short name to describe the goal"
 msgstr ""
 
-#: apps/tcc/models.py:119
+#: apps/tcc/models.py:120
 msgid "Diamonds"
 msgstr ""
 
-#: apps/tcc/models.py:121
+#: apps/tcc/models.py:122
 msgid "Diamonds received when employee finishes this goal"
 msgstr ""
 
-#: apps/tcc/models.py:126 apps/tcc/models.py:274
+#: apps/tcc/models.py:127 apps/tcc/models.py:281
 msgid "The level of importance of this goal"
 msgstr ""
 
-#: apps/tcc/models.py:144
+#: apps/tcc/models.py:146
 msgid "Employee"
 msgstr ""
 
-#: apps/tcc/models.py:145
+#: apps/tcc/models.py:147
 msgid "Employees"
 msgstr ""
 
-#: apps/tcc/models.py:165
+#: apps/tcc/models.py:167
 msgid "Is his first login?"
 msgstr ""
 
-#: apps/tcc/models.py:168
+#: apps/tcc/models.py:170
 msgid "Identify first login user."
 msgstr ""
 
-#: apps/tcc/models.py:260
+#: apps/tcc/models.py:193 apps/tcc/templates/tcc/base_site.html:98
+msgid "Language"
+msgstr ""
+
+#: apps/tcc/models.py:267
 msgid "Badge"
 msgstr ""
 
-#: apps/tcc/models.py:261
+#: apps/tcc/models.py:268
 #: apps/tcc/templates/tcc/views/dashboard/profile_base.html:18
 msgid "Badges"
 msgstr ""
 
-#: apps/tcc/models.py:278
+#: apps/tcc/models.py:285
 #, python-format
 msgid "%(employee_name)s's %(badge_name)s badge"
 msgstr ""
 
-#: apps/tcc/models.py:291
+#: apps/tcc/models.py:298
 msgid "Purchase"
 msgstr ""
 
-#: apps/tcc/models.py:292
+#: apps/tcc/models.py:299
 msgid "Purchases"
 msgstr ""
 
-#: apps/tcc/models.py:313
+#: apps/tcc/models.py:320
 msgid "You don't have enough money."
 msgstr ""
 
-#: apps/tcc/models.py:316
+#: apps/tcc/models.py:323
 msgid "This item is not available."
 msgstr ""
 
-#: apps/tcc/models.py:320
+#: apps/tcc/models.py:327
 msgid "You already own this product."
 msgstr ""
 
-#: apps/tcc/models.py:329
+#: apps/tcc/models.py:336
 msgid "Team"
 msgstr ""
 
-#: apps/tcc/models.py:330 apps/tcc/templates/tcc/base_site.html:35
+#: apps/tcc/models.py:337 apps/tcc/templates/tcc/base_site.html:35
 msgid "Teams"
 msgstr ""
 
-#: apps/tcc/models.py:372
+#: apps/tcc/models.py:379
 msgid "Team questionnaire"
 msgstr ""
 
-#: apps/tcc/models.py:373
+#: apps/tcc/models.py:380
 msgid "Team questionnaires"
 msgstr ""
 
-#: apps/tcc/models.py:391
+#: apps/tcc/models.py:398
 msgid "Team questionnaire control"
 msgstr ""
 
-#: apps/tcc/models.py:392
+#: apps/tcc/models.py:399
 msgid "Team questionnaire controls"
 msgstr ""
 
-#: apps/tcc/models.py:402
+#: apps/tcc/models.py:409
 msgid "Engagement metric config"
 msgstr ""
 
-#: apps/tcc/models.py:403
+#: apps/tcc/models.py:410
 msgid "Engagement metric configs"
 msgstr ""
 
-#: apps/tcc/models.py:411
+#: apps/tcc/models.py:418
 msgid "Icon class"
 msgstr ""
 
-#: apps/tcc/models.py:413
+#: apps/tcc/models.py:420
 msgid "An icon class (eg: fontawesome) to be displayed."
 msgstr ""
 
-#: apps/tcc/models.py:418
+#: apps/tcc/models.py:425
 msgid "Should this metric be displayed only by staff?"
 msgstr ""
 
@@ -289,7 +293,7 @@ msgid "A brief description for this questionnaire"
 msgstr ""
 
 #: apps/tcc/questionnaire/views.py:44 apps/tcc/questionnaire/views.py:81
-#: apps/tcc/views.py:223
+#: apps/tcc/views.py:237
 msgid "Thank you for your feedback!"
 msgstr ""
 
@@ -334,21 +338,26 @@ msgstr ""
 msgid "Reports"
 msgstr ""
 
-#: apps/tcc/templates/tcc/base_site.html:123
+#: apps/tcc/templates/tcc/base_site.html:140
+#: apps/tcc/templates/tcc/views/shop/index.html:19
+msgid "Shop"
+msgstr ""
+
+#: apps/tcc/templates/tcc/base_site.html:152
 msgid "Hi,"
 msgstr ""
 
-#: apps/tcc/templates/tcc/base_site.html:130
+#: apps/tcc/templates/tcc/base_site.html:159
 #: apps/tcc/templates/tcc/views/dashboard/update_profile.html:13
 #: apps/tcc/templates/tcc/views/dashboard/update_profile.html:83
 msgid "Update profile"
 msgstr ""
 
-#: apps/tcc/templates/tcc/base_site.html:133
+#: apps/tcc/templates/tcc/base_site.html:162
 msgid "Change password"
 msgstr ""
 
-#: apps/tcc/templates/tcc/base_site.html:136
+#: apps/tcc/templates/tcc/base_site.html:165
 msgid "Logout"
 msgstr ""
 
@@ -475,10 +484,6 @@ msgstr ""
 msgid "Overall"
 msgstr ""
 
-#: apps/tcc/templates/tcc/views/shop/index.html:19
-msgid "Shop"
-msgstr ""
-
 #: apps/tcc/templates/tcc/views/shop/index.html:29
 msgid "Sorry, the shop has nothing to sell."
 msgstr ""
@@ -547,15 +552,15 @@ msgstr ""
 msgid "See profile"
 msgstr ""
 
-#: apps/tcc/views.py:124
+#: apps/tcc/views.py:138
 msgid "Item purchased!"
 msgstr ""
 
-#: apps/tcc/views.py:156
+#: apps/tcc/views.py:170
 msgid "You have already answered this quiz this week!"
 msgstr ""
 
-#: apps/tcc/views.py:263
+#: apps/tcc/views.py:277
 msgid "Your profile were updated!"
 msgstr ""
 
@@ -571,14 +576,14 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: config/settings/base.py:144
+#: config/settings/base.py:145
 msgid "Portuguese (BR)"
 msgstr ""
 
-#: config/settings/base.py:145
+#: config/settings/base.py:146
 msgid "Spanish"
 msgstr ""
 
-#: config/settings/base.py:146
+#: config/settings/base.py:147
 msgid "English (AU)"
 msgstr ""

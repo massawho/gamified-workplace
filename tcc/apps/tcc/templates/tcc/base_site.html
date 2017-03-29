@@ -92,6 +92,35 @@
             <div class="topbar">
               <div class="header-right">
                 <ul class="header-menu nav navbar-nav">
+                  <li class="dropdown" id="language-header">
+                    <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                    <i class="icon-globe"></i>
+                    <span>{% trans 'Language' %}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="{% url 'set_language'%}?language=en-au" data-lang="en">
+                          <img
+                            src="{% static "admin/global/images/flags/australia.png" %}"
+                            alt="flag-english"> <span>English (AU)</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{% url 'set_language'%}?language='es" data-lang="es">
+                          <img
+                            src="{% static "admin/global/images/flags/spanish.png" %}"
+                            alt="flag-english"> <span>Español</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{% url 'set_language'%}?language=pt-br" data-lang="fr">
+                          <img
+                            src="{% static "admin/global/images/flags/brazil.png" %}"
+                            alt="flag-english"> <span>Português</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                   {% if not user.is_staff %}
                     <li id="language-header">
                       <a href="#">

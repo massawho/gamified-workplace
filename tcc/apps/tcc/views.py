@@ -1,13 +1,14 @@
+from django.conf import settings
 from django.urls import reverse
 from django.contrib import messages
 from django.db import models
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import check_for_language, LANGUAGE_SESSION_KEY, ugettext_lazy as _
 from .models import Product, Employee, Purchase, Team, Goal, TeamQuestionnaireControl
 from django.views.generic import DetailView
 from extra_views import FormSetView
@@ -21,6 +22,19 @@ from .forms import (UserQuestionnaireForm, SatisfactionQuestionnaireForm, FirstL
         TeamQuestionnaireForm, TeamQuestionnaireInline, QuestionnaireForm, UpdateLoginForm,
         TaskQuestionnaireForm, PeerToPeerQuestionnaireForm)
 from .signals import update_money
+
+
+@login_required
+def set_language(request):
+    response = HttpResponseRedirect('/')
+    if request.method == 'GET':
+        lang_code = request.GET.get('language', None)
+        if lang_code and check_for_language(lang_code):
+            if hasattr(request, 'session'):
+                request.session[LANGUAGE_SESSION_KEY] = lang_code
+            else:
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    return response
 
 
 @login_required

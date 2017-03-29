@@ -1,9 +1,10 @@
 from django.conf import settings
+from django.contrib.auth.signals import user_logged_in
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import LANGUAGE_SESSION_KEY, ugettext_lazy as _
 from django.utils.functional import cached_property
 from .questionnaire.models import EngagementMetric, Questionnaire
 from .managers import ProductManager, EmployeeManager, TeamManager, GoalManager
@@ -187,6 +188,12 @@ class Employee(models.Model):
         null=True,
         blank=True,
         upload_to=user_directory_path
+    )
+    language = models.CharField(
+        _('Language'),
+        max_length=5,
+        default='pt-br',
+        choices=settings.LANGUAGES
     )
 
     def reset_energy(self):
@@ -446,3 +453,9 @@ def update_targets(sender, instance, created, **kwargs):
             users.append(member.user)
         instance.questionnaire.targets = users
         instance.questionnaire.save()
+
+
+@receiver(user_logged_in)
+def set_lang(sender, **kwargs):
+    lang_code = kwargs['user'].employee.language
+    kwargs['request'].session[LANGUAGE_SESSION_KEY] = lang_code

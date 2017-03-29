@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^shop/$', views.shop, name='shop'),
     url(r'^team/(?P<pk>[0-9]+)/$', views.TeamDetail.as_view(), name='team_details'),
     url(r'^teams/$', views.team_list, name='team_list'),
+    url(r'^set_language/$', views.set_language, name='set_language'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
