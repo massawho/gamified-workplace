@@ -48,12 +48,18 @@
                         <a href="{% url 'satisfaction_questionnaire' %}"> {% trans 'Satisfaction quiz' %}</a>
                       </li>
                     {% endif %}
-                    <li class="{% active '/task-feedback/' %}">
-                      <a href="{% url 'task_questionnaire' %}"> {% trans ' Task feedback' %}</a>
-                    </li>
-                    <li class="{% active '/team-task-feedback/' %}">
-                      <a href="{% url 'team_task_questionnaire' %}"> {% trans ' Team task feedback' %}</a>
-                    </li>
+                    {% test_rule 'can_answer_task_feedback' user as can_answer_task_feedback %}
+                    {% if can_answer_task_feedback %}
+                      <li class="{% active '/task-feedback/' %}">
+                        <a href="{% url 'task_questionnaire' %}"> {% trans ' Task feedback' %}</a>
+                      </li>
+                    {% endif %}
+                    {% test_rule 'can_answer_team_task_feedback' user as can_answer_team_task_feedback %}
+                    {% if can_answer_team_task_feedback %}
+                      <li class="{% active '/team-task-feedback/' %}">
+                        <a href="{% url 'team_task_questionnaire' %}"> {% trans ' Team task feedback' %}</a>
+                      </li>
+                    {% endif %}
                     {% test_rule 'can_give_progress_feedback' user as can_give_progress_feedback %}
                     {% if can_give_progress_feedback %}
                       <li class="{% active '/manager-to-collaborator/' %}">
@@ -121,7 +127,7 @@
                       </li>
                     </ul>
                   </li>
-                  {% if not user.is_staff %}
+                  {% if not user.is_staff and not user.employee.is_guest %}
                     <li id="language-header">
                       <a href="#">
                         <i class="fa fa-bolt"></i>
@@ -137,7 +143,7 @@
                     <li id="language-header">
                       <a href="{% url 'shop' %}">
                         <i class="icon-basket"></i>
-                        <span>Shop</span>
+                        <span>{% trans 'Shop' %}</span>
                       </a>
                     </li>
                   {% endif %}

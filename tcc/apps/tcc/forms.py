@@ -34,7 +34,7 @@ class UserQuestionnaireForm(QuestionnaireFormMixin, forms.ModelForm):
 class BadgeForm(forms.ModelForm):
 
     employee = django_models.ModelChoiceField(
-        queryset=Employee.objects.filter(user__is_staff=False)
+        queryset=Employee.objects.collaborators()
     )
 
     class Meta:

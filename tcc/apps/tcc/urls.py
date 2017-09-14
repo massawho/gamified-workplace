@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^team/(?P<pk>[0-9]+)/$', views.TeamDetail.as_view(), name='team_details'),
     url(r'^teams/$', views.team_list, name='team_list'),
     url(r'^set_language/$', views.set_language, name='set_language'),
+    url(r'^reports/collaborator/$', views.collaborator_report, name='collaborator_report'),
+    url(r'^overall_average_over_time\.json$', views.overall_average_over_time, name='overall_average_over_time'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

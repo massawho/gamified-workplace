@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from apps.utils.filters import IsNullFieldListFilter
 from django.utils.translation import ugettext_lazy as _
 from .forms import EmployeeFormSet, EngagementMetricConfigFormSet, BadgeForm
-from .models import (Employee, Department, Badge,
+from .models import (Employee, Department, Badge, LoginCount,
     Occupation, Product, Team, EngagementMetricConfig, Goal)
 from .questionnaire.admin import EngagementMetricAdmin as BaseEngagementMetricAdmin
 from .questionnaire.models import EngagementMetric
@@ -36,11 +36,14 @@ class DepartmentFilter(admin.SimpleListFilter):
             queryset = queryset.filter(employee__department_id=lookup_value)
         return queryset
 
+
 class DepartmentAdmin(admin.ModelAdmin):
     model = Department
 
+
 class OccupationAdmin(admin.ModelAdmin):
     model = Occupation
+
 
 class TeamAdmin(admin.ModelAdmin):
     model = Team
@@ -52,10 +55,12 @@ class TeamAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Employee.objects.filter(user__is_staff=False)
         return super(TeamAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
+
 class ProductAdmin(admin.ModelAdmin):
     model = Product
     list_display = ('name', 'is_active', 'is_featured', 'price', 'stock')
     list_filter = ('is_active', 'is_featured')
+
 
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
@@ -65,10 +70,12 @@ class EmployeeInline(admin.StackedInline):
     verbose_name_plural = 'employee'
     formset = EmployeeFormSet
 
+
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = (EmployeeInline, )
     list_filter = (DepartmentFilter, 'is_active', 'is_staff', 'is_superuser')
+
 
 # Define an inline admin descriptor for EngagementMetricConfig model
 # which acts a bit like a singleton
@@ -77,6 +84,7 @@ class EngagementMetricConfigInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = 'engagement_metric'
     formset = EngagementMetricConfigFormSet
+
 
 class EngagementMetricAdmin(BaseEngagementMetricAdmin):
     inlines = (EngagementMetricConfigInline, )
@@ -89,12 +97,14 @@ class EngagementMetricAdmin(BaseEngagementMetricAdmin):
     get_is_staff.short_description = _('Displayed only for staff')
     get_is_staff.boolean = True
 
+
 class BadgeInline(admin.TabularInline):
     model = Badge
     form = BadgeForm
     can_delete = False
     verbose_name_plural = 'badges'
     extra = 1
+
 
 class GoalAdmin(admin.ModelAdmin):
     model = Goal

@@ -2,6 +2,8 @@
 {% load i18n static %}
 {% block content_classes %}{% endblock %}
 {% block content %}
+  <div id="financial-chart" style="height:320px"></div>
+
   <div class="alert alert-info">
     <p>
       <img class="img-md m-r-10" src="https://cdn0.iconfinder.com/data/icons/smile-emoticons/78/smyle_emoticons-01-512.png">
@@ -22,4 +24,12 @@
       {% endfor %}
     </div>
   </div>
+
+{% endblock %}
+{% block extrascript %}
+  {{ block.super }}
+  <script src="{% static "admin/global/plugins/charts-highstock/js/highstock.min.js" %}"></script> <!-- Financial Charts -->
+  <script src="{% static "admin/global/plugins/charts-highstock/js/highcharts-more.min.js" %}"></script> <!-- Financial Charts additional -->
+  <script src="{% static "admin/global/plugins/charts-highstock/js/modules/exporting.min.js" %}"></script> <!-- Financial Charts export tool -->
+  <script src="{% static "admin/global/js/pages/reports.js" %}"></script>
 {% endblock %}

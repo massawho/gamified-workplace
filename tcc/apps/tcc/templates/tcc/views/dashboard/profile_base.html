@@ -38,17 +38,18 @@
           </div>
         {% endfor %}
       </div>
-
-      <div class="row">
-        <div class="col-xs-12">
-          <h3><strong>{% trans 'My goals' %}</strong></h3>
-          <div class="widget-infobox m-t-20">
-            {% for goal in goals %}
-              {% include 'tcc/widgets/_goal.html' with goal=goal %}
-            {% endfor %}
+      {% if not profile.is_guest %}
+        <div class="row">
+          <div class="col-xs-12">
+            <h3><strong>{% trans 'My goals' %}</strong></h3>
+            <div class="widget-infobox m-t-20">
+              {% for goal in goals %}
+                {% include 'tcc/widgets/_goal.html' with goal=goal %}
+              {% endfor %}
+            </div>
           </div>
         </div>
-      </div>
+      {% endif %}
     {% endblock %}
   </div>
 {% endblock %}

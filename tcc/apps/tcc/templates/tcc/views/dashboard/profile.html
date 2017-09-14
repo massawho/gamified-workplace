@@ -1,2 +1,15 @@
 {% extends "tcc/views/dashboard/profile_base.html" %}
 {% load i18n static %}
+{% block profile_content %}
+  <div id="financial-chart" style="height:320px"></div>
+
+  {{ block.super }}
+{% endblock %}
+
+{% block extrascript %}
+  {{ block.super }}
+  <script src="{% static "admin/global/plugins/charts-highstock/js/highstock.min.js" %}"></script> <!-- Financial Charts -->
+  <script src="{% static "admin/global/plugins/charts-highstock/js/highcharts-more.min.js" %}"></script> <!-- Financial Charts additional -->
+  <script src="{% static "admin/global/plugins/charts-highstock/js/modules/exporting.min.js" %}"></script> <!-- Financial Charts export tool -->
+  <script src="{% static "admin/global/js/pages/charts_finance.js" %}"></script>
+{% endblock %}

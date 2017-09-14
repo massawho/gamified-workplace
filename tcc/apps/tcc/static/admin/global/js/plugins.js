@@ -452,7 +452,6 @@ function tableDynamic(){
 
 // Handles custom checkboxes & radios using jQuery iCheck plugin
 function handleiCheck() {
-
     if (!$().iCheck)  return;
     $(':checkbox:not(.js-switch, .switch-input, .switch-iphone, .onoffswitch-checkbox, .ios-checkbox, .md-checkbox), :radio:not(.md-radio)').each(function() {
 

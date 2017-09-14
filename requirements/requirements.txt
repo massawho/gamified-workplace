@@ -1,7 +1,7 @@
 Django==1.10.1
 django-extra-views==0.8.0
 Pillow==3.4.1
-rules==1.1.1
+rules==1.2.0
 six==1.10.0
 sorl-thumbnail==12.3
 django-tenant-schemas==1.7.0

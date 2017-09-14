@@ -1,12 +1,16 @@
 from django.contrib import messages
-from django.dispatch import receiver
-from django.db.models import F
-from .models import (Employee,
-    MANAGER_COLLABORATOR, COLLABORATOR_SATISFACTION, TASK_FEEDBACK)
-from .questionnaire.models import Questionnaire
-from .questionnaire.signals import update_score
+from .models import (
+    Employee,
+    MANAGER_COLLABORATOR,
+    COLLABORATOR_SATISFACTION,
+    TASK_FEEDBACK
+)
+
 
 def update_money(sender, instance, request, **kwargs):
+    if request.user.employee.is_guest:
+        return
+
     money = 0
     added_money = 0
     users = []

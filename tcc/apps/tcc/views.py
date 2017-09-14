@@ -1,27 +1,57 @@
+from datetime import date
+from dateutil.rrule import rrule, DAILY
 from django.conf import settings
-from django.urls import reverse
 from django.contrib import messages
+from django.contrib.auth import (
+    update_session_auth_hash
+)
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.db import models
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import get_user_model, update_session_auth_hash
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.utils.translation import check_for_language, LANGUAGE_SESSION_KEY, ugettext_lazy as _
-from .models import Product, Employee, Purchase, Team, Goal, TeamQuestionnaireControl
+from django.utils.translation import (
+    check_for_language,
+    LANGUAGE_SESSION_KEY,
+    ugettext_lazy as _
+)
 from django.views.generic import DetailView
 from extra_views import FormSetView
 from rules.contrib.views import PermissionRequiredMixin
-from .questionnaire.forms import AnswersInline
-from .questionnaire.models import (EngagementMetric, Answer, Questionnaire,
-    update_score, QuestionnaireTemplate)
-from .questionnaire.signals import update_score as update_score_signal
-from .questionnaire.views import GenericQuestionnaireView, QuestionnaireTemplateMixin
-from .forms import (UserQuestionnaireForm, SatisfactionQuestionnaireForm, FirstLoginForm,
-        TeamQuestionnaireForm, TeamQuestionnaireInline, QuestionnaireForm, UpdateLoginForm,
-        TaskQuestionnaireForm, PeerToPeerQuestionnaireForm)
+from .forms import (
+    FirstLoginForm,
+    PeerToPeerQuestionnaireForm,
+    QuestionnaireForm,
+    SatisfactionQuestionnaireForm,
+    TaskQuestionnaireForm,
+    TeamQuestionnaireInline,
+    UpdateLoginForm,
+    UserQuestionnaireForm
+)
+from .models import (
+    Employee,
+    Goal,
+    Product,
+    Purchase,
+    Team,
+    TeamQuestionnaireControl
+)
 from .signals import update_money
+from .questionnaire.forms import AnswersInline
+from .questionnaire.models import (
+    Answer,
+    EngagementMetric,
+    Questionnaire,
+    QuestionnaireTemplate,
+    update_score
+)
+from .questionnaire.signals import update_score as update_score_signal
+from .questionnaire.views import (
+    GenericQuestionnaireView,
+    QuestionnaireTemplateMixin
+)
 
 
 @login_required
@@ -39,7 +69,7 @@ def set_language(request):
 
 @login_required
 def dashboard(request):
-    if not request.user.is_staff:
+    if not request.user.is_staff and not request.user.employee.is_guest:
         energy = request.user.employee.reset_energy()
         if energy:
             messages.add_message(
@@ -54,10 +84,16 @@ def dashboard(request):
         user_teams = request.user.employee.team_set.active()
         inventory = request.user.employee.get_inventory()
         engagement_metrics = Answer.objects \
-            .values('engagement_metric', 'engagement_metric__name', 'engagement_metric__description',
-                'engagement_metric__engagementmetricconfig__icon_class' ) \
-            .filter(questionnaire__targets__id=request.user.pk,
-                engagement_metric__engagementmetricconfig__is_staff=False) \
+            .values(
+                'engagement_metric',
+                'engagement_metric__name',
+                'engagement_metric__description',
+                'engagement_metric__engagementmetricconfig__icon_class'
+            ) \
+            .filter(
+                questionnaire__targets__id=request.user.pk,
+                engagement_metric__engagementmetricconfig__is_staff=False
+            ) \
             .annotate(value=models.Avg('value'))
 
         return render(request, 'tcc/views/dashboard/user_dashboard.html', {
@@ -70,7 +106,7 @@ def dashboard(request):
             'skill_list': engagement_metrics
         })
     else:
-        employees = Employee.objects.filter(user__is_staff=False)
+        employees = Employee.objects.collaborators()
 
         teams = Team.objects.filter(ended_at=None)
 
@@ -82,7 +118,7 @@ def dashboard(request):
 
 @login_required
 def collaborator_list(request):
-    collaborators = Employee.objects.filter(user__is_staff=False)
+    collaborators = Employee.objects.collaborators()
     return render(request, 'tcc/views/collaborator/list.html', {
         'collaborators': collaborators,
     })
@@ -126,6 +162,7 @@ def profile(request, pk):
 
 
 @login_required
+@user_passes_test(lambda u: not u.is_staff and not u.employee.is_guest)
 def purchase_product(request, product_id):
     product = Product.objects.get(pk=product_id)
     employee = request.user.employee
@@ -141,6 +178,7 @@ def purchase_product(request, product_id):
     finally:
         return redirect(reverse('dashboard'))
 
+
 @method_decorator(login_required, name='dispatch')
 class QuestionnaireView(GenericQuestionnaireView):
 
@@ -154,7 +192,10 @@ class QuestionnaireView(GenericQuestionnaireView):
         return initial
 
 
-@method_decorator(user_passes_test(lambda u: not u.is_staff), name='dispatch')
+@method_decorator(
+    user_passes_test(lambda u: not u.is_staff),
+    name='dispatch'
+)
 class SatisfactionQuestionnaire(QuestionnaireView):
 
     template_name = 'tcc/views/questionnaire/satisfaction_questionnaire.html'
@@ -242,6 +283,7 @@ class TeamMembersQuestionnaire(PermissionRequiredMixin, QuestionnaireTemplateMix
         control.save()
         return super(TeamMembersQuestionnaire, self).formset_valid(formset)
 
+
 class TeamTaskQuestionnaire(TaskQuestionnaire):
 
     template_name = 'tcc/views/questionnaire/team_task_questionnaire.html'
@@ -261,6 +303,7 @@ class TeamTaskQuestionnaire(TaskQuestionnaire):
 
     def get_initial(self):
         return super(QuestionnaireView, self).get_initial()
+
 
 @login_required
 def update_profile(request):
@@ -283,8 +326,9 @@ def update_profile(request):
         'form': form
     });
 
+
 @login_required
-@user_passes_test(lambda u: not u.is_staff)
+@user_passes_test(lambda u: not u.is_staff and not u.employee.is_guest)
 def shop(request):
     featured_products = Product.objects.featured()
     products = Product.objects.not_featured()
@@ -293,6 +337,42 @@ def shop(request):
         'products': products,
     });
 
+
 class TeamDetail(DetailView):
     model = Team
     template_name = 'tcc/views/team/details.html'
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def collaborator_report(request):
+    collaborators = Employee.objects.collaborators()
+    metrics = EngagementMetric.objects.all()
+    return render(request, 'tcc/views/reports/collaborator.html', {
+        'collaborators': collaborators,
+        'metrics': metrics
+    })
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def overall_average_over_time(request):
+    today = date.today()
+    start_date = date(today.year-1, today.month, today.day)
+    teste = []
+    for dt in rrule(DAILY, dtstart=start_date, until=today):
+        avg = models.Avg('answer__value')
+        t = Questionnaire.objects \
+            .filter(created_at__range=(start_date, dt)) \
+
+        if 'collaborator' in request.GET:
+            t = t.filter(targets__id=request.GET['collaborator'])
+
+        if 'engagement_metric' in request.GET:
+            t = t.filter(answer__engagement_metric=request.GET['engagement_metric'])
+
+        t = t.aggregate(avg=avg)
+        if t['avg']:
+            teste.append([int(dt.strftime("%s"))*1000, t['avg']])
+
+    return JsonResponse(teste, safe=False)

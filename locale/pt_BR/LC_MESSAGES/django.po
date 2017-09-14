@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-29 19:21+0000\n"
-"PO-Revision-Date: 2017-03-29 16:22-0300\n"
+"PO-Revision-Date: 2017-03-29 17:56-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -368,6 +368,7 @@ msgstr "Hey, psiu!"
 #: apps/tcc/templates/tcc/views/dashboard/manager_dashboard.html:10
 msgid "Don\\"
 msgstr ""
+"Não se esqueça de dar feedback a seus colaboradores sempre que possível!"
 
 #: apps/tcc/templates/tcc/views/dashboard/profile_base.html:10
 msgid "Inventory"
@@ -379,7 +380,7 @@ msgstr "Seu inventório está vazio"
 
 #: apps/tcc/templates/tcc/views/dashboard/profile_base.html:23
 msgid "You haven\\"
-msgstr ""
+msgstr "Você não recebeu medalhas ainda!"
 
 #: apps/tcc/templates/tcc/views/dashboard/profile_base.html:33
 msgid "My teams"
@@ -412,7 +413,7 @@ msgstr "Queremos ouvir você!"
 #: apps/tcc/templates/tcc/views/team/details.html:14
 #: apps/tcc/templates/tcc/views/team/details.html:16
 msgid "We haven\\"
-msgstr ""
+msgstr "Não recebemos seu quiz de satisfação esta semana ainda."
 
 #: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:8
 #: apps/tcc/templates/tcc/views/dashboard/user_dashboard.html:18

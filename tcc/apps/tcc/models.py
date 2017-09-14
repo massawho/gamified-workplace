@@ -46,7 +46,11 @@ class Occupation(models.Model):
 
 def images_path(instance, filename):
     extension = filename.split(".")[-1]
-    return '{0}/{1}.{2}'.format(instance._meta.verbose_name_plural, instance.id, extension)
+    return '{0}/{1}.{2}'.format(
+        instance._meta.verbose_name_plural,
+        instance.id,
+        extension
+    )
 
 
 class Product(models.Model):
@@ -103,6 +107,18 @@ GOAL_LEVELS = (
     (1, _('Bronze'))
 )
 
+ONCE = 1
+DAILY = 2
+WEEKLY = 3
+MONTHLY = 4
+
+GOAL_FREQUENCIES = (
+    (ONCE, _('Once')),
+    (DAILY, _('Daily')),
+    (WEEKLY, _('Weekly')),
+    (MONTHLY, _('Monthly'))
+)
+
 
 class Goal(models.Model):
 
@@ -120,6 +136,17 @@ class Goal(models.Model):
         _('Diamonds'),
         default=0,
         help_text=_('Diamonds received when employee finishes this goal')
+    )
+    frequency = models.PositiveIntegerField(
+        choices=GOAL_FREQUENCIES,
+        default=1,
+        help_text=_('Frequency rate this goal happens'),
+    )
+    starts_at = models.DateField(
+        _('Starts on'),
+    )
+    ends_at = models.DateField(
+        _('Ends on'),
     )
     level = models.PositiveIntegerField(
         choices=GOAL_LEVELS,
@@ -194,6 +221,10 @@ class Employee(models.Model):
         max_length=5,
         default='pt-br',
         choices=settings.LANGUAGES
+    )
+    is_guest = models.BooleanField(
+        _('Is a guest in the system?'),
+        default=False,
     )
 
     def reset_energy(self):
@@ -426,6 +457,18 @@ class EngagementMetricConfig(models.Model):
     )
 
 
+class LoginCount(models.Model):
+
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    created_at = models.DateField(
+        auto_now=True,
+        editable=False
+    )
+
+    def __str__(self):
+        return self.employee.__str__()
+
+
 @receiver(post_save, sender=Purchase)
 def update_data_after_purchase(sender, instance, created, **kwargs):
     if created:
@@ -462,3 +505,12 @@ def update_targets(sender, instance, created, **kwargs):
 def set_lang(sender, **kwargs):
     lang_code = kwargs['user'].employee.language
     kwargs['request'].session[LANGUAGE_SESSION_KEY] = lang_code
+
+
+@receiver(user_logged_in)
+def update_user_login(sender, user, **kwargs):
+    if user.is_staff:
+        return
+
+    user.employee.logincount_set.create()
+    user.save()
