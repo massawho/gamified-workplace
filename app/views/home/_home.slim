@@ -1,0 +1,23 @@
+- featured_products.any?
+  .row
+    .col-sm-12
+      h3
+        ' >
+        = t '.featured_products'
+      .row
+        - featured_products.each do |product|
+          = render 'products/display', product: product
+.row
+  .col-sm-12
+    h3
+      ' >
+      = t '.goals'
+    - if goals.any?
+      .row
+        - goals.each do |goal|
+          = render 'goals/display', goal: goal
+    - else
+      div.text-center
+        = image_tag 'happy-easter-bunny.svg', height: '200px'
+        h4
+          =t '.no_goals'

@@ -1,0 +1,18 @@
+@import "../widgets/_profile_card";
+
+aside.profile-information {
+    max-width: $card-profile-size;
+    float: left;
+}
+
+.dashboard-content {
+    margin-left: $card-profile-size + 40px;
+}
+
+body > .alert {
+    margin-top: -1.5rem;
+}
+
+.margin-center {
+    margin: 0 auto;
+}

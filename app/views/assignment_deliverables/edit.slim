@@ -1,0 +1,27 @@
+div.container
+  h3=@record.exercise.description
+  h5
+    '#{t '.due_at'}:
+    small=l @record.exercise.due_at, format: :short
+  h5
+    '#{t '.value'}:
+    small
+      i.fa.fa-gem
+      '&nbsp;
+      = @record.exercise.goal.money
+
+  br
+  br
+  = simple_form_for @record do |f|
+    = f.simple_fields_for :answers do |fa|
+      div
+        p= simple_format fa.object.description.html_safe
+        = fa.input :id, as: :hidden
+        - if fa.object.upload?
+          = fa.input :upload, as: :custom_file, label: false
+        - else
+          = fa.input :extensive_answer, label: false
+
+        hr
+
+    = f.submit t('.save_answers'), class: 'btn btn-success btn-round'

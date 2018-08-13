@@ -1,0 +1,53 @@
+# EditorConfig is awesome: http://EditorConfig.org
+# Download a plugin for your favorite editor: http://editorconfig.org/?#download
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+#charset = utf-8
+
+# Tab indentation (no size specified)
+[*.js]
+indent_style = space
+indent_size = 2
+# Tab indentation (no size specified)
+
+[.babelrc]
+indent_style = space
+indent_size = 2
+
+[.ex]
+indent_style = space
+indent_size = 2
+
+[*.rb]
+indent_style = space
+indent_size = 2
+
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[*.scss]
+indent_style = space
+indent_size = 4
+
+[*.slim]
+indent_style = space
+indent_size = 2
+
+[docker-compose.yaml]
+indent_style = space
+indent_size = 2
+
+[Dockerfile]
+indent_size = 2

@@ -1,0 +1,17 @@
+div class="col-lg-3 col-md-4 col-sm-6 mb-4"
+  div class="card"
+    img class="card-img-top" src="#{product.photo.thumb.url}" alt="#{product.name}"
+    div class="card-body"
+      h5 class="card-title"
+        = product.name
+      div.row.card-text
+        div.col-md-6
+          i.fa.fa-gem
+          '&nbsp;#{product.price}
+        div.col-md-6
+          i.fa.fa-cubes
+          '&nbsp;Out of stock
+      a.btn.btn-primary.btn-block href="#" data-alert-swal="This feature is not working yet"
+        i.fa.fa-shopping-basket
+        '&nbsp;
+        =t '.purchase'

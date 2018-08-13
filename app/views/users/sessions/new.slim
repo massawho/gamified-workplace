@@ -1,0 +1,32 @@
+div.wrapper
+  div class="page-header" style="background-image: url('#{asset_path('login.jpg')}');"
+    div class="filter"
+    div class="container"
+      div class="row"
+        div class="col-lg-4 ml-auto mr-auto"
+          div class="card card-register"
+            = render 'shared/alerts'
+            h3 class="title"
+              ' Welcome
+
+            = form_for(resource, as: resource_name, url: session_path(resource_name), class: 'register-form') do |f|
+              div class="field"
+                br
+                = f.text_field :username, autofocus: true, autocomplete: 'username', class: 'form-control', placeholder: 'Username'
+
+
+              div class="field"
+                br
+                = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'Password'
+
+
+              - if devise_mapping.rememberable?
+                div class="field"
+                  = f.check_box :remember_me
+                  = f.label :remember_me
+
+
+              div class="actions"
+                = f.submit "Log in", class: 'btn btn-info btn-block btn-round'
+
+            = render "devise/shared/links"

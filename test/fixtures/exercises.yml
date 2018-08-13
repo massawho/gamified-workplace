@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  due_at: 2018-08-11
+  goal: one
+
+two:
+  description: MyString
+  due_at: 2018-08-11
+  goal: two

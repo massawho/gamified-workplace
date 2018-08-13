@@ -1,0 +1,75 @@
+$bg-start: #9d9181;
+$bg-end: #9e866c;
+$card-bg: #fff;
+$dribbble-color: #ea4b89;
+$twitter-color: #68aade;
+$facebook-color: #3b5999;
+$card-profile-size: 340px;
+
+.card-profile {
+  width: $card-profile-size;
+  background-color: $card-bg;
+  border-radius: 0;
+  border: 0;
+
+  .card-img-top {
+    border-radius: 0;
+  }
+
+  .card-img-profile {
+    max-width: 100%;
+    border-radius: 50%;
+    margin-top: -95px;
+    margin-bottom: 35px;
+    border: 5px solid $card-bg;
+  }
+
+  .card-title {
+    margin-bottom: 50px;
+
+    small {
+      display: block;
+      font-size: .6em;
+      margin-top: .2em;
+    }
+  }
+
+  .card-links {
+    margin-bottom: 25px;
+
+    .fa {
+      margin: 0 1em;
+      font-size: 1.6em;
+
+      &:focus,
+      &:hover {
+        text-decoration: none;
+      }
+
+      &.fa-dribbble {
+        color: $dribbble-color;
+        font-weight: bold;
+
+        &:hover {
+          color: darken($dribbble-color, 10%);
+        }
+      }
+
+      &.fa-twitter {
+        color: $twitter-color;
+
+        &:hover {
+          color: darken($twitter-color, 10%);
+        }
+      }
+
+      &.fa-facebook {
+        color: $facebook-color;
+
+        &:hover {
+          color: darken($facebook-color, 10%);
+        }
+      }
+    }
+  }
+}

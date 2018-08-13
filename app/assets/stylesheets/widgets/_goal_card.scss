@@ -1,0 +1,33 @@
+.card.card-goal {
+    &.opacity {
+        opacity: 0.3;
+    }
+    &.gold {
+        .card-img-top {
+            background-color: #bc8856;
+        }
+    }
+    &.silver {
+        .card-img-top {
+            background-color: #86878c;
+        }
+    }
+    &.bronze {
+        .card-img-top {
+            background-color: #8f4128;
+        }
+    }
+    &.platinum {
+        .card-img-top {
+            background-color: #46404c;
+        }
+    }
+    .card-img-top {
+        text-align: center;
+        i {
+            font-size: 50px;
+            color: white;
+            margin: 10px 0;
+        }
+    }
+}

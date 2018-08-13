@@ -1,0 +1,9 @@
+- if achievements.any?
+  .row
+    - achievements.each do |achievement|
+      = render 'display_achievement', achievement: achievement, approved: achievement.approved?
+- else
+  div.text-center
+    = image_tag 'poo_flat.svg', height: '200px'
+    h4
+      =t '.no_achievements'

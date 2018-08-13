@@ -1,0 +1,19 @@
+- content_for :body, flush: true do
+  - if approved
+
+    - if can? :recieve_prize, achievement.goal
+      div.col-md-6
+        i.fa.fa-gem data-toggle="tooltip" data-placement="top" title="#{t('.prize_received')}"
+        '&nbsp;#{achievement.money}
+
+    div.col-md-6
+      i.fas.fa-calendar-alt data-toggle="tooltip" data-placement="top" title="#{t('.received_at')}"
+      '&nbsp;#{l achievement.received_at, format: :short}
+  - else
+    div.col-md-12
+      p=t('.pending_approval')
+
+- content_for :footer, flush: true do
+  '
+
+= render 'shared/badge', goal: achievement, opacity: !approved

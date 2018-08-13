@@ -1,0 +1,10 @@
+div class="col-lg-3 col-md-4 col-sm-6 mb-4"
+  div class="card card-goal #{goal.readable_level.downcase}#{' opacity' if defined?(opacity) && opacity}"
+    div.card-img-top
+      i.fa.fa-medal
+    div class="card-body"
+      h6 class="card-title"
+        = goal.description
+      div.card-text.row
+        = yield :body
+      = yield :footer

@@ -1,0 +1,44 @@
+version: "2"
+services:
+  sidekiq:
+    container_name: gamifiedworkplace-worker
+    image: gamified-workplace_app
+    env_file: /opt/gamified-workplace/config/env
+    command: sidekiq -q default
+  app:
+    build: .
+    restart: always
+    container_name: gamifiedworkplace-app
+    env_file: /opt/gamified-workplace/config/env
+    volumes:
+      - /opt/rsyslog/run:/opt/rsyslog/run
+      - public:/app/public
+      - node_modules:/app/node_modules
+    ports:
+      - 3000:3000
+    command: bundle exec puma -C config/puma.rb
+  postgres:
+    image: postgres:9.6.5-alpine
+    restart: always
+    container_name: postgres
+    env_file: /opt/gamified-workplace/config/env
+    volumes:
+      - /opt/postgres-data:/var/lib/postgresql/data
+      - /opt/rsyslog/run:/opt/rsyslog/run
+    ports:
+      - 5432:5432
+  nginx:
+    image: nginx:1.15.2-alpine
+    restart: always
+    container_name: nginx
+    volumes:
+      - ./docker/production/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - /opt/rsyslog/run:/opt/rsyslog/run
+      - public:/app/public
+      - node_modules:/app/node_modules
+    ports:
+      - 80:80
+
+volumes:
+  public:
+  node_modules:

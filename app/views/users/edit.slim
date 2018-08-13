@@ -1,0 +1,14 @@
+div.container
+  = simple_form_for current_user, as: :user, url: user_path, method: :patch do |f|
+    div.row
+      div.col-md-6.margin-center
+        = f.input :username, disabled: true
+        = f.input :name, required: true
+        = f.input :nickname
+        = f.input :avatar, required: true
+        = f.input :date_of_birth, required: true, as: :date, start_year: 1960
+        hr
+
+        = f.input :password, required: !f.object.profile_complete?, label: t('.new_password')
+        = f.input :password_confirmation
+        = f.submit t('update'), class: 'btn btn-success'

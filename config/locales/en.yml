@@ -1,0 +1,29 @@
+en:
+  goals:
+    display:
+      start: 'Start'
+      continue: 'Continue'
+      prize: 'Prize'
+      due_at: 'Due at'
+      frequency: 'Frequency'
+      readable_frequency:
+        once: 'Once'
+        daily: 'Daily'
+        weekly: 'Weekly'
+        biweekly: 'Biweekly'
+        monthly: 'Monthly'
+  assignment_deliverables:
+    edit:
+      save_answers: 'Save answers'
+      close: 'Close'
+  update: 'Update'
+  home:
+    display_achievement:
+      pending_approval: 'Pending approval'
+      received_at: 'Received at'
+      prize_received: 'Prize received'
+      prize: 'Prize'
+    home:
+      no_goals: 'Yay! No activities to be done for now!'
+    achievements:
+      no_achievements: "Oh noes! You haven't collected any badges so far!"

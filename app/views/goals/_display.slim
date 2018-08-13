@@ -1,0 +1,27 @@
+- content_for :body, flush: true do
+  - if can? :recieve_prize, goal
+    div.col-md-6
+      i.fa.fa-gem data-toggle="tooltip" data-placement="top" title="#{t('.prize')}"
+      '&nbsp;#{goal.money}
+  - if goal.once?
+    div.col-md-6
+      i.fas.fa-calendar-alt data-toggle="tooltip" data-placement="top" title="#{t('.due_at')}"
+      '&nbsp;#{l goal.ends_at, format: :short}
+  - else
+    div.col-md-6
+      i.fas.fa-clock data-toggle="tooltip" data-placement="top" title="#{t('.frequency')}"
+      '&nbsp;#{t ".readable_frequencies.#{goal.readable_frequency}"}
+
+- content_for :footer, flush: true do
+  - if goal.exercise.present?
+    a.btn.btn-primary.btn-block href="#{assignment_deliverables_path(exercise_id: goal.exercise.id)}" data-method="post"
+      i.fas.fa-play-circle
+      '&nbsp;
+      - if current_user.has_started?(goal.exercise)
+        = t '.continue'
+      - else
+        = t '.start'
+  - else
+    '
+
+= render 'shared/badge', goal: goal

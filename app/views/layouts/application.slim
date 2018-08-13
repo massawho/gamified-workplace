@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    title
+      ' TCC 2018 - ATP
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+    div.loader
+      div.page-loader
+
+
+    nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4"
+      = image_tag 'demo/shards-logo.svg', class: 'mr-2', height: 30, alt: 'Example Navbar 1'
+      a class="navbar-brand" href="#{root_path}"
+        ' TCC
+      button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-2" aria-controls="navbarNavDropdown-2" aria-expanded="false" aria-label="Toggle navigation"
+        span class="navbar-toggler-icon"
+      div class="collapse navbar-collapse mr-auto" id="navbarNavDropdown-2"
+        ul class="navbar-nav mr-auto"
+
+        ul class="navbar-nav"
+          - unless current_user.is_guest?
+            li class="nav-item"
+              a class="nav-link" href="#{products_path}"
+                i.fa.fa-gem
+                '&nbsp; #{current_user.money || 0}
+
+    = render 'shared/alerts'
+
+    = yield
+
+    footer.footer.container
+      hr
+      p Ciencia da computacao - ICEI - PUC Minas

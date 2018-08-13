@@ -1,0 +1,6 @@
+- unless notice.nil?
+  p.alert.alert-info= notice
+- unless alert.nil?
+  p.alert.alert-warning= alert
+- unless flash[:success].nil?
+  p.alert.alert-success= flash[:success]

@@ -1,0 +1,15 @@
+div.container
+  - if @products.any?
+    .row
+      .col-sm-12
+        h3
+          ' >
+          = t '.products'
+        .row
+          - @products.each do |product|
+            = render 'products/display', product: product
+  - else
+    div.text-center
+      = image_tag 'bag.png', width: '300px'
+      h2
+        = t '.no_items'
