@@ -27,7 +27,7 @@ ActiveAdmin.register Goal do
       f.has_many :achieved_badges, heading: 'Badge', new_record: true do |a|
         a.input :received_at, as: :datepicker
         a.input :approved
-        a.input :user
+        a.input :user, collection: User.all.map {|u| ["#{u.username}, #{u.name}", u.id]}
       end
     end
 
