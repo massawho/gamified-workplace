@@ -1,7 +1,7 @@
 ActiveAdmin.register Exercise do
 
   permit_params :description, :due_at, :level, :money,
-    questions_attributes: [:id, :description, :answer_type, :_destroy]
+    questions_attributes: [:id, :description, :answer_type, :file_name, :_destroy]
 
   form do |f|
     f.inputs 'Exercise info' do
@@ -21,6 +21,7 @@ ActiveAdmin.register Exercise do
           ['Text', Question::ANSWER_TYPE_TEXT]
         ]
         a.input :answer_type, as: :select, collection: answer_types
+        a.input :file_name
         a.input :description
       end
     end
