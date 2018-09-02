@@ -27,4 +27,23 @@ ActiveAdmin.register Exercise do
     end
     f.actions
   end
+
+  index do
+    selectable_column
+    column :description do |exercise|
+      link_to exercise.description, admin_exercise_path(exercise)
+    end
+    column :due_at
+    column :goal
+    column :created_at
+    column :updated_at
+    actions defaults: true do |exercise|
+      item "Download", download_admin_exercise_path(exercise), class: "member_link"
+    end
+  end
+
+  member_action :download, method: :get do
+    es = Exercise::DownloadService.new
+    send_file es.create_downloadable_file(Exercise.find(params[:id]))
+  end
 end

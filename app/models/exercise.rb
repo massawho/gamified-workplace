@@ -7,6 +7,7 @@ class Exercise < ApplicationRecord
 
   belongs_to :goal, dependent: :delete
   has_many :questions, dependent: :delete_all
+  has_many :assignment_deliverables
 
   accepts_nested_attributes_for :questions, :allow_destroy => true
   accepts_nested_attributes_for :goal, :allow_destroy => true
@@ -19,6 +20,10 @@ class Exercise < ApplicationRecord
 
   def level
     self.goal.try(:level)
+  end
+
+  def to_s
+    description
   end
 
   private
