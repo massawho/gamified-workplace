@@ -6,7 +6,7 @@ en:
       prize: 'Prize'
       due_at: 'Due at'
       frequency: 'Frequency'
-      readable_frequency:
+      readable_frequencies:
         once: 'Once'
         daily: 'Daily'
         weekly: 'Weekly'
