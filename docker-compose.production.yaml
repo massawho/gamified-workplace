@@ -13,6 +13,7 @@ services:
     volumes:
       - /opt/rsyslog/run:/opt/rsyslog/run
       - public:/app/public
+      - private:/app/private
       - node_modules:/app/node_modules
     ports:
       - 3000:3000
@@ -41,4 +42,5 @@ services:
 
 volumes:
   public:
+  private:
   node_modules:

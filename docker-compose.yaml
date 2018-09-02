@@ -9,6 +9,7 @@ services:
     build: .
     volumes:
       - .:/app
+      - /home/massa/personal/tcc/private:/private
       - ~/.ssh/:/root/.ssh/
     command: bundle exec rails s -b 0.0.0.0
     ports:
