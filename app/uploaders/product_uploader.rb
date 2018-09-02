@@ -9,7 +9,7 @@ class ProductUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb do
-    process resize_to_fit: [355, 155]
+    process resize_to_fill: [355, 155]
   end
 
   def extension_whitelist
