@@ -9,8 +9,12 @@ div class="col-lg-3 col-md-4 col-sm-6 mb-4"
           i.fa.fa-gem
           '&nbsp;#{product.price}
         div.col-md-6
-          i.fa.fa-cubes
-          '&nbsp;Out of stock
+          - if product.stock != -1
+            i.fa.fa-cubes
+            - if product.stock > 0
+              '&nbsp;#{product.stock}
+            - else
+              '&nbsp;Out of stock
       a.btn.btn-primary.btn-block href="#" data-alert-swal="This feature is not working yet"
         i.fa.fa-shopping-basket
         '&nbsp;
