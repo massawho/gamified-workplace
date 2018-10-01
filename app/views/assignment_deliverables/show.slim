@@ -1,0 +1,19 @@
+div.container
+  h3=@record.exercise.description
+  h5
+    '#{t '.due_at'}:
+    small=l @record.exercise.due_at, format: :short
+  h5
+    '#{t '.value'}:
+    small
+      i.fa.fa-gem
+      '&nbsp;
+      = @record.exercise.goal.money
+
+  br
+  br
+  - @record.answers.each do |answer|
+    hr
+    p= simple_format answer.description.html_safe
+    h5=t('.feedback')
+    p= simple_format answer.feedback

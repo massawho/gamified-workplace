@@ -24,6 +24,10 @@ class User < ApplicationRecord
     username
   end
 
+  def to_s
+    display_name
+  end
+
   def has_started?(exercise)
     assignment_deliverables.where(user: self, exercise: exercise).exists?
   end

@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   resources :products, only: [:index]
   resources :purchases, only: [:create]
   resource :user, only: [:edit, :update]
-  resources :assignment_deliverables, only: [:create, :edit, :update]
+  resources :assignment_deliverables, only: [:create, :edit, :update, :show]
 end

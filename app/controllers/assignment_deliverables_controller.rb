@@ -7,10 +7,12 @@ class AssignmentDeliverablesController < BaseController
 
   def edit
     @record = AssignmentDeliverable.find_by! id: params[:id]
+    authorize! :update, @record
   end
 
   def update
     @record = AssignmentDeliverable.find_by! id: params[:id]
+    authorize! :update, @record
 
     if @record.update assignment_deliverable_params
       flash[:success] = 'Assignment saved successfuly.'
@@ -19,6 +21,11 @@ class AssignmentDeliverablesController < BaseController
       render :edit
     end
 
+  end
+
+  def show
+    @record = AssignmentDeliverable.find_by! id: params[:id]
+    authorize! :show, @record
   end
 
   def create_or_find_assignment

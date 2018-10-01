@@ -1,0 +1,9 @@
+- if feedback.any?
+  .row
+    - feedback.each do |assignment|
+      = render 'display_feedback', assignment: assignment
+- else
+  div.text-center
+    = image_tag 'if_smiley__6_2291008.svg', height: '200px'
+    h4
+      =t '.empty_feedback'

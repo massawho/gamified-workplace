@@ -18,6 +18,8 @@ en:
         biweekly: 'Biweekly'
         monthly: 'Monthly'
   assignment_deliverables:
+    show:
+      feedback: 'Feedback given:'
     edit:
       save_answers: 'Save answers'
       close: 'Close'
@@ -34,3 +36,8 @@ en:
       no_achievements: "Oh noes! You haven't collected any badges so far!"
     inventory:
       empty_inventory: "Your inventory seems empty!"
+    feedback:
+      empty_feedback: "No feedback provided so far!"
+    display_feedback:
+      awaiting_feedback: "Waiting for feedback..."
+      check_feedback: "Check"

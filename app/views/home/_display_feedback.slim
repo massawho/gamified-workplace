@@ -1,0 +1,14 @@
+- content_for :body, flush: true do
+  '
+
+- content_for :footer, flush: true do
+  - if assignment.correction_completed
+    a.btn.btn-primary.btn-block href="#{assignment_deliverable_path(assignment.id)}"
+      i.fas.fa-play-circle
+      '&nbsp;
+      = t '.check_feedback'
+  - else
+    = t '.awaiting_feedback'
+
+
+= render 'shared/badge', goal: assignment.exercise.goal, opacity: !assignment.correction_completed
