@@ -1,0 +1,11 @@
+div class="col-lg-3 col-md-4 col-sm-6 mb-4"
+  div class="card"
+    img class="card-img-top" src="#{product.photo.thumb.url}" alt="#{product.name}"
+    div class="card-body"
+      h5 class="card-title"
+        = product.name
+      div.row.card-text
+        div.col-md-6
+          i.fa.fa-cubes data-toggle="tooltip" data-placement="top" title="#{t('.owned')}"
+          '&nbsp;#{count}
+

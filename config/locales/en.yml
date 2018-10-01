@@ -1,4 +1,9 @@
 en:
+  products:
+    inventory_item:
+      owned: Owned
+    display:
+      confirm_purchase: 'Would really like to purchase this item?'
   goals:
     display:
       start: 'Start'
@@ -27,3 +32,5 @@ en:
       no_goals: 'Yay! No activities to be done for now!'
     achievements:
       no_achievements: "Oh noes! You haven't collected any badges so far!"
+    inventory:
+      empty_inventory: "Your inventory seems empty!"

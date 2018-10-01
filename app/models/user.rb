@@ -9,6 +9,7 @@ class User < ApplicationRecord
   belongs_to :occupation
   has_many :assignment_deliverables
   has_many :achieved_badges
+  has_many :purchases
 
   validates :username, presence: true, uniqueness: true
   validates :name, :avatar, :date_of_birth, :password, presence: true, on: :first_login

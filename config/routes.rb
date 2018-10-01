@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   resources :products, only: [:index]
+  resources :purchases, only: [:create]
   resource :user, only: [:edit, :update]
   resources :assignment_deliverables, only: [:create, :edit, :update]
 end

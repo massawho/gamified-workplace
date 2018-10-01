@@ -1,0 +1,9 @@
+- if inventory.any?
+  .row
+    - inventory.each do |product, count|
+      = render 'products/inventory_item', product: product, count: count
+- else
+  div.text-center
+    = image_tag 'poo_flat.svg', height: '200px'
+    h4
+      =t '.empty_inventory'

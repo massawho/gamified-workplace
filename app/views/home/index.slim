@@ -17,6 +17,9 @@ div.container-fluid
       li class="nav-item"
         a class="nav-link" id="achievements-tab" data-toggle="tab" href="#achievements" role="tab" aria-controls="achievements" aria-selected="false"
           ' #{t '.achievements'}
+      li class="nav-item"
+        a class="nav-link" id="inventory-tab" data-toggle="tab" href="#inventory" role="tab" aria-controls="inventory" aria-selected="false"
+          ' #{t '.inventory'}
 
     br
     div class="tab-content" id="myTabContent"
@@ -24,3 +27,5 @@ div.container-fluid
         = render 'home', featured_products: @featured_products, goals: @goals
       div class="tab-pane fade" id="achievements" role="tabpanel" aria-labelledby="achievements-tab"
         = render 'achievements', achievements: @achievements
+      div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="inventory-tab"
+        = render 'inventory', inventory: @inventory
