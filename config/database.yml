@@ -9,7 +9,7 @@ default: &default
 
 development:
   <<: *default
-  database: gamifiedworkspace_development
+  database: gamifiedworkplace_development
   host: postgres
 
 # Warning: The database defined as "test" will be erased and
