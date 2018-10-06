@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_01_172713) do
+ActiveRecord::Schema.define(version: 2018_10_06_203645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2018_10_01_172713) do
     t.datetime "updated_at", null: false
     t.string "file_name"
     t.text "feedback"
+    t.string "description_image"
     t.index ["assignment_deliverable_id"], name: "index_answers_on_assignment_deliverable_id"
   end
 
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(version: 2018_10_01_172713) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "file_name"
+    t.string "description_image"
     t.index ["exercise_id"], name: "index_questions_on_exercise_id"
   end
 

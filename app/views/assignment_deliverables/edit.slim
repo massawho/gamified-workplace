@@ -16,6 +16,8 @@ div.container
     = f.simple_fields_for :answers do |fa|
       div
         p= simple_format fa.object.description.html_safe
+        - if fa.object.description_image?
+          img src="#{fa.object.description_image.url}"
         = fa.input :id, as: :hidden
         - if fa.object.upload?
           = fa.input :upload, as: :custom_file, label: false
