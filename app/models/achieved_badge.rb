@@ -7,7 +7,7 @@ class AchievedBadge < ApplicationRecord
   belongs_to :user
   belongs_to :goal
 
-  validate :correctness_of_received_at
+  # validate :correctness_of_received_at
 
   before_create :populate_values
   before_create :award_prize
